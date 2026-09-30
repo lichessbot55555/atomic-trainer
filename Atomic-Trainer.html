@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☢️ Atomic Trainer — обучение атомным шахматам · F55555</title>
+<script>
+const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.07.25","tc":"30+0","term":"","we":"2034","be":"1602","id":"","src":"bot","m":["g1f3","f7f6","e2e3","d7d5","f3g5","f6g5","d1h5","g7g6","h5e5","c8e6","e5c7","b7b5","b2b3","g8f6","c1a3","b5b4","f1b5","e8d8","f2f3","f6e4","f3e4","f8g7","h1f1","g7f6","h2h3"]},{"w":"GoroArmeT","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2101","be":"2322","id":"rHuoGamv","src":"F55555","m":["g1h3","e7e5","d2d4","c7c6","e2e3","d7d5","b1a3","b7b5","h3g5","f7f5","g5h7","g7g6","e3e4","f5f4","h2h4","f8h6","g2g4","d8e7","g4g5","h6g7","h4h5","e5d4","f1h3","c8h3","d1e2","f4f3","c1f4","f3e2"]},{"w":"F55555","b":"GoroArmeT","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2319","be":"2104","id":"vkzRLaHq","src":"F55555","m":["g1f3","e7e5","f3g5","f7f5","e2e3","f8b4","c2c3","g8f6","f2f3","h7h5","g5f7","e8g8","f7d8","f6e4","f3e4","f5f4","f1c4","d7d5","e1g1","f4f3","g2g3","f3f2","g1h1","b8d7","c4b5","d7f6","h2h3","f6e4","d2d4","e4d2","b1a3","c7c6","h3h4","d2f1","b5f1","g8h8","a3b5","b4a3","b2a3","c6b5","d1a4","b7b5","a4a6","a8c8","a6g6"]},{"w":"GoroArmeT","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2107","be":"2317","id":"v3jVldTo","src":"F55555","m":["g1h3","e7e5","h3g5","f7f5","d2d4","c7c6","b1a3","d7d5","e2e4","e5d4","g5h7","f8c5","c1e3","f5e4","d1d4","d8e7","e1d1"]},{"w":"F55555","b":"GoroArmeT","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2314","be":"2109","id":"kSQSBMfk","src":"F55555","m":["g1f3","f7f6","b1c3","c7c6","e2e3","e7e6","f1d3","g7g6","d3g6","h7h5","g2g4","h5g4","h1g1","f8g7","g1g7","e8e7","d1g4","e7e8"]},{"w":"GoroArmeT","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2112","be":"2311","id":"1ezcBjQw","src":"F55555","m":["g1h3","e7e5","d2d4","c7c6","e2e4","d7d5","b1a3","e5d4","c1e3","f8c5","f2f3","f7f5","e4e5","f5f4","a3b5","f4e3","b5d6","e8f8","d6b7","c5f2","e1e2","d8b6","d1d4","f2d4","e2d1","b6f2"]},{"w":"F55555","b":"GoroArmeT","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2308","be":"2115","id":"no9xJxut","src":"F55555","m":["g1f3","e7e5","f3g5","f7f5","e2e3","f8b4","c2c3","g8f6","f2f3","f6g4","g5f7","e8g8","f3f4","g7g6","f7d8","g4f2","d1a4","b7b5","a4b5","f2d1","b2b4","e5f4","f1c4","d7d5","e1g1","d1f2","g2g3","b8d7","h2h3","d7f6","c4d3","f6d7","b1a3","a7a6","b4b5","d5d4","d3b1","d4c3","c1b2","d7c5","b2g7","f8e8","a3c4","c5b3","a2b3","a6b5","b1a2","a8a2","f1a1","e8a8","a1b1","a8a6","b1b8","g8f7","b8f8","f7e6","f8e8","e6d5","e8e5","d5c4","e5c5","c4b3","c5c3","b3b2","c3c2","b2b1","c2c1","b1a2","c1b1"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2072","be":"2306","id":"swEo0CEN","src":"F55555","m":["e2e3","g8f6","f2f4","f6e4","d2d4","e7e6","f1b5","c7c6","g1f3","f7f5","f3e5","d7d5","e5f7","d8h4","g2g3","f8b4","c2c3","h4h3","d1h5","h3f1"]},{"w":"F55555","b":"FeodorPt","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2303","be":"2080","id":"q6ivCkrz","src":"F55555","m":["e2e3","e7e6","g1f3","f8b4","c2c3","f7f5","f3g5","g8f6","g5e6","d8h4","g2g3","h4g4","f2f3","e8g8","f3g4","h7h5","c3b4","f5f4","d1b3","d7d5","b3c3","f8f6","c3c5","f6d6","f1d3","g7g6","e1g1","f4f3","d3e4","c8h3","f1f2","b8a6","c5c3","d5d4","c3b3","d6d5","e4d5","h3e6","b3b5","c7c6","b5e5","d4e3","e5g7"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2082","be":"2301","id":"Ty7M7Wfg","src":"F55555","m":["g1f3","e7e5","f3g5","f7f5","d2d4","e5e4","g5e6","d7e6","c1g5","g8f6","e2e3","c7c6","f1c4","f8b4","c2c3","h7h6","d4d5","h6g5","d5d6","c8d7","c4f7","e8f8","f7e8","d8h4","g2g3","h4h3","d1g4","h3g3","e8d7","h8h2","d6d7","b8d7","b1a3","a8d8","e1f1","d8d2","f2f4","d2f2","f1g1","g7g5","a3b5","g5f4","b5d6","f2g2","g1h1","f5f4","e3f4","e4e3","d6f5","g2h2"]},{"w":"F55555","b":"FeodorPt","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2298","be":"2085","id":"93Lfbvy1","src":"F55555","m":["g1f3","f7f6","b1c3","g8h6","g2g4","c7c6","e2e3","b8a6","f1d3","a6b4","c3d5","e7e5","d5c7","d8c7","c2c3","b4c2","e1f1","c2e3","d1a4","f8c5","d2d4","c5b4","f2f4","e8g8","g4g5","h6g4","h2h3","g4f2","h3h4","h7h6","g5h6","e5f4","h1g1","f2h3","g1g7"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2087","be":"2295","id":"6C1E3kcF","src":"F55555","m":["b1c3","e7e5","e2e3","f8b4","f1b5","c7c6","f2f4","d7d5","h2h3","d5d4","e3e4","d4d3","d1h5","g7g6","h5h4","f7f6","f4f5","d3c2","e1f1","d8d4","g1f3","d4f2"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2018","be":"2293","id":"oiLarAhZ","src":"F55555","m":["b1c3","e7e5","g1h3","f8b4","h3g5","f7f5","d2d4","d7d5","e2e3","g7g6","g5f7","d8h4","g2g3","h4h5","f2f3","e5e4","h2h4","g8f6","g3g4","f5f4","g4h5","c8h3","f1h3","e8g8","h4h5","g6g5","f7h6","g8h8","h6f7","f8f7","e3f4","e4e3","c1e3","b8c6","d1e2","a8f8","e2e8","f8e8","f3f4","g5g4","f4f5","g4g3","f5f6","g3g2","f6f7","g2g1q","h1g1","c6d4","c2c3","d5d4"]},{"w":"F55555","b":"FeodorPt","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2291","be":"2020","id":"atFkLN7M","src":"F55555","m":["g1f3","e7e5","e2e3","f8b4","c2c3","g8h6","f3g5","f7f5","g5h7","d8h4","g2g3","h4g4","d1g4","b8c6","h2h4","c6d4","e3d4","d7d5","h4h5","e5e4","h5h6","e4e3","d2e3","f5f4","h6h7","c8h3","f1h3","e8c8","h7h8q","b4c5","e1d1","d8e8","h8g8","c5f2","g8f7","e8e7","h1h8","e7e8","f7c7"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2022","be":"2289","id":"6y27ch5W","src":"F55555","m":["b1c3","e7e5","e2e3","f8b4","f1b5","c7c6","d2d3","d7d5","d1h5","g7g6","h5g5","f7f6","g5h4","g8h6","f2f4","h6g4","g1f3","h7h5","f3d4","g6g5","d4e6","c8e6","h4g5","f6f5","g2g3","h5h4","h2h3","h4g3","h1g1","h8g8","h3h4","g8g2","g1g2","d8e7","c1d2","b8a6","e1c1","b4a3","b2a3","a6b4","c1b1","b4c2"]},{"w":"F55555","b":"FeodorPt","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2287","be":"2024","id":"zDhYICGo","src":"F55555","m":["e2e3","e7e6","g1f3","f8b4","c2c3","d7d5","f3g5","f7f5","g5h7","d8h4","g2g3","h4g4","d1g4","b8c6","h2h4","c6d4","e3d4","b7b6","h4h5","c8a6","f1b5","c7c6","h5h6","e8c8","h6h7","d8h8","d2d4","e6e5","b1d2","b4c3","b2b3","e5d4","e1g1","f5f4","c1b2","d5d4","f1e1","f4g3","e1e8","c8d7","e8h8","a6b5","h7h8q","d7e6","h8f8","e6d7","f8f4","d7e8","f4d6","e8f7","d6e6","f7f8","e6e8"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2026","be":"2285","id":"3ZClO79t","src":"F55555","m":["b1c3","e7e5","e2e3","f8b4","f1b5","c7c6","e3e4","d7d5","d2d3","f7f5","c1g5","g8f6","g1h3","b4c5","b5c6","d8b6","d3d4","e5d4","d1d4","f5e4","e1d1","b6d4","d1e1","d4d2","e1f1","d2f2"]},{"w":"F55555","b":"FeodorPt","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2294","be":"2017","id":"qyNQfLtj","src":"F55555","m":["g1f3","e7e5","f3g5","f7f5","e2e3","f8b4","c2c3","g8f6","f2f3","f6e4","f3e4","b8c6","g5h7","d8h4","g2g3","h4g4","d1g4","d7d5","h2h4","f5f4","h4h5","f4f3","f1h3","f3f2","e1f1","b7b6","h5h6","c8a6","d2d3","e5e4","h6h7","e4d3","f1g2","f2f1q","g2h2","f1g2"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2019","be":"2292","id":"wHjV5e2M","src":"F55555","m":["b1c3","e7e5","g1f3","f8b4","f3g5","f7f5","e2e3","d7d5","h2h4","g7g6","g5h7","d5d4","d2d3","e5e4","f2f3","e4d3","c2c3","d4d3","d1a4","b7b5","c1d2","f5f4","e3e4","b5a4","h4h5","c8e6","b2b3","d8d6","h5g6","d6b6","h1h8","e6g8","d2e3","d3d2","e1d1","f4e3","f1b5","e8e7","h8h7","g8h7","g2g4","b6f2","d1c2","f2e1"]},{"w":"F55555","b":"FeodorPt","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2290","be":"2021","id":"U5AZPTLm","src":"F55555","m":["e2e3","e7e6","g1f3","f8b4","c2c3","d7d5","f3g5","f7f5","g5h7","d8h4","g2g3","h4d4","e3d4","b4c5","d2d4","g7g6","h2h4","b8a6","h4h5","c5f8","h5g6","f8h6","d1h5","e8d7","h5e8","d7d6","e8e6"]},{"w":"FeodorPt","b":"F55555","r":"0-1","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2023","be":"2288","id":"j11cXoJW","src":"F55555","m":["b1c3","e7e5","e2e3","f8b4","f1b5","c7c6","g1h3","f7f5","h3g5","d7d5","g5h7","g7g6","h2h4","d5d4","d2d3","e5e4","h4h5","e4d3","c2c3","d4d3","d1d2","f5f4","e3f4","b4c3","c1e3","d3d2","e1d1","d8d3","b5d3","b8a6","h5g6","c8f5","h1h8","e8f7","h8f8","f7g7","f8f7","g7h8","f7g7","f5c2","d1e2","d2d1q","e2e3","d1f3","e3d4","f3e4"]},{"w":"F55555","b":"FeodorPt","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2286","be":"2025","id":"uGp7f8cc","src":"F55555","m":["g1f3","e7e5","f3g5","f7f5","e2e3","f8b4","c2c3","g8f6","f2f3","f6e4","f3e4","d7d5","h2h4","h7h5","g5f7","e8g8","f7d8","f5f4","f1b5","f4f3","g2g4","f3f2","e1f1","d5d4","g4h5","d4e3","d1h5","g7g6","h5h7"]},{"w":"AtomicOverseer","b":"F55555","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2331","be":"2291","id":"A2DIYDbK","src":"F55555","m":["g1f3","f7f6","b1c3","c7c6","e2e3","e7e6","f3d4","f8b4","d4b5","g8h6","b5c7","e8f8","g2g4","g7g6","h2h4","d7d5","h4h5","g6g5","d2d3","d5d4","e3e4","f6f5","c1g5","f5f4","f2f3","e6e5","g4g5","c8h3","f1h3","d8d7","c7e6","f8e8","h1g1","h8g8","g5g6","h7g6","g1g7","g8g7","d1e2","d7h7","e2g2","b8d7","g2g8","h7g8","e6c7","e8e7","c7a8","d7f6","h5h6","f6h7","a2a3","b4a5","b2b4","a5d8","c3d5","e7e8","d5c7","e8f7","c2c4","d8h4","e1f1","h4f2","c7e8","b7b5","e8f6","h7g5","f6h7","g5h3","h7g5","f7g6","g5h3","g6g5","h6h7"]},{"w":"F55555","b":"AtomicOverseer","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2284","be":"2338","id":"sLFkkU74","src":"F55555","m":["e2e3","e7e6","g1f3","d8f6","f1d3","f8b4","c2c3","b4c3","d1a4","b7b5","a4h4","e8d8","e1d1","g8h6","f3e5","d7d6","e5f7","g7g5","h4h5","h6f7","d2d4","e6e5","d4d5","c8g4","f2f3","g4h5","b1c3","c7c5","h2h4","b8d7","g2g4","h7h5","e3e4","a8c8","f3f4","a7a5","f4f5","a5a4","a2a3","d7b8","c3b5","c5c4","c1e3","c4c3","e3b6","d8e8","b6c7","b8c6","b2c3","c6d4","a1b1","d4c2","f5f6","h5g4","h4g5","h8h2","h1h2","e8f8","d1e2","c2e1","e2f2","f7g5","f6f7","g5h3","f2f1","e1f3","f1g2","h3g1","b1b2","f3h4","g2h1","g1f3","b2h2","f3e1","h2h3"]},{"w":"AtomicOverseer","b":"F55555","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Normal","we":"2333","be":"2289","id":"ttMjlLEn","src":"F55555","m":["g1f3","e7e5","f3g5","f7f5","d2d4","e5e4","e2e3","d7d5","g5h7","g7g6","h2h4","f8h6","f2f4","e4f3","f1b5","c7c6","e1g1","c6b5","c2c4","b8a6","d1a4","b7b5","a4a5","d8c7","a5c7","b5c4","b2b4","a8c8","b1c3","a6c7","e3e4","f5f4","g2g4","f4f3","c1h6","f3f2","g1h1","c7b5","a1c1","b5a3","c3b5","a3c2","b5d6","e8e7","d6c8","g6g5","f1f2","g5h4","g4g5","c2e3","g5g6","e7f6","g6g7","f6g5","g7g8q","g5h4","g8g3","h4h5","g3h4","h5g6","h4g5","g6f7","g5f6","f7e8","f6e7"]},{"w":"F55555","b":"AtomicOverseer","r":"1-0","d":"2026.09.28","tc":"30+0","term":"Time forfeit","we":"2282","be":"2339","id":"ps8aSB1a","src":"F55555","m":["e2e3","e7e6","g1f3","d8f6","f1d3","f8b4","c2c3","b4c3","d1a4","b7b5","a4h4","d7d6","e1d1","g8h6","f3e5","e8d8","e5f7","g7g5","h4h5","h6f7","b1c3","c7c6","c3e4","e6e5","e4f6","c8g4","f2f3","g4h5","f6h7","f7h6","h2h4","g5g4","g2g3","b8d7","f3g4","d7c5","d2d3","c5a4","b2b3","a4c3","d1e1","d8c7","h1f1","h6f5","e3e4","a8f8","c1h6","f8f7","h6f8","d6d5","d3d4","c6c5","a1c1","a7a5","b3b4","f5e3","f1f6","e3g2","e1d2","g2e3","c1a1","f7f6","d2c1","c3d1","c1d2","e3f1","d2e1","f1e3","e1e2","c5c4","e2d2","c4c3","d2e2"]},{"w":"k1ll-shot","b":"Loam2011","r":"1-0","d":"2026.09.29","tc":"180+2","term":"Normal","we":"2444","be":"2018","id":"iRN2SiIJ","src":"top","m":["g1f3","f7f6","d2d4","d7d5","b1a3","b7b5","g2g3","c8g4","f1h3","e7e5","e1g1","e5d4","f3g5","f8c5","a3b5","c7c6","g5e6","d8b6","d1d4","g4e2","e6c7","e8d8","c7e6","d8e8","e6g7","h7h6","h3d7","e8f8","d7c6","b8c6","d4c5"]},{"w":"yamadakyotai","b":"k1ll-shot","r":"0-1","d":"2026.09.29","tc":"180+2","term":"Normal","we":"1936","be":"2443","id":"BUbWdnYD","src":"top","m":["g1f3","f7f6","b1c3","c7c6","c3d5","c6d5","e2e4","e7e6","f1b5","b8c6","e1g1","g7g6","g1h1","g8h6","h2h3","f8b4","c2c3","h6g4","f3g5","g4f2","g5f7","e8g8","d2d4","h7h6","f7d8","f6f5","g2g3","f5e4","c1f4","c6e5","b5a6","b7a6","c3b4","a8c8","d1c2","c8c2","a1c1","e5c4","f4d6","f8f2","g3g4","f2h2","h1g1","h2h1","g1f2","c4b2"]},{"w":"k1ll-shot","b":"DontDrinkAndZerk","r":"1-0","d":"2026.09.29","tc":"180+2","term":"Normal","we":"2442","be":"1882","id":"2LRarkS4","src":"top","m":["g1h3","h7h6","d2d4","d7d5","b1c3","b7b5","e2e4","c8g4","f2f3","g4h3","g2g3","e7e6","e4d5","c7c6","c1f4","f8d6","c3d5","c6d5","f4c7","d8d5","c7b8","g8f6","c2c4","d5b7","d1c2","f6e4","f1h3","b5c4","c2c8","b7c8","f3e4","e8g8","a1c1","f8c8","e1g1"]},{"w":"k1ll-shot","b":"PLZbeatme","r":"1-0","d":"2026.09.29","tc":"180+2","term":"Normal","we":"2440","be":"2227","id":"KpVDNMTa","src":"top","m":["g1h3","h7h6","d2d4","e7e6","b1c3","f8b4","e2e4","b8a6","f1b5","c7c6","e1g1","b4a3","c3d5","a3b2","d5e7","a6b4","d1f3","f7f5","f3g3"]},{"w":"k1ll-shot","b":"maxwellssilvrhaMMer","r":"1-0","d":"2026.09.29","tc":"30+0","term":"Normal","we":"2428","be":"2563","id":"M40d3qs1","src":"top","m":["g1h3","h7h6","b1c3","e7e6","d2d4","f8b4","e2e4","f7f5","f1b5","c7c6","e1g1","f5f4","d1h5","g7g6","h5e5","g8f6","e5c7","e8g8","f2f3","f6g4","c1f4","d8h4","g2g3","h4g4","c7d8","g8h8","d8f6","f8f6","f3g4"]},{"w":"maxwellssilvrhaMMer","b":"k1ll-shot","r":"0-1","d":"2026.09.29","tc":"30+0","term":"Time forfeit","we":"2571","be":"2420","id":"4c8ldjRC","src":"top","m":["g1f3","f7f6","b1c3","g8h6","h2h3","h6g4","h3g4","c7c6","e2e4","g7g6","h1h6","d7d6","d2d4","c8g4","f2f3","e7e6","f3g4","f6f5","e4e5","f5f4","c3b5","f8h6","b5c7","e8f8","g2g3","b8a6","b2b4","h7h5","c1f4","h5h4","d1d2","f8g8","e1c1","h4g3","d2g5","d8g5","f1h3","a8f8","d1f1","f8f2","f1f2","g6g5","c7e8","g5g4","h3g2","h8h1","g2h1","g4g3","e5d6","g3g2","e8f6","g8g7","f6h5","g7h8","h5f4","g2g1q"]},{"w":"k1ll-shot","b":"maxwellssilvrhaMMer","r":"1-0","d":"2026.09.29","tc":"30+0","term":"Time forfeit","we":"2412","be":"2579","id":"DVuLVhkJ","src":"top","m":["g1f3","f7f6","b1c3","c7c6","e2e4","g7g6","c3d5","c6d5","f1b5","b8c6","d2d4","f8h6","c1g5","e7e6","f3e5","d7d6","e5f7","d8a5","c2c3","g8e7","f7d6","e8f8","b5e8","c8d7","d1a4","a5b5","a4b4","b5c5","e8f7","c5c3","f7e6","a8c8","a1c1","h6g5","c1c7","c8c7","e1d2","f8e7","h1c1","h8c8","c1c7","c8c7","d4d5","e7d6","d2d1","d6c5","e4e5","c5c4","e5e6","c4d3","e6e7","d3c2","e7e8q","a7a5","e8f7","f6f5","d1d2","g6g5","d5d6","b7b6","d6d7","a5a4","d7d8q","c2d3","d2c3","b6b5","c3d4","f5f4","d4e5","d3d4","e5f6","d4e5","f6g7","e5f6","f7e6","h7h5","g7h7","f6g7","d8f8"]},{"w":"maxwellssilvrhaMMer","b":"k1ll-shot","r":"1-0","d":"2026.09.29","tc":"30+0","term":"Time forfeit","we":"2576","be":"2415","id":"Cc82zXjx","src":"top","m":["g1f3","f7f6","b1c3","c7c6","e2e4","e7e6","d2d4","f8b4","f3e5","f6e5","d1h5","g7g6","h5h7","d8h4","g2g3","h4h7","c1g5","e6e5","d4d5","d7d6","h2h4","h7f7","f2f3","c8h3","f1h3","b8d7","h4h5","f7g8","e1c1","d7b6","c3b5","b4d2","c1b1","b6c4","b2b3","c4a3","b5a3","c6d5","h5g6","d2e1","h1h7","g8g6","h7e7","e8f8","e7e8","f8g7","e8e7","g7h6","e7h7","h6g5","h7h5","g5f6","h5h6","f6e7","h6g6","e7d7","c2c4"]},{"w":"k1ll-shot","b":"maxwellssilvrhaMMer","r":"0-1","d":"2026.09.29","tc":"30+0","term":"Time forfeit","we":"2418","be":"2572","id":"gE5TmRnd","src":"top","m":["g1f3","f7f6","e2e4","d7d5","b1c3","c8g4","d2d4","b8a6","e4d5","a6b4","c3d5","e7e6","f1b5","c7c6","d5c7","d8c7","c1h6","g7h6","e1g1","g4h3","g2h3","g8h6","g1h1","h6g4","h2h3","b4c2","f3g5","g4f2","g5h7","f8h6","a1g1","h6g5","h3h4","e8c8","b5c6","c8b8","h4h5","d8c8","h5h6","c8c1","g1c1","g5h6","h1g2","b7b5","d4d5","b8c8","d5e6","c8d8","g2f3","f6f5","f3f4","a7a5","b2b4","d8c8","a2a4","c8b8","b4a5","b8a7","a4a5","a7b7","a5a6","b7a7","f4e5","b5b4","e5d6","b4b3","d6c6","b3b2","c6b6","b2b1q","b6b7","b1b4","b7b6","b4b5","b6b7","b5b6","b7b8","b6c7","b8b7","a7b6","b7c6","b6a5","c6b5","c7a7","b5a4","f5f4","a4b4","f4f3","b4a4","a5b6","a4b5","b6c7","b5c6","c7d8","c6d7","d8e8","d7e7","e8f8","e7f7","f8g7","f7g6","g7h6","g6h5","f3f2","h5g5","f2f1q","g5g6","h6g5","g6h5","g5f4","h5h4","f4e3","h4g5","f1e2"]},{"w":"maxwellssilvrhaMMer","b":"k1ll-shot","r":"1-0","d":"2026.09.29","tc":"30+0","term":"Time forfeit","we":"2569","be":"2422","id":"vnj3fW7x","src":"top","m":["g1f3","f7f6","b1c3","c7c6","e2e4","e7e6","d2d4","f8b4","f3g5","f6g5","d1h5","g7g6","h5h7","d8h4","g2g3","h4h5","g3g4","h5h4","e1d1","h4h8","h2h4","e6e5","d4d5","d7d6","h4h5","g6g5","c1e3","c6d5","c3d5","b4d2","f1b5","b8c6","d5f6","e8f7","c2c3","c8d7","f6d7","a8c8","b5e8","f7f8","h1f1","d6d5","e3c5","f8g8","f2f4","d2e1","e8f7","g8g7","c5f8","g7h7","f7g6","h7g8","g6h7","g8f7","f4e5","f7e8","h7g6","e8d8","f8e7","d8c7","g6f5","c7b8","e7d6","b8a8","d6b8"]},{"w":"k1ll-shot","b":"mss365","r":"1-0","d":"2026.09.29","tc":"30+0","term":"Normal","we":"2431","be":"2516","id":"xmTtFOqY","src":"top","m":["g1f3","f7f6","b1c3","g8h6","g2g4","c7c6","d2d4","e7e6","e2e4","f8b4","f3g5","f6f5","h1g1","d7d5","g5h7","e6e5","a2a3","b4a5","b2b4","d8h4","g1g3","a5b6","c3b5","b6d8","b5d6","e8f8","c1g5","h4h7","g5h6","f8e7","h6g7","f5f4","g4g5","f4f3","d6c8","e5d4","g3h3","e7f7","h3h7","f7g6","d1d2","a8e8","e1c1","d5d4","h7g7","g6h5","f1h3","d4d3","c2c4","e8d8","h3g4","h5h4","g7h7"]},{"w":"mss365","b":"k1ll-shot","r":"0-1","d":"2026.09.29","tc":"30+0","term":"Normal","we":"2523","be":"2424","id":"YUnavwhm","src":"top","m":["g1f3","f7f6","b1c3","c7c6","d2d4","e7e6","d4d5","f8b4","f3e5","f6e5","c1g5","d8a5","e2e4","g8h6","g5h6","e8g8","f2f4","h7h5","a2a3","b4e7","d5e6","d7d5","e4d5","f8e8","d1e2","e8e2"]},{"w":"k1ll-shot","b":"mss365","r":"0-1","d":"2026.09.29","tc":"30+0","term":"Normal","we":"2428","be":"2519","id":"Y0f8z1Wd","src":"top","m":["g1f3","e7e5","f3g5","f7f5","d2d4","e5e4","g2g3","d7d5","g5f7","d8f6","c1g5","f8b4","c2c3","f6a6","d1d3","e4d3","e2e4","a6f1"]},{"w":"mss365","b":"k1ll-shot","r":"0-1","d":"2026.09.29","tc":"30+0","term":"Normal","we":"2526","be":"2421","id":"Azousnqs","src":"top","m":["g1f3","f7f6","b1c3","c7c6","c3d5","c6d5","e2e3","e7e6","f3d4","g7g6","d4b5","f8b4","c2c3","h7h5","b5c7","e8f8","d2d4","g8h6","h2h3","b8c6","e3e4","b4d6","e4e5","d6b4","c1h6","f8g8","a2a3","b4f8","f1d3","b7b6","d3c2","c8a6","c7b5","c6b4","d1f3","b4d3","c2d3","a6b5","e5f6","d8h4","f3f5","h4f2"]},{"w":"k1ll-shot","b":"mss365","r":"0-1","d":"2026.09.29","tc":"30+0","term":"Normal","we":"2425","be":"2522","id":"qDywIz7y","src":"top","m":["g1f3","e7e5","f3g5","f7f5","d2d4","e5e4","e2e3","d7d5","b1a3","b7b5","h2h3","h7h5","f2f4","e4f3","g5f7","d8f6","f7d8","f8d6","g2g3","f5f4","d8e6","f4g3","d1f3","d6g3","e1d1","f6f5","f1d3","g3e1","b2b3","e1d2","c1b2","d2e3","d1e1","f5f2"]},{"w":"mss365","b":"k1ll-shot","r":"1-0","d":"2026.09.29","tc":"30+0","term":"Time forfeit","we":"2518","be":"2429","id":"xFIXPx7c","src":"top","m":["g1f3","f7f6","b1c3","c7c6","c3d5","c6d5","e2e3","e7e6","f3d4","g7g6","d4b5","f8b4","c2c3","g8h6","h2h3","e8g8","d2d4","a7a6","b5c7","b8c6","f2f4","h6f5","g2g3","f5h4","g3h4","h7h5","h3h4","g8h8","f1e2","f8g8","e2h5","b4f8","h4h5","g6g5","h5h6","g5g4","c7e8","c6b4","c3b4","d8a5","b2b4","a5b5","d1d3","f6f5","h6h7","g8g6","e8f6","b5a4","d3c2","a4c2","f6h5","g6h6","h1g1"]},{"w":"ReChesster","b":"hulka416","r":"1-0","d":"2026.09.28","tc":"180+0","term":"Normal","we":"2505","be":"1812","id":"kdAPSrHN","src":"top","m":["g1h3","f7f6","b1c3","c7c6","e2e3","e7e6","c3b5","c6b5","d1h5","g7g6","h5b5","b8c6","b5b6","a7b6","f1b5","e8f7","h3f4"]},{"w":"ReChesster","b":"Maracker","r":"1-0","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2502","be":"2359","id":"VpIaBHRC","src":"top","m":["g1h3","h7h6","d2d4","f7f5","h3f4","e7e6","f4g6","f8b4","c2c3","g8f6","e2e4","f5e4","g6e7","b8c6","f2f3","b7b6","f1b5","c8a6","h2h3","d7d6","g2g3","h8f8","e7g6","f8f7","g6f8","f6e4","f8e6","d8e7","e1g1","e4d2","f1e1","e7e2","d1e2","e8c8","c1g5","h6g5","b1a3","d8e8","a1e1","c6e5","d4e5","b4c5","g1h1","e8e2","e1e2","c8d8","b5d7","a6b7","d7c6","b7c8","a3c4","c8f5","c4d6","c7c5","b2b3","f5d3","b3b4","d8e7","a2a3","e7e6","b4b5","e6e5","a3a4","d3f1","a4a5","b6a5","b5b6","a7a5","b6b7","a5a4","b7b8q"]},{"w":"Maracker","b":"ReChesster","r":"0-1","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2362","be":"2498","id":"e9gJNWze","src":"top","m":["d2d4","g8h6","h2h3","e7e5","e2e4","b8a6","b2b4","d7d5","f1e2","g7g6","e2h5","h6g4","h5g4","f8h6","c1g5","f7f6","f2f3","e8g8","g1e2","c7c6","e1g1","e5d4","b4b5","a6b4","c2c3","b4c2","b1a3","c2e3","g5e3","h6e3","g1h1","a7a6","b5b6","d8e7","c3c4","e7b4","d1c2","e3c1","a3b5","b4c3","b5d6","c3e3","f1f2","e3e1"]},{"w":"ReChesster","b":"Maracker","r":"1-0","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2494","be":"2366","id":"BXpp5O4R","src":"top","m":["g1h3","h7h6","d2d4","f7f5","h3f4","e7e6","f4g6","f8b4","c2c3","g8f6","e2e4","f6g4","f2f4","g4f2","d1h5","f2d3","f1d3","d8h4","h5h4","b4a5","b1a3","a7a6","a3b5","a6b5","a2a4","b7b5","b2b4","c7c5","a4b5","a8a2","a1a2","c5b4","c1a3","d7d6","e4e5","c8b7","d4d5","e6d5","g2g3","d6e5","e1g1","b7e4","f1e1","b8c6","a3f8","h6h5","g6h4","g7g5","h4f5","e8d7","f8g7","h8a8","e1e7","d7d8","e7e8","d8d7","e8a8","g5g4","f4f5","c6d8","h2h4","d8f7","c3c4","d7c6","c4c5","c6d5","c5c6","d5e4","c6c7","e4f3","g7e5","f3f2","c7c8q","f2g2","c8e8","f7h6","e8h5","g2f2","h4h5","f2g2","f5f6","g2f2","f6f7","f2f1","f7f8q","f1g2","f8f4","g2f2","e5g7","f2f1","f4e4","f1g2","g1f2","g2f3","f2e3","f3e2","e3f3","e2f1","f3f4","f1f2","e4f3","f2e3","f4g5","e3f4","g5h6","f4g5","f3g4"]},{"w":"Maracker","b":"ReChesster","r":"0-1","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2370","be":"2491","id":"t5O3USz5","src":"top","m":["g1f3","f7f6","f3d4","g8h6","h2h3","b7b5","e2e3","g7g6","f1d3","f6f5","b1c3","e7e6","a2a4","a7a6","a4b5","b8c6","d3b5","f8b4","e1g1","b4c3","d2d4","h6g4","f2f4","g4f2","d1e1","e8g8","d4d5","d7d6","e3e4","c6d4","e1b4","a6b5"]},{"w":"ErizoDeManchuria","b":"ReChesster","r":"1-0","d":"2026.09.28","tc":"180+2","term":"Normal","we":"2205","be":"2500","id":"fMWTDrmj","src":"top","m":["g1h3","h7h6","e2e3","e7e6","h3f4","f8b4","c2c3","g8f6","f4e6","d7d6","d1f3","c8f5","b1a3","d8h4","g2g3","h4g3","a3b5","a7a6","a2a3","f5c2","b5a7","b8c6","d2d4","f7f5","a3b4","g7g5","e3e4","e8g8","e4e5","d6e5","a7c8","f5f4","f1h3","c2f5","c8e7","g8h8","f2f3","f5d3","h3c8","b7b5","h1g1","d3f1","h2h4","f8e8","d4d5","f1g2","b2b3","b5b4","d5c6","c7c5","c3c4","e8d8","c1b2","h8h7","c8f5"]},{"w":"Dar_Metz","b":"sutcunuri","r":"1-0","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2214","be":"2452","id":"mqgPEMV6","src":"top","m":["g1f3","f7f6","b1c3","c7c6","e2e4","e7e6","d2d4","f8b4","f3h4","g7g6","e4e5","d7d5","g2g3","b8a6","a2a3","h7h6","f2f4","f6f5","f1g2","g8e7","e1g1","b4c3","b2b4","e8g8","c2c4","c6c5","c4d5","b7b5","g2b7","d8e8","d4d5","e7c6","b4c5","a6c5","d5d6","c8d7","b7c6","e8b8","c6a8","c5d3","d1d3","f8c8","c1d2","c8c2","a1c1","a7a5","c1c2","a5a4","f1c1","b5b4","c1c8","d7c8","d6d7","b4b3","d7d8q"]},{"w":"sutcunuri","b":"Dar_Metz","r":"1-0","d":"2026.09.28","tc":"60+0","term":"Time forfeit","we":"2450","be":"2217","id":"IbWy9874","src":"top","m":["g1f3","f7f6","c2c3","e7e6","e2e4","d7d5","d2d4","b8a6","f3g5","f6g5","c1g5","g8f6","e4e5","a6b4","c3b4","f8b4","b1c3","e8g8","f2f4","b7b6","g5h4","c8a6","f1a6","a8c8","e5f6","d8e8","h4e7","f8f5","g2g4","c7c5","d4c5","f5f7","e1g1","d5d4","d1a4","d4c3","a1c1","c8c4","c1c4","e8d7","a4e4"]},{"w":"Dar_Metz","b":"sutcunuri","r":"0-1","d":"2026.09.28","tc":"60+0","term":"Time forfeit","we":"2219","be":"2447","id":"c0xUeqpZ","src":"top","m":["g1f3","f7f6","b1c3","c7c6","e2e4","e7e6","c3d5","c6d5","d2d4","a7a6","f3h4","g7g6","a2a4","b8c6","b2b4","c6e5","d4e5","d7d5","f1d3","d5d4","e4e5","f6f5","h2h3","h7h6","e1g1","b7b6","g1h1","a6a5","b4b5","c8b7","f2f3","a8c8","c1a3","f8a3","d1e1","g8e7","d3c4","e7d5","c4d5","c8c3"]},{"w":"sutcunuri","b":"Dar_Metz","r":"0-1","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2457","be":"2210","id":"drKnclbT","src":"top","m":["g1f3","f7f6","c2c3","e7e6","e2e4","d7d5","d2d4","b8a6","f3g5","f6g5","c1g5","g8f6","e4e5","a6b4","c3b4","f8b4","b1c3","b7b6","f2f4","e8g8","g5h4","c8a6","f1a6","h7h6","f4f5","a8c8","e1g1","f6g4"]},{"w":"Dar_Metz","b":"sutcunuri","r":"0-1","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2212","be":"2454","id":"LbAZ6ZQd","src":"top","m":["g1f3","f7f6","b1c3","c7c6","e2e4","e7e6","c3b5","c6b5","f1b5","b8c6","d2d4","a7a6","f3h4","g7g6","e4e5","a6b5","a2a4","b7b5","a4a5","c8a6","b2b4","d8c7","d1e2","c7c3"]},{"w":"sutcunuri","b":"Dar_Metz","r":"1-0","d":"2026.09.28","tc":"60+0","term":"Normal","we":"2452","be":"2214","id":"8Ecjm2w4","src":"top","m":["g1f3","f7f6","c2c3","e7e6","e2e4","d7d5","d2d4","b8a6","f3g5","f6g5","c1g5","g8f6","e4e5","a6b4","c3b4","f8b4","b1c3","e8g8","f2f4","h7h6","g5h4","c7c5","d4c5","d8b6","d1d4","b6b4","d4c5","g8h8","e5f6","e6e5","c5e7","f8f7","e7e8"]}],"puzzles":[{"fen":"rn2k3/p3q1b1/2p3p1/1p1p2PP/4PB2/N4p2/PPP1QP2/R3K2R b KQq - 1 14","sol":"f3e2","type":"boom","side":"b","from":"GoroArmeT - F55555 (lichess.org/rHuoGamv)","n":1,"lvl":1},{"fen":"rnb1k2r/pp3Npp/2p1p3/1B1p1p1Q/1b1PnP2/2P1P1Pq/PP5P/RNB1K2R b KQkq - 2 10","sol":"h3f1","type":"mate","side":"b","from":"FeodorPt - F55555 (lichess.org/swEo0CEN)","n":2,"lvl":1},{"fen":"r5k1/pp6/n1p1b1p1/4Q2p/8/5pP1/PP1P3P/RNB3K1 w - - 0 22","sol":"e5g7","type":"mate","side":"w","from":"F55555 - FeodorPt (lichess.org/q6ivCkrz)","n":3,"lvl":1},{"fen":"r4rk1/pp1p2p1/2p2p2/8/Qb1P3P/2P4n/PP6/R1B2KR1 w - - 2 18","sol":"g1g7","type":"boom","side":"w","from":"F55555 - FeodorPt (lichess.org/93Lfbvy1)","n":4,"lvl":1},{"fen":"rnb1k1nr/pp5p/2p2pp1/1B2pP2/1b1qP2Q/5N1P/PP1P2P1/R4K1R b kq - 3 11","sol":"d4f2","type":"mate","side":"b","from":"FeodorPt - F55555 (lichess.org/6C1E3kcF)","n":5,"lvl":1},{"fen":"2k1r2R/ppp2Qp1/8/3p4/5p2/2P3P1/PP6/RNBK4 w - - 4 20","sol":"f7c7","type":"boom","side":"w","from":"F55555 - FeodorPt (lichess.org/atFkLN7M)","n":6,"lvl":1},{"fen":"rn3rk1/ppp5/6p1/1B2p2Q/1b5P/2P5/PP1P1p2/RNB2K1R w - - 0 15","sol":"h5h7","type":"mate","side":"w","from":"F55555 - FeodorPt (lichess.org/uGp7f8cc)","n":7,"lvl":1},{"fen":"4k3/p7/5Q2/3p4/1P1PP3/4n3/P7/2R4K w - - 9 33","sol":"f6e7","type":"mate","side":"w","from":"AtomicOverseer - F55555 (lichess.org/ttMjlLEn)","n":8,"lvl":1},{"fen":"3r4/pp4R1/2p5/6P1/1PP1P1Bk/P2p1p2/3Q1P1P/2KR4 w - - 3 27","sol":"g7h7","type":"mate","side":"w","from":"k1ll-shot - mss365 (lichess.org/xmTtFOqY)","n":9,"lvl":1},{"fen":"rnb1r1k1/pp4p1/2p5/q6p/5P2/P1N5/1PP1Q1PP/R3KB1R b KQ - 2 13","sol":"e8e2","type":"boom","side":"b","from":"mss365 - k1ll-shot (lichess.org/YUnavwhm)","n":10,"lvl":1},{"fen":"r4bkr/p2p4/1p2p1p1/5Q1p/3P3q/P1P4P/1P3PP1/R3K2R b KQ - 2 21","sol":"h4f2","type":"boom","side":"b","from":"mss365 - k1ll-shot (lichess.org/Azousnqs)","n":11,"lvl":1},{"fen":"8/6B1/7K/6kP/6p1/5QP1/8/8 w - - 21 54","sol":"f3g4","type":"boom","side":"w","from":"ReChesster - Maracker (lichess.org/BXpp5O4R)","n":12,"lvl":1},{"fen":"r1Br4/4N2k/p6p/2p3p1/1pP2p1P/1P3P2/1B4b1/R3K1R1 w Q - 3 28","sol":"c8f5","type":"mate","side":"w","from":"ErizoDeManchuria - ReChesster (lichess.org/fMWTDrmj)","n":13,"lvl":1},{"fen":"rn1qkbnr/ppp1p2p/4b1p1/3pQ3/8/4P3/PPPP1PPP/RNB1KB1R w KQkq - 2 6","sol":"e5c7","type":"material","side":"w","from":"SuperGame5 - CherryFish_Bot","n":14,"lvl":2},{"fen":"r2k3r/p3p1bp/4b1p1/1B1p4/1p6/BP2P3/P1PP2PP/RN2KR2 b Q - 2 12","sol":"g7a1","type":"material","side":"b","from":"SuperGame5 - CherryFish_Bot","n":15,"lvl":2},{"fen":"rnbqkbnr/p5pp/2p5/1p1pppN1/3P4/N3P3/PPP2PPP/R1BQKB1R w KQkq - 0 6","sol":"g5h7","type":"material","side":"w","from":"GoroArmeT - F55555 (lichess.org/rHuoGamv)","n":16,"lvl":2},{"fen":"rnb1k3/p3q1b1/2p3p1/1p1p2PP/4Pp2/N7/PPP2P2/R1BQKB1R w KQq - 0 12","sol":"h5g6","type":"material","side":"w","from":"GoroArmeT - F55555 (lichess.org/rHuoGamv)","n":17,"lvl":2},{"fen":"1R4k1/2p3Bp/r5p1/5p2/8/4P1PP/3P1n2/6K1 b - - 5 27","sol":"g8f7","type":"defense","side":"b","from":"F55555 - GoroArmeT (lichess.org/no9xJxut)","n":18,"lvl":2},{"fen":"8/2p3Bp/r5p1/5p2/8/4P1PP/3P1n2/1kR3K1 b - - 19 34","sol":"b1a2","type":"defense","side":"b","from":"F55555 - GoroArmeT (lichess.org/no9xJxut)","n":19,"lvl":2},{"fen":"rn1qk2r/pp1b1Bp1/2pP4/5p2/1b2p3/2P1P3/PP3PPP/RN1QK2R b KQkq - 2 11","sol":"e8f8","type":"defense","side":"b","from":"FeodorPt - F55555 (lichess.org/Ty7M7Wfg)","n":20,"lvl":2},{"fen":"8/p4kp1/1pp1Q3/8/3p4/1P6/PB3P2/R5K1 b - - 8 26","sol":"f7f8","type":"defense","side":"b","from":"F55555 - FeodorPt (lichess.org/zDhYICGo)","n":21,"lvl":2},{"fen":"2k5/ppp1rQp1/8/3p4/5p2/2P3P1/PP6/RNBK3R w - - 2 19","sol":"h1h8","type":"mate2","side":"w","from":"F55555 - FeodorPt (lichess.org/atFkLN7M)","n":22,"lvl":3},{"fen":"r3k3/pp2q3/n1p5/1B1ppp2/5P1P/2NPP3/P1PB4/2KR4 b q - 0 20","sol":"e7a3","type":"mate2","side":"b","from":"FeodorPt - F55555 (lichess.org/6y27ch5W)","n":23,"lvl":3},{"fen":"rnb1k2r/pp4pp/1q3n2/3p2B1/8/7N/PPP2PPP/R2K3R b kq - 1 11","sol":"b6d4","type":"mate2","side":"b","from":"FeodorPt - F55555 (lichess.org/3ZClO79t)","n":24,"lvl":3},{"fen":"r3k3/p1p3pP/bpn5/3p4/1b6/2P1P1PB/PP3pK1/RNB4R b q - 1 17","sol":"f2f1q","type":"mate2","side":"b","from":"F55555 - FeodorPt (lichess.org/qyNQfLtj)","n":25,"lvl":3},{"fen":"r3R3/pp4k1/3p2q1/4p3/4P3/1P3PP1/P1P5/1K1Rb3 w - - 7 24","sol":"e8g8","type":"mate2","side":"w","from":"maxwellssilvrhaMMer - k1ll-shot (lichess.org/Cc82zXjx)","n":26,"lvl":3}],"lessons":[{"id":"boom-basic","fen":"k7/8/8/8/4p3/3P4/8/K7 w - - 0 1","moves":["d3e4"],"title":"Взятие = взрыв","text":"Пешка d3 берёт пешку e4. Обе фигуры исчезают — и бьющая, и битая!"},{"id":"boom-radius","fen":"6k1/8/8/5n2/4p3/3Q4/8/K7 w - - 0 1","moves":["d3e4"],"title":"Радиус взрыва","text":"Ферля забирает пешку e4 — и взрыв уничтожает коня f5 рядом! Взрыв бьёт все небитые фигуры в 8 соседних клетках (кроме пешек)."},{"id":"own-king","fen":"k7/7K/7p/8/8/8/8/7R w - - 0 1","moves":[],"title":"Своего короля взрывать нельзя","text":"Ладья h1 хочет взять пешку h6 — но взрыв уничтожит короля h7! Такой ход ЗАПРЕЩЁН, ладье надо уходить (например, a1)."},{"id":"kings-adjacent","fen":"8/8/8/3kK3/8/8/8/8 w - - 0 1","moves":[],"title":"Короли могут стоять рядом!","text":"В атомных шахматах короли НЕ атакуют друг друга и могут стоять рядом. Мат ставится только настоящими фигурами или взрывом."},{"id":"real-mate","fen":"rnb1k2r/pp3Npp/2p1p3/1B1p1p1Q/1b1PnP2/2P1P1Pq/PP5P/RNB1K2R b KQkq - 2 10","moves":["h3f1"],"title":"Мат из реальной партии F55555","text":"Позиция из вашей партии (чёрные). Ферль h4 идёт на f1 — мат! В обычных шахматах король просто взял бы ферзя, но в атоме взрыв уничтожил бы собственную охрану — это классический «тихий мат»."}],"topOpen":[["g1f3 e7e5",7],["b1c3 e7e5",6],["e2e3 e7e6",5],["g1h3 e7e5",3],["g1f3 f7f6",3],["e2e3 g8f6",1]],"course":[{"part_ru":"Часть первая. Элементы","part_en":"Part one. The elements","chapters":[{"id":"boom-basic","fen":"k7/8/8/8/4p3/3P4/8/K7 w - - 0 1","moves":["d3e4"],"title_ru":"Взрыв — душа атомных шахмат","title_en":"The explosion — the soul of atomic chess","text_ru":"Вся партия держится на одном механизме. Правило: при взятии исчезают бьющая фигура, битая фигура и все фигуры вокруг точки взрыва. Не пешки — они бронированы. Здесь пешка d3×e4: обе пешки исчезают.","text_en":"The whole game rests on one mechanism. Rule: on a capture, the capturing piece, the captured piece and every piece around the blast vanish. Not pawns — they are armored. Here d3×e4: both pawns vanish.","num":1},{"id":"boom-radius","fen":"6k1/8/8/5n2/4p3/3Q4/8/K7 w - - 0 1","moves":["d3e4"],"title_ru":"Радиус взрыва","title_en":"The blast radius","text_ru":"Взрыв бьёт на восемь клеток вокруг точки взятия. Ферзь d3×e4 уничтожает коня f5 — и погибает сама. Железное правило атома: перед каждым взятием считайте фигуры в радиусе.","text_en":"The blast hits the eight squares around the capture. Queen d3×e4 destroys the knight f5 — and dies itself. The iron rule of atomic: before every capture, count the pieces in the radius.","num":2},{"id":"pawn-armor","fen":"6k1/8/8/3p1p2/4p3/3Q4/8/K7 w - - 0 1","moves":["d3e4"],"title_ru":"Пешки — бронированная техника","title_en":"Pawns — the armored force","text_ru":"Пешки — единственные солдаты, которых взрыв не берёт. Чёрные пешки d5 и f5 стоят вплотную к полю взрыва e4 — и невредимы. Погибает только ферзь. Пешечная цепь — это крепость.","text_en":"Pawns are the only soldiers the blast cannot touch. The black pawns d5 and f5 stand right next to the blast square e4 — unharmed. Only the queen dies. A pawn chain is a fortress.","num":3},{"id":"own-king","fen":"k7/7K/7p/8/8/8/8/7R w - - 0 1","moves":[],"title_ru":"Запрещённый подвиг","title_en":"The forbidden exploit","text_ru":"Ладья h1 бьёт пешку h6, но взрыв накрывает своего короля h7 — ход запрещён. Атом прощает всё, кроме самоубийства короля.","text_en":"The rook h1 captures the pawn h6, but the blast covers your own king h7 — the move is forbidden. Atomic forgives everything except the king's suicide.","num":4},{"id":"kings-adjacent","fen":"8/8/8/3kK3/8/8/8/8 w - - 0 1","moves":[],"title_ru":"Короли — соседи","title_en":"Kings — the neighbors","text_ru":"Короли могут стоять вплотную: в атоме они не атакуют друг друга. Больше того — пока короли рядом, шахов нет вовсе. Чужой король — лучший щит.","text_en":"Kings may stand side by side: in atomic they do not attack each other. Moreover — while the kings are adjacent, there are no checks at all. The enemy king is the best shield.","num":5}]},{"part_ru":"Часть вторая. Тактика","part_en":"Part two. Tactics","chapters":[{"id":"boom-win","fen":null,"moves":[],"title_ru":"Победа №1 — взрыв короля","title_en":"Victory #1 — the king explosion","text_ru":"Самая частая победа в атоме: белые бьют рядом с королём — король исчезает. Девять из десяти партий заканчиваются не матом, а взрывом. На доске — реальная задача из базы: найдите решающее взятие.","text_en":"The most common win in atomic: White captures next to the king — the king vanishes. Nine of ten games end not with mate but with an explosion. The board shows a real task from the database: find the decisive capture.","num":6},{"id":"real-mate","fen":"rnb1k2r/pp3Npp/2p1p3/1B1p1p1Q/1b1PnP2/2P1P1Pq/PP5P/RNB1K2R b KQkq - 2 10","moves":["h3f1"],"title_ru":"Победа №2 — тихий мат","title_en":"Victory #2 — the quiet mate","text_ru":"Ферзь идёт на f1 — прямо под бой белого короля — и это мат! Король не может взять ферзя: при взрыве погиб бы он сам. В атоме мат часто ставится фигурой, стоящей под боем, — классическая шахматная интуиция здесь подводит.","text_en":"The queen steps to f1 — right into the white king's attack — and it is mate! The king cannot capture the queen: the explosion would kill the king itself. In atomic, mate is often delivered by a piece that is itself attacked — classical intuition fails here.","num":7},{"id":"queen-kamikaze","fen":"r1b1k3/p1q5/n5pb/Qp1p1p2/2PP3P/4P3/PP4P1/RNB2RK1 w - - 13 24","moves":["a5c7"],"title_ru":"Ферзь-камикадзе","title_en":"The kamikaze queen","text_ru":"Из вашей партии: ферзь бьёт ферзя — и обе покидают доску. Размен через взрыв выгоден тому, кто заранее посчитал радиус и понял, чья позиция развалится. Нажмите «Показать ход».","text_en":"From your own game: queen takes queen — and both leave the board. A trade through an explosion favors the one who counted the radius in advance and understood whose position falls apart. Press “Show the move”.","num":8}]},{"part_ru":"Часть третья. Стратегия","part_en":"Part three. Strategy","chapters":[{"id":"pawn-chain","fen":"5rk1/5ppp/8/8/8/8/5PPP/5RK1 w - - 0 1","moves":[],"title_ru":"Пешечная цепь — крепость короля","title_en":"The pawn chain — the king's fortress","text_ru":"Классическая крепость: король за цепью f7-g6-h7. Взрыв не берёт пешки, конь и слон не пробивают их без помощи. Строите дом — стройте пешечную цепь. Ломаете чужую — зовите ферзя.","text_en":"A classic fortress: the king behind the chain f7-g6-h7. The blast cannot take pawns; a knight or bishop cannot break them without help. Building a house? Build a pawn chain. Breaking someone else's? Call the queen.","num":9},{"id":"knight-hunter","fen":"5rk1/5N2/8/8/8/8/8/K6 w - - 0 1","moves":[],"title_ru":"Конь — охотник на королей","title_en":"The knight — the king hunter","text_ru":"Конь f7 уже бьёт ладью h8 и перепрыгивает пешечные заслоны, которые держат ферзя. Кони — главные охотники атома: они не боятся взрывов и атакуют поля, до которых ферзю не добраться.","text_en":"The knight on f7 already attacks the rook h8 and jumps over the pawn screens that stop the queen. Knights are the chief hunters of atomic: they fear no blasts and reach what a queen cannot.","num":10},{"id":"checklist","fen":null,"moves":[],"title_ru":"Контрольный список","title_en":"The checklist","text_ru":"Перед каждым взятием — три вопроса. 1) Кто исчезнет в радиусе? 2) Не взорвётся ли мой король? 3) Не открою ли я линию на своего короля? Считайте быстро — и вы будете играть на уровне F55555.","text_en":"Before every capture — three questions. 1) Who vanishes in the radius? 2) Will my own king explode? 3) Am I opening a line against my king? Count fast — and you will play at the F55555 level.","num":11}]},{"part_ru":"Часть четвёртая. Дебюты","part_en":"Part four. Openings","chapters":[{"id":"opening-main","fen":"rnbqk1nr/ppp1p1bp/5pp1/3p4/3P4/2N1PN2/PPP2PPP/R1BQKB1R w KQkq - 1 5","moves":[],"title_ru":"Главный дебют: 1.Кf3 f6 2.Кc3","title_en":"The main opening: 1.Nf3 f6 2.Nc3","text_ru":"Дебют №1 атома. Идеи: кони выходят первыми (f3/f6 — контроль e5/e4), пешки e3+d4 или e4 строят центр, слон c4/b5 нависает над f7/f2, конь прыгает g5. Чёрные отвечают d5/c6/e5 или g6. На доске — табия после 8 ходов.","text_en":"Opening #1 of atomic. Ideas: knights come first (f3/f6 control e5/e4), pawns e3+d4 or e4 build the center, the bishop eyes c4/b5 against f7/f2, a knight jumps to g5. Black answers d5/c6/e5 or g6. The board shows the tabiya after 8 moves.","num":12},{"id":"openings-db","fen":null,"moves":[],"title_ru":"Дебютный репертуар из базы","title_en":"Opening repertoire from the database","text_ru":"Статистика первых трёх ходов по всем 54 партиям базы: ваши, топ-игроков и бота. Смотрите, какие линии реально встречаются и с каким счётом.","text_en":"Statistics of the first three moves across all 54 games of the database: yours, top players and the bot. See which lines really occur and with what score.","num":13},{"id":"opening-traps","fen":null,"moves":[],"title_ru":"Дебютные ловушки","title_en":"Opening traps","text_ru":"Три классические ловушки атома. 1) Конь g5 прыгает f7/h7: двойной удар по пешкам и королю — не торопитесь их брать. 2) Ранний выход ферзя Qh5/Qh4: жертвуйте g3/g4 и гоните ферзя, теряя темп — у атакующего темп кончится. 3) Слоновые шахи b5/c4/g4 вынуждают ослаблять королевский фланг — заранее держите пешку f6/h6. Все три встречаются в партиях базы — смотрите раздел «Партии».","text_en":"Three classic atomic traps. 1) A knight to g5 hits f7/h7: do not rush to capture those pawns. 2) An early queen raid Qh5/Qh4: push g3/g4 and chase it, gaining tempo — the attacker runs out of steam. 3) Bishop checks on b5/c4/g4 force king-side weakening — keep f6/h6 pawns ready. All three appear in the database games — see the Games section.","num":14}]}],"openings":[{"n":5,"w":3,"d":0,"bl":2,"sans":"Nf3 f6 Nc3 c6 e4 e6"},{"n":4,"w":3,"d":0,"bl":1,"sans":"Nf3 e5 Ng5 f5 e3 Bb4"},{"n":4,"w":1,"d":0,"bl":3,"sans":"Nf3 e5 Ng5 f5 d4 e4"},{"n":4,"w":0,"d":0,"bl":4,"sans":"Nc3 e5 e3 Bb4 Bb5 c6"},{"n":3,"w":1,"d":0,"bl":2,"sans":"Nf3 f6 Nc3 c6 Nd5 cxd5"},{"n":3,"w":2,"d":0,"bl":1,"sans":"Nf3 f6 c3 e6 e4 d5"},{"n":2,"w":2,"d":0,"bl":0,"sans":"Nf3 f6 Nc3 c6 e3 e6"},{"n":2,"w":2,"d":0,"bl":0,"sans":"Nf3 f6 Nc3 Nh6 g4 c6"},{"n":2,"w":2,"d":0,"bl":0,"sans":"e3 e6 Nf3 Bb4 c3 d5"},{"n":2,"w":2,"d":0,"bl":0,"sans":"e3 e6 Nf3 Qf6 Bd3 Bb4"},{"n":2,"w":2,"d":0,"bl":0,"sans":"Nh3 h6 d4 f5 Nf4 e6"},{"n":1,"w":0,"d":1,"bl":0,"sans":"Nf3 f6 e3 d5 Ng5 fxg5"}]};
+</script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", sans-serif; background: #0b0e14; color: #e6edf3; min-height: 100vh; }
+  a { color: #58a6ff; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+  header.hero {
+    background: linear-gradient(160deg, #1a2332, #0b0e14 75%);
+    border-bottom: 1px solid #21262d; padding: 36px 16px 24px; text-align: center;
+  }
+  .hero h1 { font-size: 36px; }
+  .hero h1 span { color: #f0883e; }
+  .hero .sub { color: #8b949e; margin-top: 8px; font-size: 17px; }
+  .langsw { position: absolute; top: 14px; right: 16px; display: flex; gap: 6px; }
+  .langsw button { background:#161b22; color:#c9d1d9; border:1px solid #30363d; border-radius:8px; padding:6px 12px; cursor:pointer; font-size:13px; font-weight:700; }
+  .langsw button.act { background:#bb5b14; border-color:#f0883e; color:#fff; }
+  .pillrow { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+  .pill { background:#161b22; border:1px solid #30363d; border-radius:20px; padding:5px 14px; font-size:13px; color:#8b949e;}
+  .pill b { color:#f0883e; }
+  .gold { color:#e3b341; font-weight:700; }
+
+  nav.tabs { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:22px 0 6px; }
+  nav.tabs button {
+    background:#161b22; color:#c9d1d9; border:1px solid #30363d; border-radius:10px;
+    padding:10px 20px; font-size:15px; cursor:pointer; transition:.15s;
+  }
+  nav.tabs button:hover { border-color:#8b949e; }
+  nav.tabs button.act { background:#bb5b14; border-color:#f0883e; color:#fff; font-weight:600; }
+  section.page { display:none; padding: 18px 0 60px; }
+  section.page.act { display:block; }
+
+  h2.sect { font-size: 24px; margin: 18px 0 12px; }
+  h3.sect { font-size: 18px; margin: 16px 0 8px; color:#f0883e; }
+  .card { background:#11161d; border:1px solid #21262d; border-radius:12px; padding:16px; margin:12px 0; }
+  .cols { display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start; }
+  .col { flex:1; min-width: 300px; }
+
+  /* ===== доска: ровные квадратные клетки, влезает в любую колонку ===== */
+  .board {
+    display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(8,1fr);
+    width:min(440px,100%,92vw); aspect-ratio:1;
+    border:3px solid #3d2914; border-radius:6px; overflow:hidden; user-select:none; touch-action:manipulation;
+  }
+  .sq { position:relative; display:flex; align-items:center; justify-content:center; cursor:default; overflow:hidden; }
+  .sq.light { background:#f0d9b5; }
+  .sq.dark { background:#b58863; }
+  .sq .pc { line-height:1; z-index:2; font-size:min(7.2vw,36px); text-shadow:0 1px 2px rgba(0,0,0,.4); }
+  .sq .pc.w { color:#fff; } .sq .pc.b { color:#1a1a1a; }
+  .sq.sel { outline:3px solid #f0883e; outline-offset:-3px; z-index:3; }
+  .sq.mv { cursor:pointer; }
+  .sq.mv::after { content:""; position:absolute; width:30%; height:30%; border-radius:50%; background:rgba(32,17,4,.45); z-index:1; }
+  .sq.cap::after { width:92%; height:92%; background:transparent; border:4px solid rgba(240,80,30,.75); border-radius:6px; }
+  .sq.last { box-shadow: inset 0 0 0 100vmax rgba(240,136,62,.28); }
+  .sq.boom { animation: boom .9s ease-out; }
+  .sq.boom::before { content:"💥"; position:absolute; font-size:34px; z-index:5; animation: boomscale .9s ease-out; }
+  @keyframes boom { 0%{background:#ff7b39} 60%{background:#ffb26b} 100%{} }
+  @keyframes boomscale { 0%{transform:scale(.4);opacity:1} 100%{transform:scale(2.2);opacity:0} }
+  .boardwrap { position:relative; }
+  .blabel { font-size:13px; color:#8b949e; margin-top:6px; text-align:center; min-height:20px; }
+
+  .btn { background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:14px; }
+  .btn:hover { border-color:#8b949e; }
+  .btn.main { background:#bb5b14; border-color:#f0883e; font-weight:600; }
+  .btn:disabled { opacity:.4; cursor:default; }
+  .btnrow { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+
+  .note { border-radius:10px; padding:10px 14px; margin:10px 0; font-size:14.5px; }
+  .note.ok { background:rgba(63,185,80,.12); border:1px solid rgba(63,185,80,.5); }
+  .note.err { background:rgba(248,81,73,.12); border:1px solid rgba(248,81,73,.5); }
+  .note.info { background:rgba(88,166,255,.1); border:1px solid rgba(88,166,255,.4); }
+
+  .rule { border-left:3px solid #f0883e; padding:8px 14px; margin:10px 0; background:#11161d; border-radius:0 10px 10px 0; }
+  .rule b { color:#f0883e; }
+  .rulelist p { margin:6px 0; }
+
+  .pz-head { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .pz-tag { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:4px 10px; font-size:13px; }
+  .score { font-size:15px; }
+  .movelist { display:flex; flex-wrap:wrap; gap:4px; font-family:Consolas,monospace; font-size:13px; max-height:180px; overflow:auto; }
+  .movelist span { background:#161b22; border-radius:5px; padding:2px 7px; }
+  .movelist span.cur { background:#bb5b14; color:#fff; }
+  .gameitem { display:block; width:100%; text-align:left; background:#11161d; border:1px solid #21262d; border-radius:8px;
+    padding:8px 12px; margin:6px 0; cursor:pointer; color:#c9d1d9; font-size:14px; }
+  .gameitem:hover { border-color:#f0883e; }
+  .gameitem.act { border-color:#f0883e; background:#1a1208; }
+  .srcbtn { border-radius:20px; padding:4px 12px; font-size:13px; cursor:pointer; border:1px solid #30363d; background:#161b22; color:#c9d1d9; }
+  .srcbtn.act { background:#bb5b14; border-color:#f0883e; color:#fff; }
+  table.lb { width:100%; border-collapse:collapse; font-size:14.5px; }
+  table.lb td, table.lb th { padding:7px 10px; border-bottom:1px solid #21262d; text-align:left; }
+  table.lb tr.me td { background:#2a1a08; color:#ffb26b; font-weight:600; }
+  .muted { color:#8b949e; font-size:13px; }
+  .big { font-size: 42px; }
+  .badge { display:inline-block; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:4px 10px; font-size:12.5px; color:#8b949e; }
+  .ok-badge { color:#3fb950; font-weight:700; }
+  footer { text-align:center; color:#8b949e; padding:26px; font-size:13.5px; border-top:1px solid #21262d; }
+</style>
+</head>
+<body>
+
+<header class="hero" style="position:relative">
+  <div class="langsw">
+    <button id="langRu" onclick="setLang('ru')">RU</button>
+    <button id="langEn" onclick="setLang('en')">EN</button>
+    <button id="sndBtn" onclick="toggleSound()" title="Звук">🔊</button>
+  </div>
+  <div id="authArea" style="position:absolute; top:14px; left:16px;">
+    <button class="btn" id="lichLoginBtn" onclick="openLogin()" data-i18n="auth.login"></button>
+  </div>
+  <div id="userChip" style="display:none; position:absolute; top:14px; left:16px; display:flex; gap:8px; align-items:center; background:#161b22; border:1px solid #30363d; border-radius:20px; padding:4px 10px;">
+    <b id="uName" style="color:#f0883e"></b>
+    <span id="uRating" class="muted"></span>
+    <button class="btn" id="myGamesBtn" onclick="loadMyGames()" data-i18n="auth.mygames" style="padding:2px 8px; font-size:12px;"></button>
+    <button class="btn" onclick="lichLogout()" data-i18n="auth.logout" style="padding:2px 8px; font-size:12px;"></button>
+  </div>
+  <h1>☢️ Atomic <span>Trainer</span></h1>
+  <div class="sub" data-i18n="hero.sub"></div>
+  <div class="pillrow">
+    <div class="pill"><span data-i18n="pill.player"></span>: <b>F55555</b></div>
+    <div class="pill"><span data-i18n="pill.world"></span>: <span class="gold">#19</span></div>
+    <div class="pill"><span data-i18n="pill.rating"></span>: <b>2325</b></div>
+    <div class="pill"><span data-i18n="pill.games"></span>: <b id="statGames">…</b></div>
+    <div class="pill"><span data-i18n="pill.puzzles"></span>: <b id="statPz">…</b></div>
+  </div>
+</header>
+
+<div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(1,4,9,.72); z-index:50; align-items:center; justify-content:center;">
+  <div style="background:#161b22; border:1px solid #30363d; border-radius:14px; padding:24px; width:min(420px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.6);">
+    <h3 style="margin-bottom:6px; font-size:20px" data-i18n="auth.title"></h3>
+    <p class="muted" style="margin-bottom:14px" data-i18n="auth.desc"></p>
+    <input id="nickInput" placeholder="F55555" onkeydown="if(event.key==='Enter') doLogin()"
+      style="width:100%; padding:11px 14px; font-size:15px; background:#0d1117; color:#e6edf3; border:1px solid #30363d; border-radius:8px; outline:none; box-sizing:border-box;">
+    <div class="btnrow" style="justify-content:flex-end; margin-top:16px">
+      <button class="btn" onclick="closeLogin()" data-i18n="auth.cancel"></button>
+      <button class="btn main" onclick="doLogin()" data-i18n="auth.enterbtn"></button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<nav class="tabs" id="tabsNav">
+  <button data-p="rules" class="act" data-i18n="tab.rules"></button>
+  <button data-p="lessons" data-i18n="tab.lessons"></button>
+  <button data-p="puzzles" data-i18n="tab.puzzles"></button>
+  <button data-p="games" data-i18n="tab.games"></button>
+  <button data-p="import" data-i18n="tab.import"></button>
+  <button data-p="about" data-i18n="tab.about"></button>
+</nav>
+
+<!-- ================= ПРАВИЛА ================= -->
+<section class="page act" id="p-rules">
+  <h2 class="sect" data-i18n="rules.title"></h2>
+  <div class="card rulelist">
+    <p data-i18n="rules.intro"></p>
+    <div class="rule" data-i18n-html="rules.r1"></div>
+    <div class="rule" data-i18n-html="rules.r2"></div>
+    <div class="rule" data-i18n-html="rules.r3"></div>
+    <div class="rule" data-i18n-html="rules.r4"></div>
+    <div class="rule" data-i18n-html="rules.r5"></div>
+    <div class="rule" data-i18n-html="rules.r6"></div>
+    <p class="muted" data-i18n="rules.note"></p>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <h3 class="sect" data-i18n="rules.demo1t"></h3>
+      <div class="card">
+        <p data-i18n="rules.demo1d"></p>
+        <div class="btnrow">
+          <button class="btn main" onclick="demoRun(0)" data-i18n="btn.show"></button>
+          <button class="btn" onclick="demoReset(0)" data-i18n="btn.reset"></button>
+        </div>
+        <div class="boardwrap"><div id="demo0" class="board"></div></div>
+        <div class="blabel" id="demo0-lbl"></div>
+      </div>
+    </div>
+    <div class="col">
+      <h3 class="sect" data-i18n="rules.demo2t"></h3>
+      <div class="card">
+        <p data-i18n="rules.demo2d"></p>
+        <div class="btnrow">
+          <button class="btn main" onclick="demoRun(1)" data-i18n="btn.show"></button>
+          <button class="btn" onclick="demoReset(1)" data-i18n="btn.reset"></button>
+        </div>
+        <div class="boardwrap"><div id="demo1" class="board"></div></div>
+        <div class="blabel" id="demo1-lbl"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= УЧЕБНИК ================= -->
+<section class="page" id="p-lessons">
+  <h2 class="sect" data-i18n="bk.title"></h2>
+  <p class="muted" data-i18n="bk.subtitle"></p>
+  <div class="card">
+    <b data-i18n="bk.toc"></b>
+    <div id="toc" style="margin-top:8px"></div>
+    <div style="margin-top:10px"><span class="badge" id="readProgress"></span></div>
+  </div>
+  <div id="courseBody"></div>
+</section>
+
+<!-- ================= ПАЗЛЫ ================= -->
+<section class="page" id="p-puzzles">
+  <h2 class="sect" data-i18n="pz.title"></h2>
+  <div class="pz-head">
+    <span class="pz-tag"><span data-i18n="pz.task"></span>: <b id="pzNum">1</b> / <span id="pzTotal">…</span></span>
+    <span class="pz-tag" id="pzType">…</span>
+    <span class="pz-tag"><span data-i18n="pz.tomove"></span>: <b id="pzSide">…</b></span>
+    <span class="score" id="pzScore">✅ 0 &nbsp; ❌ 0</span>
+    <span class="pz-tag" id="pzSolved">…</span>
+  </div>
+  <div class="btnrow" id="pzFilters" style="margin:8px 0 0"></div>
+  <div class="cols" style="margin-top:14px">
+    <div class="col">
+      <div class="boardwrap"><div id="pzBoard" class="board"></div></div>
+      <div class="blabel" id="pzLbl"></div>
+      <div class="btnrow">
+        <button class="btn" onclick="pzReset()" data-i18n="btn.reset"></button>
+        <button class="btn" onclick="pzHint()" data-i18n="btn.hint"></button>
+        <button class="btn" onclick="pzNext()" data-i18n="btn.skip"></button>
+        <button class="btn" onclick="pzRandom()" title="Random">🎲</button>
+      </div>
+    </div>
+    <div class="col">
+      <div id="pzMsg"></div>
+      <div class="card">
+        <b data-i18n="pz.howt"></b>
+        <p class="muted" style="margin-top:6px" data-i18n="pz.howd"></p>
+      </div>
+      <div class="card"><b data-i18n="pz.from"></b> <span id="pzFrom" class="muted"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПАРТИИ ================= -->
+<section class="page" id="p-games">
+  <h2 class="sect" data-i18n="g.title"></h2>
+  <div>
+    <button class="srcbtn act" data-src="all"><span data-i18n="g.all"></span> (<span id="cAll">0</span>)</button>
+    <button class="srcbtn" data-src="F55555"><span data-i18n="g.mine"></span> (<span id="cF">0</span>)</button>
+    <button class="srcbtn" data-src="top"><span data-i18n="g.top"></span> (<span id="cT">0</span>)</button>
+    <button class="srcbtn" data-src="bot"><span data-i18n="g.bot"></span> (<span id="cB">0</span>)</button>
+    <button class="srcbtn" data-src="import"><span data-i18n="g.imp"></span> (<span id="cI">0</span>)</button>
+  </div>
+  <div class="cols" style="margin-top:14px">
+    <div class="col" style="max-width:420px">
+      <div id="gameList" style="max-height:560px;overflow:auto"></div>
+    </div>
+    <div class="col">
+      <div class="boardwrap"><div id="gBoard" class="board"></div></div>
+      <div class="blabel" id="gInfo"></div>
+      <div class="btnrow">
+        <button class="btn" onclick="gGo(0)">⏮</button>
+        <button class="btn" onclick="gStep(-1)">◀</button>
+        <button class="btn main" id="gPlay" onclick="gPlay()">▶</button>
+        <button class="btn" onclick="gStep(1)">▶</button>
+        <button class="btn" onclick="gGo(999)">⏭</button>
+        <button class="btn" onclick="gToggleFlip()" title="Перевернуть доску">⟲</button>
+        <button class="btn" onclick="gRandom()" title="Random">🎲</button>
+      </div>
+      <div class="card" id="gStats" style="padding:10px 14px; margin-top:12px"><b data-i18n="g.stats"></b><div id="gStatsBody" class="muted" style="margin-top:6px"></div></div>
+      <div class="movelist" id="gMoves" style="margin-top:12px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ИМПОРТ ================= -->
+<section class="page" id="p-import">
+  <h2 class="sect" data-i18n="imp.title"></h2>
+  <div class="card">
+    <p data-i18n="imp.desc"></p>
+    <p class="muted" style="margin:10px 0" data-i18n="imp.how"></p>
+    <input type="file" id="pgnFile" accept=".pgn,text/plain" multiple>
+    <div id="impMsg" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <b data-i18n="imp.openings"></b>
+    <div id="topOpen" style="margin-top:8px"></div>
+  </div>
+</section>
+
+<!-- ================= О РЕЙТИНГЕ ================= -->
+<section class="page" id="p-about">
+  <h2 class="sect" data-i18n="ab.title"></h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card">
+        <span class="big">🏆</span>
+        <p data-i18n="ab.card"></p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="lbRefresh" onclick="refreshLB(true)" data-i18n="ab.refresh"></button>
+        <span class="badge" id="lbUpdated"></span>
+        <span class="badge" data-i18n="ab.autorefresh"></span>
+      </div>
+      <table class="lb" id="lbTable" style="margin-top:10px">
+        <tr><th>#</th><th data-i18n="ab.player"></th><th data-i18n="ab.rating"></th></tr>
+      </table>
+    </div>
+    <div class="col">
+      <div class="card">
+        <b data-i18n="ab.princ"></b>
+        <div class="rule" data-i18n-html="ab.p1"></div>
+        <div class="rule" data-i18n-html="ab.p2"></div>
+        <div class="rule" data-i18n-html="ab.p3"></div>
+        <div class="rule" data-i18n-html="ab.p4"></div>
+        <div class="rule" data-i18n-html="ab.p5"></div>
+        <div class="rule" data-i18n-html="ab.p6"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>Atomic Trainer для <b>F55555</b> · <span data-i18n="footer"></span></footer>
+
+<script>
+/* ================= ЯЗЫК ================= */
+const I18N = {
+ru: {
+  "hero.sub": "Обучение атомным шахматам с нуля — на реальных партиях с Lichess",
+  "pill.player": "Игрок", "pill.world": "Мир", "pill.rating": "Рейтинг", "pill.games": "Партий", "pill.puzzles": "Пазлов",
+  "tab.rules": "📖 Правила", "tab.lessons": "📖 Моя система", "tab.puzzles": "🧩 Пазлы", "tab.games": "♟️ Партии", "tab.import": "📥 Импорт PGN", "tab.about": "🏅 О рейтинге",
+  "bk.title": "📖 Моя атомная система",
+  "bk.subtitle": "Учебник атомных шахмат по мотивам «Моей системы» Нимцовича. Читайте главы по порядку, играйте на досках, отмечайте прочитанное.",
+  "bk.toc": "Оглавление:", "bk.chapter": "Глава", "bk.read": "прочитано",
+  "pz.f.all": "Все", "pz.f.boom": "💥 Взрывы", "pz.f.mate": "🎯 Маты", "pz.f.mate2": "🎯 Мат в 2", "pz.f.material": "⚔️ Материал", "pz.f.defense": "🛡️ Защита",
+  "pz.solvedtag": "Решено",
+  "g.stats": "Статистика подборки", "g.white": "Белые", "g.black": "Чёрные", "g.draws": "Ничьи", "g.longest": "Самая длинная", "g.movesw": "ходов", "g.toppair": "Частая пара",
+  "auth.login": "Войти через Lichess", "auth.logout": "Выйти", "auth.mygames": "Мои партии",
+  "auth.title": "Вход — Lichess",
+  "auth.desc": "Введите ваш ник на Lichess. Пароль не нужен — сайт покажет ваш рейтинг и загрузит ваши атомные партии.",
+  "auth.cancel": "Отмена", "auth.enterbtn": "Войти",
+  "auth.welcome": "Вы вошли как",
+  "rules.title": "📖 Атомные шахматы с нуля",
+  "rules.intro": "Всё как в обычных шахматах, кроме одного: при каждом взятии происходит взрыв. 💥",
+  "rules.r1": "<b>Правило взрыва.</b> Когда ты берёшь фигуру, исчезают: сама битая фигура, твоя бьющая фигура, и <b>все фигуры (кроме пешек!) на 8 клетках вокруг</b> точки взрыва.",
+  "rules.r2": "<b>Победа.</b> Побеждает тот, кто: 1) <b>взорвал короля соперника</b> (взял фигуру рядом с ним), или 2) поставил обычный мат.",
+  "rules.r3": "<b>Своего короля взрывать нельзя.</b> Ход, после которого взрыв уничтожит твоего короля, запрещён правилами.",
+  "rules.r4": "<b>Пешки — бронированные.</b> Взрыв НЕ уничтожает пешки. Пешечная цепочка — самая прочная стена в атоме.",
+  "rules.r5": "<b>Короли дружат.</b> Короли могут стоять рядом — они не атакуют друг друга и не дают шах.",
+  "rules.r6": "<b>Всё остальное</b> — рокировка, взятие на проходе, превращение — работает как в обычных шахматах.",
+  "rules.note": "Игра идёт быстро: мат или взрыв случаются уже на 10–20-м ходу. Контроль — 30+0, как в ваших партиях.",
+  "rules.demo1t": "Демонстрация: как работает взрыв",
+  "rules.demo1d": "Белая пешка d3 берёт пешку e4. Обе исчезают. Нажми «Показать»:",
+  "rules.demo2t": "Демонстрация: радиус взрыва",
+  "rules.demo2d": "Ферзь d3 берёт пешку e4 — взрыв убивает коня f5 рядом! Ферзь тоже гибнет.",
+  "btn.show": "▶ Показать", "btn.reset": "↺ Сброс", "btn.hint": "💡 Подсказка", "btn.skip": "Пропустить ⏭",
+  "lessons.title": "🎓 Интерактивные уроки (проверено движком)",
+  "lessons.interactive": "Доска интерактивная: кликай по фигурам, чтобы ходить и проверять идеи.",
+  "lessons.boom-basic.t": "Взятие = взрыв",
+  "lessons.boom-basic.x": "Пешка d3 берёт пешку e4. Обе фигуры исчезают — и бьющая, и битая!",
+  "lessons.boom-radius.t": "Радиус взрыва",
+  "lessons.boom-radius.x": "Ферзь забирает пешку e4 — взрыв уничтожает коня f5 рядом! Взрыв бьёт все фигуры в 8 соседних клетках (кроме пешек).",
+  "lessons.own-king.t": "Своего короля взрывать нельзя",
+  "lessons.own-king.x": "Ладья h1 хочет взять пешку h6 — но взрыв уничтожит короля h7! Такой ход ЗАПРЕЩЁН, ладье надо уходить (например, a1).",
+  "lessons.kings-adjacent.t": "Короли могут стоять рядом!",
+  "lessons.kings-adjacent.x": "В атомных шахматах короли НЕ атакуют друг друга и могут стоять рядом. Мат ставится только настоящими фигурами или взрывом.",
+  "lessons.real-mate.t": "Мат из реальной партии F55555",
+  "lessons.real-mate.x": "Позиция из вашей партии (чёрные). Ферзь h4 идёт на f1 — мат! В обычных шахматах король просто взял бы ферзя, но в атоме взрыв уничтожил бы собственную охрану — классический «тихий мат».",
+  "pz.title": "🧩 Тактические пазлы из реальных партий",
+  "pz.task": "Задача", "pz.tomove": "Ход",
+  "pz.white": "белые", "pz.black": "чёрные",
+  "pz.boom": "💥 Взрыв короля", "pz.mate": "🎯 Мат в 1",
+  "pz.howt": "Как решать:", "pz.howd": "Ищи взятие, после которого взорвётся король соперника, или ход с матом. Клик по своей фигуре → клик по клетке.",
+  "pz.from": "Из партии:", "pz.label.w": "Ход белых. Найди решение!", "pz.label.b": "Ход чёрных. Найди решение!",
+  "pz.ok": "✅ Верно!", "pz.boomtxt": "— король взорван! 💥", "pz.matetxt": "— мат!",
+  "pz.miss": "❌ Мимо! Взрыв заденет не того... Попробуй ещё", "pz.reveal": "❌ Не то. Решение: — смотрим!",
+  "pz.hintmsg": "💡 Ходят фигурой с поля", "pz.label": "Найди ход, решающий задачу",
+  "g.title": "♟️ Библиотека партий",
+  "g.all": "Все", "g.mine": "Мои — F55555", "g.top": "Топ игроки", "g.bot": "Бот SuperGame5", "g.imp": "Импортированные",
+  "g.pick": "Выбери партию слева", "g.movesn": "ходов", "g.autostop": "⏸ Стоп", "g.autoplay": "▶ Авто",
+  "imp.title": "📥 Импорт своих партий",
+  "imp.desc": "Скачай свои атомные партии с Lichess и открой их здесь — они появятся в библиотеке с пометкой «Импорт».",
+  "imp.how": "Как скачать: lichess.org → свой профиль → Games → Export → выбери Atomic.",
+  "imp.openings": "Топ дебютов из ваших партий (F55555):", "imp.nodata": "нет данных", "imp.parties": "партий",
+  "imp.done": "Импортировано партий:", "imp.failed": "не удалось разобрать:",
+  "ab.title": "🏅 Мир атомных шахмат",
+  "ab.card": "F55555 — входит в топ-20 игроков мира по атомным шахматам на Lichess (рейтинг 2325). На его партиях можно учиться!",
+  "ab.refresh": "🔄 Обновить сейчас", "ab.autorefresh": "⏱ автообновление: каждые 30 минут",
+  "ab.player": "Игрок", "ab.rating": "Рейтинг", "ab.you": "(вы!)", "ab.updated": "Обновлено:", "ab.justnow": "только что",
+  "ab.minago": "мин назад", "ab.updating": "обновляю…", "ab.fail": "не удалось (показан кэш)",
+  "ab.princ": "Главные принципы атома (из партий топов):",
+  "ab.p1": "👑 <b>Король — мишень.</b> Прячь его так, чтобы рядом не было фигур, которые можно взять со взрывом. Клетка рядом с королём, занятая фигурой — это дыра.",
+  "ab.p2": "🧱 <b>Пешечные цепи.</b> Пешки не взрываются. Крепость из пешек вокруг короля — лучшая защита.",
+  "ab.p3": "⚔️ <b>Считай взрывы.</b> Перед каждым взятием: что исчезнет рядом? Не откроешь ли ты король?",
+  "ab.p4": "🐎 <b>Кони и слоны.</b> Конь бьёт сквозь пешки — главный охотник на королей. Слон с f6 на h4 часто решает партию.",
+  "ab.p5": "⚡ <b>Дебют.</b> Классика атома: 1.Nf3 f6 2.Nc3 (или 1.Nh3 g6...) — кони прыгают в центр раньше пешек.",
+  "ab.p6": "💣 <b>Размен ферзей — это яд.</b> Ферзь берёт что-то рядом с королём соперника — и оба исчезают. Проверяй радиус!",
+  "footer": "данные: Lichess API (публичные партии) · проверка задач: python-chess + встроенный JS · сделано с 💥",
+  "demo.boomtxt": "💥 ВЗРЫВ! Обе фигуры исчезли",
+  "demo.radiustxt": "радиус: +{n} фигур",
+  "selftest": "самопроверка движка"
+},
+en: {
+  "hero.sub": "Learn atomic chess from scratch — on real Lichess games",
+  "pill.player": "Player", "pill.world": "World", "pill.rating": "Rating", "pill.games": "Games", "pill.puzzles": "Puzzles",
+  "tab.rules": "📖 Rules", "tab.lessons": "📖 My System", "tab.puzzles": "🧩 Puzzles", "tab.games": "♟️ Games", "tab.import": "📥 Import PGN", "tab.about": "🏅 Rankings",
+  "bk.title": "📖 My atomic system",
+  "bk.subtitle": "An atomic chess textbook inspired by Nimzowitsch's “My System”. Read the chapters in order, play on the boards, mark what you've read.",
+  "bk.toc": "Table of contents:", "bk.chapter": "Chapter", "bk.read": "read",
+  "pz.f.all": "All", "pz.f.boom": "💥 Explosions", "pz.f.mate": "🎯 Mates", "pz.f.mate2": "🎯 Mate in 2", "pz.f.material": "⚔️ Material", "pz.f.defense": "🛡️ Defense",
+  "pz.solvedtag": "Solved",
+  "g.stats": "Selection stats", "g.white": "White", "g.black": "Black", "g.draws": "Draws", "g.longest": "Longest", "g.movesw": "moves", "g.toppair": "Common pair",
+  "auth.login": "Sign in with Lichess", "auth.logout": "Log out", "auth.mygames": "My games",
+  "auth.title": "Sign in — Lichess",
+  "auth.desc": "Enter your Lichess username. No password needed — the site will show your rating and load your atomic games.",
+  "auth.cancel": "Cancel", "auth.enterbtn": "Sign in",
+  "auth.welcome": "Signed in as",
+  "rules.title": "📖 Atomic chess from zero",
+  "rules.intro": "Everything is like in normal chess, except one thing: every capture causes an explosion. 💥",
+  "rules.r1": "<b>Explosion rule.</b> When you capture, the following vanish: the captured piece, your capturing piece, and <b>all pieces (except pawns!) on the 8 surrounding squares</b> of the blast point.",
+  "rules.r2": "<b>Winning.</b> You win by: 1) <b>blowing up the enemy king</b> (capturing a piece next to it), or 2) delivering a normal checkmate.",
+  "rules.r3": "<b>Never blow up your own king.</b> A move whose explosion destroys your own king is forbidden by the rules.",
+  "rules.r4": "<b>Pawns are armored.</b> Explosions do NOT destroy pawns. A pawn chain is the strongest wall in atomic.",
+  "rules.r5": "<b>Kings are friends.</b> Kings may stand next to each other — they do not attack each other and give no check.",
+  "rules.r6": "<b>Everything else</b> — castling, en passant, promotion — works like in normal chess.",
+  "rules.note": "Games are fast: mate or a king explosion usually happens by move 10–20. Time control 30+0, same as your games.",
+  "rules.demo1t": "Demo: how the explosion works",
+  "rules.demo1d": "White pawn d3 takes the pawn e4. Both vanish. Press “Show”:",
+  "rules.demo2t": "Demo: blast radius",
+  "rules.demo2d": "The queen on d3 takes the pawn e4 — the blast kills the knight on f5 nearby! The queen dies too.",
+  "btn.show": "▶ Show", "btn.reset": "↺ Reset", "btn.hint": "💡 Hint", "btn.skip": "Skip ⏭",
+  "lessons.title": "🎓 Interactive lessons (engine-verified)",
+  "lessons.interactive": "The board is interactive: click pieces to move and test ideas.",
+  "lessons.boom-basic.t": "Capture = explosion",
+  "lessons.boom-basic.x": "Pawn d3 captures pawn e4. Both pieces vanish — attacker and victim!",
+  "lessons.boom-radius.t": "Blast radius",
+  "lessons.boom-radius.x": "The queen takes the pawn e4 — the blast destroys the nearby knight f5! The blast hits all pieces on the 8 adjacent squares (except pawns).",
+  "lessons.own-king.t": "You may not blow up your own king",
+  "lessons.own-king.x": "The rook h1 wants to capture the pawn h6 — but the blast would destroy the king on h7! That move is FORBIDDEN; the rook must move away (e.g., a1).",
+  "lessons.kings-adjacent.t": "Kings may stand next to each other!",
+  "lessons.kings-adjacent.x": "In atomic chess kings do NOT attack each other and may stand side by side. Mate is delivered only by real pieces or an explosion.",
+  "lessons.real-mate.t": "Mate from a real F55555 game",
+  "lessons.real-mate.x": "A position from your game (Black to move). The queen h4 goes to f1 — mate! In normal chess the king would simply take the queen, but in atomic the blast would destroy its own guard — a classic “quiet mate”.",
+  "pz.title": "🧩 Tactical puzzles from real games",
+  "pz.task": "Task", "pz.tomove": "To move",
+  "pz.white": "White", "pz.black": "Black",
+  "pz.boom": "💥 King explosion", "pz.mate": "🎯 Mate in 1",
+  "pz.howt": "How to solve:", "pz.howd": "Look for a capture that blows up the enemy king, or a mating move. Click your piece → click the square.",
+  "pz.from": "From the game:", "pz.label.w": "White to move. Find the solution!", "pz.label.b": "Black to move. Find the solution!",
+  "pz.ok": "✅ Correct!", "pz.boomtxt": "— king blown up! 💥", "pz.matetxt": "— mate!",
+  "pz.miss": "❌ Miss! The blast would hit the wrong thing... Try again", "pz.reveal": "❌ Wrong. Solution: — watch it!",
+  "pz.hintmsg": "💡 Move the piece from square", "pz.label": "Find the winning move",
+  "g.title": "♟️ Game library",
+  "g.all": "All", "g.mine": "Mine — F55555", "g.top": "Top players", "g.bot": "Bot SuperGame5", "g.imp": "Imported",
+  "g.pick": "Pick a game on the left", "g.movesn": "moves", "g.autostop": "⏸ Stop", "g.autoplay": "▶ Auto",
+  "imp.title": "📥 Import your games",
+  "imp.desc": "Download your atomic games from Lichess and open them here — they will appear in the library tagged “Import”.",
+  "imp.how": "How to download: lichess.org → your profile → Games → Export → choose Atomic.",
+  "imp.openings": "Top openings from your games (F55555):", "imp.nodata": "no data", "imp.parties": "games",
+  "imp.done": "Games imported:", "imp.failed": "failed to parse:",
+  "ab.title": "🏅 The world of atomic chess",
+  "ab.card": "F55555 is in the world top-20 of atomic chess on Lichess (rating 2325). Your own games are worth studying!",
+  "ab.refresh": "🔄 Refresh now", "ab.autorefresh": "⏱ auto-refresh: every 30 minutes",
+  "ab.player": "Player", "ab.rating": "Rating", "ab.you": "(you!)", "ab.updated": "Updated:", "ab.justnow": "just now",
+  "ab.minago": "min ago", "ab.updating": "updating…", "ab.fail": "failed (showing cache)",
+  "ab.princ": "Core atomic principles (from top-level games):",
+  "ab.p1": "👑 <b>The king is a target.</b> Hide it so that no capturable piece stands next to it. A piece on a square adjacent to your king is a hole.",
+  "ab.p2": "🧱 <b>Pawn chains.</b> Pawns are never blown up. A fortress of pawns around the king is the best defense.",
+  "ab.p3": "⚔️ <b>Count the blasts.</b> Before every capture: what vanishes nearby? Are you exposing your king?",
+  "ab.p4": "🐎 <b>Knights and bishops.</b> A knight jumps over pawns — the main king-hunter. The bishop from f6 to h4 often decides the game.",
+  "ab.p5": "⚡ <b>Openings.</b> Atomic classics: 1.Nf3 f6 2.Nc3 (or 1.Nh3 g6...) — knights jump to the center before pawns.",
+  "ab.p6": "💣 <b>Queen trades are poison.</b> A queen takes something next to the enemy king — and both vanish. Check the radius!",
+  "footer": "data: Lichess API (public games) · puzzle check: python-chess + built-in JS · made with 💥",
+  "demo.boomtxt": "💥 BOOM! Both pieces vanished",
+  "demo.radiustxt": "radius: +{n} pieces",
+  "selftest": "engine self-test"
+}
+};
+let LANG = localStorage.getItem("atLang") || "ru";
+const T = k => (I18N[LANG] && I18N[LANG][k]) || I18N.ru[k] || k;
+function applyLang() {
+  document.documentElement.lang = LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = T(el.dataset.i18n));
+  document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = T(el.dataset.i18nHtml));
+  document.getElementById("langRu").classList.toggle("act", LANG === "ru");
+  document.getElementById("langEn").classList.toggle("act", LANG === "en");
+  renderCourse(); renderLB(); renderOpenings();
+  document.getElementById("gPlay").textContent = gTimer ? T("g.autostop") : T("g.autoplay");
+  document.getElementById("gInfo").textContent = gCur < 0 ? T("g.pick") : document.getElementById("gInfo").textContent;
+  pzRenderTexts();
+  refreshList();
+}
+function setLang(l) { LANG = l; localStorage.setItem("atLang", l); applyLang(); }
+
+/* ================= АТОМНЫЙ ДВИЖОК ================= */
+function parseFEN(fen) {
+  const st = { b: new Array(64).fill(null), turn: "w", ep: -1, cr: { K: true, Q: true, k: true, q: true } };
+  const [pos, turn, cast, ep] = fen.trim().split(/\s+/);
+  const rows = pos.split("/");
+  for (let rr = 0; rr < 8; rr++) {
+    let f = 0;
+    for (const ch of rows[7 - rr]) {
+      if (/\d/.test(ch)) f += +ch;
+      else { st.b[rr * 8 + f] = ch; f++; }
+    }
+  }
+  st.turn = turn || "w";
+  if (cast && cast !== "-") for (const c of "KQkq") if (!cast.includes(c)) st.cr[c] = false;
+  if (ep && ep !== "-") st.ep = (ep.charCodeAt(0) - 97) + (parseInt(ep[1]) - 1) * 8;
+  return st;
+}
+function clone(st) { return { b: st.b.slice(), turn: st.turn, ep: st.ep, cr: { ...st.cr } }; }
+const isW = p => p && p === p.toUpperCase();
+const colorOf = p => isW(p) ? "w" : "b";
+const FILEi = i => i % 8, RANKi = i => i >> 3;
+
+function attacked(st, sq, by) { // короли НЕ учитываются (атом!)
+  const b = st.b, f = FILEi(sq), r = RANKi(sq);
+  const pd = by === "w" ? 1 : -1;
+  for (const df of [-1, 1]) {
+    const ff = f + df, rr = r - pd;
+    if (ff >= 0 && ff < 8 && rr >= 0 && rr < 8) {
+      const p = b[rr * 8 + ff];
+      if (p && (by === "w" ? p === "P" : p === "p")) return true;
+    }
+  }
+  for (const [df, dr] of [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]]) {
+    const ff = f + df, rr = r + dr;
+    if (ff < 0 || ff > 7 || rr < 0 || rr > 7) continue;
+    const p = b[rr * 8 + ff];
+    if (p && (by === "w" ? p === "N" : p === "n")) return true;
+  }
+  for (const [df, dr] of [[1,1],[1,-1],[-1,1],[-1,-1]]) {
+    let ff = f + df, rr = r + dr;
+    while (ff >= 0 && ff < 8 && rr >= 0 && rr < 8) {
+      const p = b[rr * 8 + ff];
+      if (p) { if (colorOf(p) === by && (p.toUpperCase() === "B" || p.toUpperCase() === "Q")) return true; break; }
+      ff += df; rr += dr;
+    }
+  }
+  for (const [df, dr] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+    let ff = f + df, rr = r + dr;
+    while (ff >= 0 && ff < 8 && rr >= 0 && rr < 8) {
+      const p = b[rr * 8 + ff];
+      if (p) { if (colorOf(p) === by && (p.toUpperCase() === "R" || p.toUpperCase() === "Q")) return true; break; }
+      ff += df; rr += dr;
+    }
+  }
+  return false;
+}
+function kingSq(st, color) {
+  const k = color === "w" ? "K" : "k";
+  for (let i = 0; i < 64; i++) if (st.b[i] === k) return i;
+  return -1;
+}
+function applyMove(st, mv) {
+  const b = st.b;
+  const piece = b[mv.from];
+  const isPawn = piece.toUpperCase() === "P";
+  const isEP = isPawn && mv.to === st.ep && !b[mv.to];
+  const isCapture = !!b[mv.to] || isEP;
+  const exploded = [];
+  b[mv.from] = null;
+  b[mv.to] = mv.promo ? (st.turn === "w" ? mv.promo.toUpperCase() : mv.promo.toLowerCase()) : piece;
+  if (isCapture) {
+    if (isEP) {
+      // сняли взятую пешку: для белой она НА 8 ниже клетки приземления, для чёрной НА 8 выше
+      b[mv.to + (piece === "P" ? -8 : 8)] = null;
+    }
+    // бьющая фигура погибает в центре взрыва (вместе с битой)
+    b[mv.to] = null;
+    exploded.push(mv.to);
+    const cf = FILEi(mv.to), cr = RANKi(mv.to);
+    for (let df = -1; df <= 1; df++) for (let dr = -1; dr <= 1; dr++) {
+      if (!df && !dr) continue;
+      const ff = cf + df, rr = cr + dr;
+      if (ff < 0 || ff > 7 || rr < 0 || rr > 7) continue;
+      const i = rr * 8 + ff;
+      const p = b[i];
+      if (p && p.toUpperCase() !== "P") { b[i] = null; exploded.push(i); }
+    }
+    exploded.push(mv.to); // бум в точке взятия
+  }
+  if (piece.toUpperCase() === "K" && Math.abs(mv.to - mv.from) === 2) {
+    if (mv.to > mv.from) { b[mv.from + 1] = b[mv.from + 3]; b[mv.from + 3] = null; }
+    else { b[mv.from - 1] = b[mv.from - 4]; b[mv.from - 4] = null; }
+  }
+  if (piece === "K") { st.cr.K = st.cr.Q = false; }
+  if (piece === "k") { st.cr.k = st.cr.q = false; }
+  for (const [sqc, kk] of [[0,"Q"],[7,"K"],[56,"q"],[63,"k"]]) {
+    if (mv.from === sqc || mv.to === sqc) st.cr[kk] = false;
+  }
+  st.ep = -1;
+  if (isPawn && Math.abs(mv.to - mv.from) === 16) st.ep = (mv.from + mv.to) / 2;
+  st.turn = st.turn === "w" ? "b" : "w";
+  return exploded;
+}
+function genLegal(st) {
+  const res = [];
+  const me = st.turn, opp = me === "w" ? "b" : "w";
+  const b = st.b;
+  const push = (from, to, promo, isEP) => {
+    const sim = clone(st);
+    const kBefore = kingSq(sim, me);
+    applyMove(sim, { from, to, promo, isEP });
+    // ВЗРЫВ КОРОЛЯ СОПЕРНИКА = мгновенная победа, ход всегда легален
+    if (kingSq(sim, opp) === -1) { res.push({ from, to, promo: promo || null }); return; }
+    const kAfter = kingSq(sim, me);
+    if (kBefore !== -1 && kAfter === -1) return;
+    // Атом: если короли СОСЕДНИ — шах невозможен, ход легален
+    if (!kingsConnected(sim) && attacked(sim, kAfter, opp)) return;
+    res.push({ from, to, promo: promo || null });
+  };
+  for (let i = 0; i < 64; i++) {
+    const p = b[i];
+    if (!p || colorOf(p) !== me) continue;
+    const P = p.toUpperCase(), f = FILEi(i), r = RANKi(i);
+    if (P === "P") {
+      const d = me === "w" ? 8 : -8, startR = me === "w" ? 1 : 6, promoR = me === "w" ? 7 : 0;
+      const one = i + d;
+      if (one >= 0 && one < 64 && !b[one]) {
+        if (RANKi(one) === promoR) for (const pr of ["Q","R","B","N"]) push(i, one, pr);
+        else { push(i, one); if (r === startR && !b[i + 2 * d]) push(i, i + 2 * d); }
+      }
+      for (const df of [-1, 1]) {
+        const ff = f + df, to = (r + (me === "w" ? 1 : -1)) * 8 + ff;
+        if (ff < 0 || ff > 7 || to < 0 || to > 63) continue;
+        const tp = b[to];
+        if (tp && colorOf(tp) !== me && tp.toUpperCase() !== "K") {
+          if (RANKi(to) === promoR) for (const pr of ["Q","R","B","N"]) push(i, to, pr);
+          else push(i, to);
+        } else if (to === st.ep && !tp) push(i, to, null, true);
+      }
+    } else if (P === "N") {
+      for (const [df, dr] of [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]]) {
+        const ff = f + df, rr = r + dr, to = rr * 8 + ff;
+        if (ff < 0 || ff > 7 || rr < 0 || rr > 7) continue;
+        const tp = b[to];
+        if (!tp) push(i, to);
+        else if (colorOf(tp) !== me && tp.toUpperCase() !== "K") push(i, to);
+      }
+    } else if (P === "K") {
+      for (let df = -1; df <= 1; df++) for (let dr = -1; dr <= 1; dr++) {
+        if (!df && !dr) continue;
+        const ff = f + df, rr = r + dr, to = rr * 8 + ff;
+        if (ff < 0 || ff > 7 || rr < 0 || rr > 7) continue;
+        const tp = b[to];
+        if (!tp) push(i, to);
+        else if (colorOf(tp) !== me && tp.toUpperCase() !== "K") push(i, to);
+      }
+      const home = me === "w" ? 4 : 60;
+      if (i === home && !attacked(st, home, opp)) {
+        const kR = me === "w" ? st.cr.K : st.cr.k, qR = me === "w" ? st.cr.Q : st.cr.q;
+        const rook = me === "w" ? "R" : "r";
+        if (kR && b[home+3] === rook && !b[home+1] && !b[home+2] &&
+            !attacked(st, home+1, opp) && !attacked(st, home+2, opp)) push(home, home+2);
+        if (qR && b[home-4] === rook && !b[home-1] && !b[home-2] && !b[home-3] &&
+            !attacked(st, home-1, opp) && !attacked(st, home-2, opp)) push(home, home-2);
+      }
+    } else {
+      const dirs = P === "R" ? [[1,0],[-1,0],[0,1],[0,-1]] :
+                   P === "B" ? [[1,1],[1,-1],[-1,1],[-1,-1]] :
+                   [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+      for (const [df, dr] of dirs) {
+        let ff = f + df, rr = r + dr;
+        while (ff >= 0 && ff < 8 && rr >= 0 && rr < 8) {
+          const to = rr * 8 + ff, tp = b[to];
+          if (!tp) push(i, to);
+          else { if (colorOf(tp) !== me && tp.toUpperCase() !== "K") push(i, to); break; }
+          ff += df; rr += dr;
+        }
+      }
+    }
+  }
+  return res;
+}
+function kingsConnected(st) {
+  const a = kingSq(st, "w"), b = kingSq(st, "b");
+  if (a < 0 || b < 0) return false;
+  return Math.abs(FILEi(a) - FILEi(b)) <= 1 && Math.abs(RANKi(a) - RANKi(b)) <= 1;
+}
+function inCheck(st) {
+  // Атом: если короли стоят рядом — шаха нет вообще
+  if (kingsConnected(st)) return false;
+  const k = kingSq(st, st.turn);
+  return k !== -1 && attacked(st, k, st.turn === "w" ? "b" : "w");
+}
+function gameStatus(st) {
+  const k = kingSq(st, st.turn);
+  if (k === -1) return "boom-loss";
+  const moves = genLegal(st);
+  if (moves.length === 0) return inCheck(st) ? "mate-loss" : "stalemate";
+  return "play";
+}
+function makeSAN(st, mv) {
+  const p = st.b[mv.from], P = p.toUpperCase();
+  if (P === "K" && Math.abs(mv.to - mv.from) === 2) return mv.to > mv.from ? "O-O" : "O-O-O";
+  const isCap = !!st.b[mv.to] || (P === "P" && mv.to === st.ep && !st.b[mv.to]);
+  let s = "";
+  if (P === "P") {
+    if (isCap) s = "abcdefgh"[FILEi(mv.from)] + "x";
+    s += "abcdefgh"[FILEi(mv.to)] + (RANKi(mv.to) + 1);
+    if (mv.promo) s += "=" + mv.promo;
+  } else {
+    s = P;
+    const others = genLegal(st).filter(m => m.to === mv.to && m.from !== mv.from && st.b[m.from] === p);
+    if (others.length) {
+      const sameFile = others.some(m => FILEi(m.from) === FILEi(mv.from));
+      const sameRank = others.some(m => RANKi(m.from) === RANKi(mv.from));
+      if (!sameFile) s += "abcdefgh"[FILEi(mv.from)];
+      else if (!sameRank) s += (RANKi(mv.from) + 1);
+      else s += "abcdefgh"[FILEi(mv.from)] + (RANKi(mv.from) + 1);
+    }
+    if (isCap) s += "x";
+    s += "abcdefgh"[FILEi(mv.to)] + (RANKi(mv.to) + 1);
+  }
+  const sim = clone(st);
+  applyMove(sim, mv);
+  const stt = gameStatus(sim);
+  if (stt === "mate-loss" || stt === "boom-loss") s += "#";
+  else if (stt !== "stalemate" && inCheck(sim)) s += "+";
+  return s;
+}
+const uciOf = m => "abcdefgh"[FILEi(m.from)] + (RANKi(m.from)+1) + "abcdefgh"[FILEi(m.to)] + (RANKi(m.to)+1) + (m.promo ? m.promo.toLowerCase() : "");
+const parseUCI = u => ({ from: (u.charCodeAt(0)-97) + (parseInt(u[1])-1)*8, to: (u.charCodeAt(2)-97) + (parseInt(u[3])-1)*8, promo: u[4] ? u[4].toUpperCase() : null });
+const chessVariantStart = () => parseFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+/* ================= ОТРИСОВКА ================= */
+const GLYPH_B = { P:"♙",N:"♘",B:"♗",R:"♖",Q:"♕",K:"♔",p:"♟",n:"♞",b:"♝",r:"♜",q:"♛",k:"♚" };
+let soundOn = true;
+function beep(kind) {
+  if (!soundOn) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    if (kind === "boom") { o.type = "sawtooth"; o.frequency.setValueAtTime(90, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + .4); g.gain.setValueAtTime(.25, ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .45); o.start(); o.stop(ctx.currentTime + .5); }
+    else { o.type = "square"; o.frequency.value = 660; g.gain.setValueAtTime(.08, ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .12); o.start(); o.stop(ctx.currentTime + .13); }
+    setTimeout(() => ctx.close(), 600);
+  } catch (e) {}
+}
+function drawBoard(el, st, opts = {}) {
+  el.innerHTML = "";
+  const flip = opts.flip || false;
+  for (let vr = 7; vr >= 0; vr--) for (let vf = 0; vf < 8; vf++) {
+    const rr = flip ? 7 - vr : vr;
+    const f = flip ? 7 - vf : vf;
+    const idx = rr * 8 + f;
+    const d = document.createElement("div");
+    const light = (f + rr) % 2 === 1;
+    d.className = "sq " + (light ? "light" : "dark");
+    const p = st.b[idx];
+    if (p) {
+      const s = document.createElement("span");
+      s.className = "pc " + (isW(p) ? "w" : "b");
+      s.textContent = GLYPH_B[p];
+      d.appendChild(s);
+    }
+    if (opts.last && (idx === opts.last.from || idx === opts.last.to)) d.classList.add("last");
+    if (opts.exploded && opts.exploded.includes(idx)) { d.classList.add("boom"); setTimeout(() => d.classList.remove("boom"), 950); }
+    if (opts.sel === idx) d.classList.add("sel");
+    if (opts.canMove && opts.legal && opts.sel != null && opts.legal.some(m => m.from === opts.sel && m.to === idx)) {
+      d.classList.add(st.b[idx] ? "cap" : "mv");
+      d.onclick = () => opts.onTarget(idx);
+    } else if (opts.canMove && opts.legal && opts.legal.some(m => m.from === idx)) {
+      d.style.cursor = "pointer";
+      d.onclick = () => opts.onSelect(idx);
+    }
+    el.appendChild(d);
+  }
+}
+
+/* ================= ТАБЫ ================= */
+document.querySelectorAll("#tabsNav button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#tabsNav button").forEach(x => x.classList.remove("act"));
+  document.querySelectorAll("section.page").forEach(x => x.classList.remove("act"));
+  b.classList.add("act");
+  document.getElementById("p-" + b.dataset.p).classList.add("act");
+});
+
+/* ================= ДЕМО ================= */
+const demos = [
+  { el: "demo0", fen: "k7/8/8/8/4p3/3P4/8/K7 w - - 0 1", moves: ["d3e4"], lbl: "demo0-lbl" },
+  { el: "demo1", fen: "6k1/8/8/5n2/4p3/3Q4/8/K7 w - - 0 1", moves: ["d3e4"], lbl: "demo1-lbl" }
+];
+const demoState = demos.map(d => ({ st: parseFEN(d.fen), done: false }));
+demos.forEach((d, i) => drawBoard(document.getElementById(d.el), demoState[i].st, {}));
+function demoRun(i) {
+  const d = demos[i], s = demoState[i];
+  if (s.done) return;
+  const exploded = applyMove(s.st, parseUCI(d.moves[0]));
+  drawBoard(document.getElementById(d.el), s.st, { exploded });
+  beep("boom");
+  let t = T("demo.boomtxt");
+  if (exploded.length > 2) t += " (" + T("demo.radiustxt").replace("{n}", exploded.length - 2) + ")";
+  document.getElementById(d.lbl).textContent = t;
+  s.done = true;
+}
+function demoReset(i) {
+  const d = demos[i];
+  demoState[i] = { st: parseFEN(d.fen), done: false };
+  drawBoard(document.getElementById(d.el), demoState[i].st, {});
+  document.getElementById(d.lbl).textContent = "";
+}
+
+/* ================= УЧЕБНИК «МОЯ АТОМНАЯ СИСТЕМА» ================= */
+const COURSE_EN_PARTS = ["Part one. The elements", "Part two. Tactics", "Part three. Strategy", "Part four. Openings"];
+const COURSE_EN = {
+  "boom-basic": { t: "The explosion — the soul of atomic chess", x: "The whole game rests on one mechanism. Rule: on a capture, the capturing piece, the captured piece and every piece around the blast vanish. Not pawns — they are armored. Here d3×e4: both pawns vanish." },
+  "boom-radius": { t: "The blast radius", x: "The blast hits the eight squares around the capture. Queen d3×e4 destroys the knight f5 — and dies itself. The iron rule of atomic: before every capture, count the pieces in the radius." },
+  "pawn-armor": { t: "Pawns — the armored force", x: "Pawns are the only soldiers the blast cannot touch. The black pawns d5 and f5 stand right next to the blast square e4 — unharmed. Only the queen dies. A pawn chain is a fortress." },
+  "own-king": { t: "The forbidden exploit", x: "The rook h1 captures the pawn h6, but the blast covers your own king h7 — the move is forbidden. Atomic forgives everything except the king's suicide." },
+  "kings-adjacent": { t: "Kings — the neighbors", x: "Kings may stand side by side: in atomic they do not attack each other. Moreover — while the kings are adjacent, there are no checks at all. The enemy king is the best shield." },
+  "boom-win": { t: "Victory #1 — the king explosion", x: "The most common win in atomic: White captures next to the king — the king vanishes. Nine of ten games end not with mate but with an explosion. The board shows a real task from the database: find the decisive capture." },
+  "real-mate": { t: "Victory #2 — the quiet mate", x: "The queen steps to f1 — right into the white king's attack — and it is mate! The king cannot capture the queen: the explosion would kill the king itself. In atomic, mate is often delivered by a piece that is itself attacked — classical intuition fails here." },
+  "queen-kamikaze": { t: "The kamikaze queen", x: "From your own game: queen takes queen — and both leave the board. A trade through an explosion favors the one who counted the radius in advance and understood whose position falls apart. Press “Show the move”." },
+  "pawn-chain": { t: "The pawn chain — the king's fortress", x: "A classic fortress: the king behind the chain f7-g6-h7. The blast cannot take pawns; a knight or bishop cannot break them without help. Building a house? Build a pawn chain. Breaking someone else's? Call the queen." },
+  "knight-hunter": { t: "The knight — the king hunter", x: "The knight on f7 already attacks the rook h8 and jumps over the pawn screens that stop the queen. Knights are the chief hunters of atomic: they fear no blasts and reach what a queen cannot." },
+  "checklist": { t: "The checklist", x: "Before every capture — three questions. 1) Who vanishes in the radius? 2) Will my own king explode? 3) Am I opening a line against my king? Count fast — and you will play at the F55555 level." },
+  "opening-main": { t: "The main opening: 1.Nf3 f6 2.Nc3", x: "Opening #1 of atomic. Ideas: knights come first (f3/f6 control e5/e4), pawns e3+d4 or e4 build the center, the bishop eyes c4/b5 against f7/f2, a knight jumps to g5. Black answers d5/c6/e5 or g6. The board shows the tabiya after 8 moves." },
+  "openings-db": { t: "Opening repertoire from the database", x: "Statistics of the first three moves across all 54 games of the database: yours, top players and the bot. See which lines really occur and with what score." },
+  "opening-traps": { t: "Opening traps", x: "Three classic atomic traps. 1) A knight to g5 hits f7/h7: do not rush to capture those pawns. 2) An early queen raid Qh5/Qh4: push g3/g4 and chase it, gaining tempo — the attacker runs out of steam. 3) Bishop checks on b5/c4/g4 force king-side weakening — keep f6/h6 pawns ready. All three appear in the database games — see the Games section." }
+};
+const courseEls = {};
+let atRead = [];
+try { atRead = JSON.parse(localStorage.getItem("atRead") || "[]"); } catch (e) { atRead = []; }
+function chapterData(ch) {
+  if (ch.id === "boom-win" && !ch.fen) {
+    const pz = DATA.puzzles.find(p => p.type === "boom");
+    if (pz) return { ...ch, fen: pz.fen, moves: [pz.sol] };
+  }
+  return ch;
+}
+function renderCourse() {
+  const body = document.getElementById("courseBody");
+  const toc = document.getElementById("toc");
+  body.innerHTML = ""; toc.innerHTML = "";
+  let n = 0;
+  DATA.course.forEach((part, pi) => {
+    const pTitle = LANG === "en" ? COURSE_EN_PARTS[pi] : part.part_ru;
+    const ph = document.createElement("h3");
+    ph.className = "sect"; ph.style.marginTop = "30px";
+    ph.textContent = pTitle;
+    body.appendChild(ph);
+    let tocPart = `<div style="margin-top:8px"><b>${pTitle}</b></div>`;
+    part.chapters.forEach(ch0 => {
+      n++;
+      const ch = chapterData(ch0);
+      const ov = (LANG === "en" && COURSE_EN[ch.id]) || null;
+      const title = ov ? ov.t : ch.title_ru;
+      const text = ov ? ov.x : ch.text_ru;
+      tocPart += `<div>• <a href="#ch-${ch.id}">${T("bk.chapter")} ${ch.num}. ${title}</a></div>`;
+      const card = document.createElement("div");
+      card.className = "card"; card.id = "ch-" + ch.id;
+      card.innerHTML = `<h3 class="sect" style="margin-top:4px">${T("bk.chapter")} ${ch.num}. ${title}
+          <label style="float:right;font-size:13px;font-weight:400;cursor:pointer"><input type="checkbox" data-read="${ch.id}" ${atRead.includes(ch.id) ? "checked" : ""}> ${T("bk.read")}</label></h3>
+        <div class="cols"><div class="col" style="max-width:400px">
+          ${ch.fen ? `<div class="boardwrap"><div id="cboard-${ch.id}" class="board"></div></div>
+          ${ch.moves && ch.moves.length ? `<div class="btnrow"><button class="btn main" onclick="courseRun('${ch.id}')">${T("btn.show")}</button><button class="btn" onclick="courseReset('${ch.id}')">${T("btn.reset")}</button></div>` : ""}
+          <div class="blabel" id="clbl-${ch.id}"></div>` : ""}
+        </div><div class="col"><p>${text}</p>${ch.id === "openings-db" ? '<div id="opentable" style="margin-top:10px"></div>' : ""}<p class="muted" style="margin-top:8px">${T("lessons.interactive")}</p></div></div>`;
+      body.appendChild(card);
+      if (ch.id === "openings-db" && DATA.openings) {
+        const tEl = document.getElementById("opentable");
+        let h = `<table class="lb"><tr><th>${LANG === "en" ? "Opening" : "Дебют"}</th><th>${LANG === "en" ? "Games" : "Партий"}</th><th>1-0</th><th>½</th><th>0-1</th></tr>`;
+        DATA.openings.forEach(o => {
+          h += `<tr><td style="font-family:Consolas,monospace">${o.sans}</td><td>${o.n}</td><td>${o.w}</td><td>${o.d}</td><td>${o.bl}</td></tr>`;
+        });
+        tEl.innerHTML = h + "</table>";
+      }
+      if (ch.fen) {
+        const st = parseFEN(ch.fen);
+        courseEls[ch.id] = { st, fen0: ch.fen, moves: ch.moves || [], done: false, legal: genLegal(st) };
+        drawCourse(ch.id, null);
+      }
+    });
+    toc.innerHTML += tocPart;
+  });
+  updateReadProgress();
+  document.querySelectorAll("input[data-read]").forEach(cb => {
+    cb.onchange = () => {
+      const id = cb.dataset.read;
+      if (cb.checked) { if (!atRead.includes(id)) atRead.push(id); }
+      else atRead = atRead.filter(x => x !== id);
+      localStorage.setItem("atRead", JSON.stringify(atRead));
+      updateReadProgress();
+    };
+  });
+}
+function updateReadProgress() {
+  const total = DATA.course.reduce((a, p) => a + p.chapters.length, 0);
+  document.getElementById("readProgress").textContent =
+    LANG === "en" ? `Read ${atRead.length} / ${total}` : `Прочитано ${atRead.length} из ${total}`;
+}
+function drawCourse(id, sel) {
+  const s = courseEls[id];
+  const el = document.getElementById("cboard-" + id);
+  if (!el) return;
+  drawBoard(el, s.st, { canMove: true, legal: s.legal, sel,
+    onTarget: idx => {
+      const mv = s.legal.find(m => m.from === sel && m.to === idx);
+      if (mv) {
+        const u = uciOf(mv);
+        const exploded = applyMove(s.st, mv);
+        s.legal = genLegal(s.st);
+        drawBoard(el, s.st, { exploded });
+        beep(exploded.length ? "boom" : "move");
+        let lbl = u + (exploded.length ? " 💥" : "");
+        const stt = gameStatus(s.st);
+        if (stt === "boom-loss") lbl += " — " + (LANG === "en" ? "KING BLOWN UP!" : "КОРОЛЬ ВЗОРВАН!");
+        if (stt === "mate-loss") lbl += " — " + (LANG === "en" ? "MATE!" : "МАТ!");
+        const lb = document.getElementById("clbl-" + id);
+        if (lb) lb.textContent = lbl;
+      }
+      drawCourse(id, null);
+    },
+    onSelect: idx => drawCourse(id, idx)
+  });
+}
+function courseRun(id) {
+  const s = courseEls[id];
+  if (s.done || !s.moves.length) return;
+  const exploded = applyMove(s.st, parseUCI(s.moves[0]));
+  drawBoard(document.getElementById("cboard-" + id), s.st, { exploded });
+  beep("boom");
+  const lb = document.getElementById("clbl-" + id);
+  if (lb) lb.textContent = "💥 " + s.moves[0];
+  s.done = true;
+}
+function courseReset(id) {
+  const s = courseEls[id];
+  s.st = parseFEN(s.fen0); s.done = false; s.legal = genLegal(s.st);
+  drawCourse(id, null);
+  const lb = document.getElementById("clbl-" + id);
+  if (lb) lb.textContent = "";
+}
+
+/* ================= ПАЗЛЫ ================= */
+const PZ_TYPES = {
+  boom:     { ru: "💥 Взрыв короля", en: "💥 King explosion", lvl: 1 },
+  mate:     { ru: "🎯 Мат в 1", en: "🎯 Mate in 1", lvl: 1 },
+  mate2:    { ru: "🎯 Мат в 2 хода", en: "🎯 Mate in 2", lvl: 2 },
+  material: { ru: "⚔️ Выигрыш материала", en: "⚔️ Win material", lvl: 2 },
+  defense:  { ru: "🛡️ Спаси короля", en: "🛡️ Save the king", lvl: 3 }
+};
+let pzi = 0, pzOK = 0, pzBad = 0, pzTries = 0, pzSel = null, pzLegal = [], pzSt = null;
+let pzSolved = [];
+try { pzSolved = JSON.parse(localStorage.getItem("atSolved") || "[]"); } catch (e) { pzSolved = []; }
+function pzKey(p) { return (p.fen || "").slice(0, 40) + "|" + (p.sol || "").slice(0, 4); }
+let pzFilter = "all";
+function pzVisibleIdx() {
+  const res = [];
+  DATA.puzzles.forEach((p, i) => { if (pzFilter === "all" || p.type === pzFilter) res.push(i); });
+  return res;
+}
+function pzNextVis(dir) {
+  const vis = pzVisibleIdx();
+  if (!vis.length) { pzLoad(); return; }
+  const pos = vis.indexOf(pzi);
+  if (pos === -1) { pzi = vis[0]; pzLoad(); return; }
+  pzi = vis[(pos + dir + vis.length) % vis.length];
+  pzLoad();
+}
+function pzRandom() {
+  const vis = pzVisibleIdx();
+  if (vis.length) { pzi = vis[Math.floor(Math.random() * vis.length)]; pzLoad(); }
+}
+function pzLoad() {
+  const p = DATA.puzzles[pzi];
+  pzSt = parseFEN(p.fen);
+  pzLegal = genLegal(pzSt);
+  pzSel = null; pzTries = 0;
+  pzRenderTexts();
+  pzDraw();
+  // диагностика: решаем ли пазл движком
+  const sol = parseUCI(p.sol);
+  const solUCI = uciOf(sol).slice(0,4);
+  const clickable = pzLegal.some(m => uciOf(m).slice(0,4) === solUCI);
+  if (!clickable) console.warn("PUZZLE NOT CLICKABLE:", pzi + 1, p.sol, p.fen);
+}
+function pzRenderTexts() {
+  const p = DATA.puzzles[pzi];
+  document.getElementById("pzNum").textContent = p.n || (pzi + 1);
+  document.getElementById("pzTotal").textContent = DATA.puzzles.length;
+  const info = PZ_TYPES[p.type] || { ru: p.type, en: p.type, lvl: 1 };
+  document.getElementById("pzType").textContent = (LANG === "en" ? info.en : info.ru) + " " + "⭐".repeat(info.lvl || 1);
+  document.getElementById("pzSide").textContent = p.side === "w" ? T("pz.white") : T("pz.black");
+  const gm = (p.from || "").match(/lichess\.org\/([A-Za-z0-9]+)/);
+  const fromEl = document.getElementById("pzFrom");
+  if (gm) fromEl.innerHTML = p.from.replace(/ \(lichess\.org\/[^)]+\)/, "") + ` <a href="https://lichess.org/${gm[1]}" target="_blank">🔗</a>`;
+  else fromEl.textContent = p.from;
+  document.getElementById("pzSolved").textContent = (LANG === "en" ? "Solved: " : "Решено: ") + pzSolved.length + " / " + DATA.puzzles.length;
+  document.getElementById("pzLbl").textContent = (p.side === "w" ? T("pz.label.w") : T("pz.label.b"));
+  document.getElementById("pzScore").innerHTML = `✅ ${pzOK} &nbsp; ❌ ${pzBad}`;
+}
+function pzDraw() {
+  drawBoard(document.getElementById("pzBoard"), pzSt, { flip: DATA.puzzles[pzi].side === "b",
+    canMove: true, legal: pzLegal, sel: pzSel, onTarget: pzTarget, onSelect: idx => { pzSel = idx; pzDraw(); } });
+}
+function pzTarget(idx) {
+  const cand = pzLegal.filter(m => m.from === pzSel && m.to === idx);
+  if (!cand.length) { pzSel = null; pzDraw(); return; }
+  const mv = cand.sort((a,b) => (b.promo ? 1 : 0) - (a.promo ? 1 : 0))[0];
+  const u = uciOf(mv).slice(0, 4);
+  const sol = DATA.puzzles[pzi].sol.slice(0, 4);
+  if (u === sol) {
+    const exploded = applyMove(pzSt, mv);
+    drawBoard(document.getElementById("pzBoard"), pzSt, { flip: DATA.puzzles[pzi].side === "b", exploded, last: mv });
+    beep("boom");
+    pzOK++;
+    const key = pzKey(DATA.puzzles[pzi]);
+    if (!pzSolved.includes(key)) pzSolved.push(key);
+    localStorage.setItem("atSolved", JSON.stringify(pzSolved));
+    const isM2 = DATA.puzzles[pzi].type === "mate2";
+    const extra = isM2 ? (LANG === "en" ? "<br>Now finish the mate on the board yourself 💪" : "<br>Теперь заматуйте на доске сами 💪") : "";
+    document.getElementById("pzMsg").innerHTML = `<div class="note ok">${T("pz.ok")} ${u} ${DATA.puzzles[pzi].type === "boom" ? T("pz.boomtxt") : T("pz.matetxt")}${extra}</div>`;
+    document.getElementById("pzScore").innerHTML = `✅ ${pzOK} &nbsp; ❌ ${pzBad}`;
+    setTimeout(() => pzNext(), isM2 ? 3000 : 1400);
+  } else {
+    pzBad++; pzTries++;
+    document.getElementById("pzScore").innerHTML = `✅ ${pzOK} &nbsp; ❌ ${pzBad}`;
+    if (pzTries >= 3) {
+      document.getElementById("pzMsg").innerHTML = `<div class="note err">${T("pz.reveal").replace("— смотрим!", "").replace("— watch it!", "")}<b>${DATA.puzzles[pzi].sol.slice(0,4)}</b></div>`;
+      pzShowSol();
+      setTimeout(() => pzNext(), 2200);
+    } else {
+      document.getElementById("pzMsg").innerHTML = `<div class="note err">${T("pz.miss")} (${3 - pzTries})</div>`;
+      beep("move");
+      pzSel = null; pzDraw();
+    }
+  }
+}
+function pzShowSol() {
+  const mv = parseUCI(DATA.puzzles[pzi].sol);
+  const exploded = applyMove(pzSt, mv);
+  drawBoard(document.getElementById("pzBoard"), pzSt, { flip: DATA.puzzles[pzi].side === "b", exploded, last: mv });
+  beep("boom");
+}
+function pzReset() { pzLoad(); }
+function pzHint() {
+  const sol = DATA.puzzles[pzi].sol;
+  document.getElementById("pzMsg").innerHTML = `<div class="note info">${T("pz.hintmsg")} <b>${sol.slice(0,2)}</b></div>`;
+}
+function pzNext() { pzNextVis(1); }
+function pzPrev() { pzNextVis(-1); }
+
+/* ================= ПАРТИИ ================= */
+let gFilter = "all", gCur = -1, gState = null, gPly = 0, gTimer = null;
+const allGames = DATA.games.map(g => ({ ...g }));
+function srcLabel(s) { return s === "F55555" ? (LANG === "en" ? "you" : "вы") : s === "top" ? (LANG === "en" ? "top" : "топ") : s === "bot" ? (LANG === "en" ? "bot" : "бот") : (LANG === "en" ? "import" : "импорт"); }
+function refreshList() {
+  const list = document.getElementById("gameList");
+  if (!list) return;
+  list.innerHTML = "";
+  let shown = 0;
+  allGames.forEach((g, i) => {
+    if (gFilter !== "all" && g.src !== gFilter) return;
+    shown++;
+    const b = document.createElement("button");
+    b.className = "gameitem" + (i === gCur ? " act" : "");
+    const link = g.id ? ` <a href="https://lichess.org/${g.id}" target="_blank">🔗</a>` : "";
+    b.innerHTML = `<b>${g.w}</b> <span class="muted">(${g.we})</span> — <b>${g.b}</b> <span class="muted">(${g.be})</span>
+      &nbsp; ${g.r} &nbsp;· ${srcLabel(g.src)} · ${g.tc} · ${g.d}<br><span class="muted">${T("g.movesn")}: ${Math.ceil(g.m.length/2)} · ${g.term}</span>${link}`;
+    b.onclick = () => openGame(i);
+    list.appendChild(b);
+  });
+  document.getElementById("cAll").textContent = allGames.length;
+  document.getElementById("cF").textContent = allGames.filter(g => g.src === "F55555").length;
+  document.getElementById("cT").textContent = allGames.filter(g => g.src === "top").length;
+  document.getElementById("cB").textContent = allGames.filter(g => g.src === "bot").length;
+  document.getElementById("cI").textContent = allGames.filter(g => g.src === "import").length;
+  if (!shown) list.innerHTML = `<div class="muted" style="padding:10px">${LANG === "en" ? "Empty. Import PGN in the Import tab." : "Пусто. Импортируй PGN во вкладке «Импорт»."}</div>`;
+}
+  renderStats();
+document.querySelectorAll(".srcbtn").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".srcbtn").forEach(x => x.classList.remove("act"));
+  b.classList.add("act");
+  gFilter = b.dataset.src;
+  refreshList();
+});
+function gRandom() {
+  const vis = [];
+  allGames.forEach((g, i) => { if (gFilter === "all" || g.src === gFilter) vis.push(i); });
+  if (vis.length) openGame(vis[Math.floor(Math.random() * vis.length)]);
+}
+function renderStats() {
+  const el = document.getElementById("gStatsBody");
+  if (!el) return;
+  const vis = allGames.filter(g => gFilter === "all" || g.src === gFilter);
+  let w = 0, bl = 0, dr = 0, longest = 0;
+  const pairs = {};
+  vis.forEach(g => {
+    if (g.r === "1-0") w++; else if (g.r === "0-1") bl++; else dr++;
+    if (g.m.length > longest) { longest = g.m.length; longestG = g; }
+    const key = g.w + " - " + g.b;
+    pairs[key] = (pairs[key] || 0) + 1;
+  });
+  let top = "", topN = 0;
+  for (const k in pairs) if (pairs[k] > topN) { topN = pairs[k]; top = k; }
+  const mw = LANG === "en" ? "moves" : "ходов";
+  let h = `${T("g.white")}: ${w} · ${T("g.black")}: ${bl} · ${T("g.draws")}: ${dr}`;
+  if (longestG) h += `<br>${T("g.longest")}: ${Math.ceil(longest / 2)} ${mw}`;
+  if (top) h += `<br>${T("g.toppair")}: ${top} (${topN})`;
+  el.innerHTML = h;
+}
+function openGame(i) {
+  gCur = i; gPly = 0;
+  stopAuto();
+  gState = chessVariantStart();
+  gRender();
+  refreshList();
+}
+function gRender() {
+  const g = allGames[gCur];
+  drawBoard(document.getElementById("gBoard"), gState, { last: gPly > 0 ? parseUCI(g.m[gPly-1]) : null });
+  document.getElementById("gInfo").innerHTML = `<b>${g.w}</b> — <b>${g.b}</b> · ${g.r} · ${g.d} · ${srcLabel(g.src)}`;
+  const ml = document.getElementById("gMoves");
+  ml.innerHTML = "";
+  let st = chessVariantStart();
+  let html = "";
+  for (let i = 0; i < g.m.length; i++) {
+    const mv = parseUCI(g.m[i]);
+    const found = genLegal(st).find(x => uciOf(x) === g.m[i]);
+    const san = found ? makeSAN(st, found.m) : g.m[i];
+    if (i % 2 === 0) html += `<span class="muted">${(i/2)+1}.</span> `;
+    html += `<span class="${i === gPly - 1 ? "cur" : ""}">${san}</span> `;
+    if (found) applyMove(st, found.m);
+  }
+  ml.innerHTML = html;
+}
+function gGo(ply) {
+  const g = allGames[gCur]; if (gCur < 0) return;
+  stopAuto();
+  gPly = Math.max(0, Math.min(ply, g.m.length));
+  gState = chessVariantStart();
+  for (let i = 0; i < gPly; i++) applyMove(gState, parseUCI(g.m[i]));
+  gRender();
+}
+function gStep(d) {
+  const g = allGames[gCur]; if (gCur < 0) return;
+  stopAuto();
+  const np = Math.max(0, Math.min(gPly + d, g.m.length));
+  if (d > 0 && np > gPly) {
+    const mv = parseUCI(g.m[gPly]);
+    const ex = applyMove(gState, mv);
+    if (ex.length) beep("boom");
+    gPly = np; gRender();
+  } else { gGo(np); }
+}
+function gPlay() {
+  if (gTimer) { stopAuto(); return; }
+  document.getElementById("gPlay").textContent = T("g.autostop");
+  if (gCur < 0) openGame(0);
+  gTimer = setInterval(() => {
+    const g = allGames[gCur];
+    if (gPly >= g.m.length) { stopAuto(); return; }
+    gStep(1);
+  }, 700);
+}
+function stopAuto() { if (gTimer) { clearInterval(gTimer); gTimer = null; document.getElementById("gPlay").textContent = T("g.autoplay"); } }
+
+/* ================= САМОПРОВЕРКА ================= */
+let stOK = 0, stFail = 0;
+for (const g of allGames) {
+  try {
+    const st = chessVariantStart();
+    for (const u of g.m) {
+      const legal = genLegal(st).find(x => uciOf(x) === u);
+      if (!legal) throw new Error("illegal " + u);
+      applyMove(st, legal);
+    }
+    stOK++;
+  } catch (e) { stFail++; }
+}
+// проверка решаемости пазлов
+let pzClickable = 0;
+for (const p of DATA.puzzles) {
+  const st = parseFEN(p.fen);
+  const sol = parseUCI(p.sol);
+  if (genLegal(st).some(m => uciOf(m).slice(0,4) === p.sol.slice(0,4))) pzClickable++;
+}
+document.getElementById("statGames").textContent = allGames.length;
+document.getElementById("statPz").textContent = DATA.puzzles.length;
+console.log(`Self-test: games ${stOK}/${stOK+stFail}, puzzles clickable ${pzClickable}/${DATA.puzzles.length}`);
+
+/* ================= ТОП-20 С LICHESS (обновление каждые 30 мин) ================= */
+let lbCache = null;
+try { lbCache = JSON.parse(localStorage.getItem("atLB") || "null"); } catch (e) {}
+function renderLB() {
+  const table = document.getElementById("lbTable");
+  table.innerHTML = `<tr><th>#</th><th>${T("ab.player")}</th><th>${T("ab.rating")}</th></tr>`;
+  if (!lbCache || !lbCache.users || !lbCache.users.length) {
+    table.innerHTML += `<tr><td colspan="3" class="muted">${T("ab.updating")}</td></tr>`;
+    return;
+  }
+  lbCache.users.forEach((u, i) => {
+    const me = u.id.toLowerCase() === "f55555";
+    table.innerHTML += `<tr class="${me ? "me" : ""}"><td>${i + 1}</td><td>${u.name}${me ? " " + T("ab.you") : ""}</td><td>${u.rating}</td></tr>`;
+  });
+  const mins = Math.floor((Date.now() - lbCache.t) / 60000);
+  document.getElementById("lbUpdated").textContent = T("ab.updated") + " " + (mins < 1 ? T("ab.justnow") : mins + " " + T("ab.minago"));
+}
+async function refreshLB(manual) {
+  if (manual) document.getElementById("lbUpdated").textContent = T("ab.updating");
+  try {
+    const r = await fetch("https://lichess.org/api/player/top/20/atomic");
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    lbCache = { t: Date.now(), users: d.users.map(u => ({ id: u.id, name: u.username, rating: u.perfs.atomic ? u.perfs.atomic.rating : 0 }))
+      .sort((a, b) => b.rating - a.rating).slice(0, 20) };
+    localStorage.setItem("atLB", JSON.stringify(lbCache));
+    if (manual) console.log("LB updated");
+  } catch (e) {
+    if (manual) document.getElementById("lbUpdated").textContent = T("ab.fail");
+  }
+  renderLB();
+}
+
+/* ================= ТОП ДЕБЮТОВ ================= */
+function renderOpenings() {
+  const el = document.getElementById("topOpen");
+  if (!DATA.topOpen || !DATA.topOpen.length) { el.innerHTML = `<span class="muted">${T("imp.nodata")}</span>`; return; }
+  const names = { "g1f3 f7f6": LANG === "en" ? "1.Nf3 f6 — knight attack" : "1.Кf3 f6 — атака конём",
+    "h2h3 e7e5": LANG === "en" ? "1.Nh3 e5" : "1.Кh3 e5",
+    "e2e3 e7e6": LANG === "en" ? "1.e3 e6 — Van Geet style" : "1.e3 e6 — система Ван Геет",
+    "e2e4 d7d5": "1.e4 d5", "d2d4 c7c6": "1.d4 c6", "g1f3 e7e5": "1.Nf3 e5" };
+  el.innerHTML = DATA.topOpen.map(([m, c]) => `<div>♞ <b>${names[m] || m}</b> <span class="muted">— ${c} ${T("imp.parties")}</span></div>`).join("");
+}
+
+/* ================= ИМПОРТ PGN ================= */
+function importPgnText(text, src) {
+  let added = 0, failed = 0;
+  const blocks = text.split(/\n\n(?=\[Event)/).filter(b => b.includes("[Event"));
+  for (const blk of blocks) {
+    try {
+      const tag = n => { const m = blk.match(new RegExp('\\[' + n + ' "([^"]*)"\\]')); return m ? m[1] : ""; };
+      if (tag("Variant") && tag("Variant").toLowerCase() !== "atomic") continue;
+      let sanText = blk.split(/\n\n/).slice(1).join(" ");
+      sanText = sanText.replace(/\{[^}]*\}/g, " ").replace(/\([^)]*\)/g, " ").replace(/\$\d+/g, " ");
+      const tokens = sanText.replace(/(1-0|0-1|1\/2-1\/2|\*).*$/, " ").trim().split(/\s+/).filter(t => t && !/^\d+\.+$/.test(t) && t !== "...");
+      const moves = [];
+      const st = chessVariantStart();
+      for (let t of tokens) {
+        t = t.replace(/^\d+\.+/, "").replace(/\+|#|!|\?/g, "");
+        if (!t) continue;
+        const found = genLegal(st).find(m => makeSAN(st, m).replace(/[+#]/g, "") === t);
+        if (!found) throw new Error("bad san " + t);
+        moves.push(uciOf(found));
+        applyMove(st, found);
+      }
+      if (moves.length < 4) throw new Error("short");
+      allGames.push({ w: tag("White") || "?", b: tag("Black") || "?", r: tag("Result") || "*", d: tag("UTCDate") || tag("Date") || "",
+        tc: tag("TimeControl") || "", term: tag("Termination") || "", we: tag("WhiteElo") || "", be: tag("BlackElo") || "",
+        id: tag("GameId") || "", src: src || "import", m: moves });
+      added++;
+    } catch (e) { failed++; }
+  }
+  return { added, failed };
+}
+document.getElementById("pgnFile").addEventListener("change", async ev => {
+  const files = [...ev.target.files];
+  const msg = document.getElementById("impMsg");
+  let added = 0, failed = 0;
+  for (const file of files) {
+    const text = await file.text();
+    const res = importPgnText(text, "import");
+    added += res.added; failed += res.failed;
+  }
+  msg.innerHTML = `<div class="note ${added ? "ok" : "err"}">${T("imp.done")} ${added}${failed ? `, ${T("imp.failed")} ${failed}` : ""}</div>`;
+  gFilter = "import";
+  document.querySelectorAll(".srcbtn").forEach(x => x.classList.toggle("act", x.dataset.src === "import"));
+  refreshList();
+});
+
+/* ================= ВХОД ПО НИКУ LICHESS ================= */
+function openLogin() {
+  document.getElementById("loginModal").style.display = "flex";
+  const inp = document.getElementById("nickInput");
+  inp.focus();
+}
+function closeLogin() { document.getElementById("loginModal").style.display = "none"; }
+function doLogin() {
+  const v = document.getElementById("nickInput").value.trim();
+  if (!v) return;
+  localStorage.setItem("atNick", v);
+  closeLogin();
+  renderAuth();
+  loadMyGames();
+}
+function lichLogout() {
+  localStorage.removeItem("atNick");
+  renderAuth();
+  refreshList();
+}
+async function renderAuth() {
+  const area = document.getElementById("authArea"), chip = document.getElementById("userChip");
+  const nick = localStorage.getItem("atNick");
+  if (!nick) { area.style.display = "block"; chip.style.display = "none"; return; }
+  area.style.display = "none"; chip.style.display = "flex";
+  document.getElementById("uName").textContent = nick;
+  document.getElementById("uRating").textContent = "…";
+  try {
+    const r = await fetch("https://lichess.org/api/user/" + nick);
+    if (!r.ok) throw new Error(r.status);
+    const me = await r.json();
+    const at = me.perfs && me.perfs.atomic ? me.perfs.atomic.rating : null;
+    document.getElementById("uRating").textContent = at ? ("☢️ " + at) : "";
+  } catch (e) {
+    document.getElementById("uRating").textContent = "";
+  }
+}
+async function loadMyGames() {
+  const nick = localStorage.getItem("atNick");
+  if (!nick) return;
+  const btn = document.getElementById("myGamesBtn");
+  btn.disabled = true;
+  try {
+    const r = await fetch("https://lichess.org/api/games/user/" + nick + "?perfType=atomic&max=25");
+    if (!r.ok) throw new Error(r.status);
+    const pgn = await r.text();
+    const res = importPgnText(pgn, "import");
+    gFilter = "import";
+    document.querySelectorAll(".srcbtn").forEach(x => x.classList.toggle("act", x.dataset.src === "import"));
+    refreshList();
+    document.getElementById("gInfo").textContent = (LANG === "en" ? "Loaded " : "Загружено ") + res.added + (LANG === "en" ? " games" : " партий");
+  } catch (e) {
+    document.getElementById("gInfo").textContent = LANG === "en"
+      ? "Failed to load games (Lichess rate limit — try again in a minute)"
+      : "Не удалось загрузить (Lichess ограничил запросы — попробуйте через минуту)";
+  }
+  btn.disabled = false;
+}
+
+/* ================= СТАРТ ================= */
+document.querySelectorAll("#pzFilters .srcbtn").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#pzFilters .srcbtn").forEach(x => x.classList.remove("act"));
+  b.classList.add("act");
+  pzFilter = b.dataset.pf;
+  pzNextVis(1);
+});
+document.addEventListener("keydown", ev => {
+  if (!document.getElementById("p-games").classList.contains("act")) return;
+  if (ev.target && ["INPUT", "TEXTAREA"].includes(ev.target.tagName)) return;
+  if (ev.key === "ArrowLeft") { gStep(-1); ev.preventDefault(); }
+  if (ev.key === "ArrowRight") { gStep(1); ev.preventDefault(); }
+});
+DATA.puzzles.sort((a, b) => (a.lvl || 1) - (b.lvl || 1));
+pzLoad();
+refreshList();
+refreshLB(false);
+setInterval(() => refreshLB(false), 30 * 60 * 1000); // каждые 30 минут
+applyLang();
+</script>
+</body>
+</html>

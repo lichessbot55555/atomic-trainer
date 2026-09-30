@@ -1,0 +1,4 @@
+pgn/
+build_out.txt
+*.log
+__pycache__/

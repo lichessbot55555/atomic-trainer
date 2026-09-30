@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lichessbot55555.github.io/atomic-trainer/sitemap.xml
