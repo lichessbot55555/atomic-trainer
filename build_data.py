@@ -336,8 +336,8 @@ EXERCISES = [
   "check": {"kind": "reach", "sq": "a1", "piece": "R"}},
  {"id": "ex-kill-attacker", "fen": "7k/8/8/8/5n2/6PR/8/7K w - - 0 1", "num": 8,
   "title_ru": "Убей нападающего", "title_en": "Kill the attacker",
-  "goal_ru": "Конь f4 напал на ладью h3! Съешь его пешкой g3 — взрыв уничтожит коня, а пешка встанет на f4.",
-  "goal_en": "The knight on f4 attacked the rook h3! Capture it with the g3 pawn — the blast kills the knight and your pawn lands on f4.",
+  "goal_ru": "Конь f4 напал на ладью h3! Возьми его пешкой g3 — ВЗРЫВ УНИЧТОЖИТ ОБЕИХ: и коня, и твою пешку. Размен в твою пользу!",
+  "goal_en": "The knight on f4 attacked the rook h3! Capture it with the g3 pawn — THE BLAST DESTROYS BOTH: the knight and your pawn. A trade in your favor.",
   "check": {"kind": "destroy", "n": 1}}
 ]
 # проверки всех упражнений движком
