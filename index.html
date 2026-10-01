@@ -12,7 +12,7 @@
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="i3QPKw1VZIeYYHLvrKVS_rrnwiqLqTDWheUEJQv3TfU">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♟️</text></svg>">
-<script src="data.js"></script>
+<script src="data.js?v=2"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: "Segoe UI", sans-serif; background: #0b0e14; color: #e6edf3; min-height: 100vh; }
@@ -154,6 +154,7 @@
 <nav class="tabs" id="tabsNav">
   <button data-p="rules" class="act" data-i18n="tab.rules"></button>
   <button data-p="lessons" data-i18n="tab.lessons"></button>
+  <button data-p="trainer" data-i18n="tab.trainer"></button>
   <button data-p="puzzles" data-i18n="tab.puzzles"></button>
   <button data-p="games" data-i18n="tab.games"></button>
   <button data-p="import" data-i18n="tab.import"></button>
@@ -211,6 +212,37 @@
     <div style="margin-top:10px"><span class="badge" id="readProgress"></span></div>
   </div>
   <div id="courseBody"></div>
+</section>
+
+<!-- ================= ТРЕНАЖЁР ================= -->
+<section class="page" id="p-trainer">
+  <h2 class="sect" data-i18n="tr.title"></h2>
+  <p class="muted" data-i18n="tr.subtitle"></p>
+  <div class="cols">
+    <div class="col" style="max-width:420px">
+      <div class="card" style="padding:10px 14px">
+        <b data-i18n="tr.list"></b>
+        <div id="trList" style="margin-top:8px"></div>
+        <div style="margin-top:10px"><span class="badge" id="trProgress"></span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="pz-head" style="margin-bottom:10px">
+        <span class="pz-tag"><b data-i18n="tr.exercise"></b> <span id="trNum">1</span>/<span id="trTotal">8</span></span>
+        <span class="pz-tag" data-i18n="tr.youmove"></span>
+      </div>
+      <div class="boardwrap"><div id="trBoard" class="board"></div></div>
+      <div class="blabel" id="trLbl"></div>
+      <div class="btnrow">
+        <button class="btn" onclick="trReset()" data-i18n="btn.reset"></button>
+      </div>
+    </div>
+    <div class="col" style="max-width:360px">
+      <div id="trGoal" class="note info"></div>
+      <div id="trMsg"></div>
+      <p class="muted" data-i18n="tr.how"></p>
+    </div>
+  </div>
 </section>
 
 <!-- ================= ПАЗЛЫ ================= -->
@@ -367,6 +399,12 @@ ru: {
   "rules.demo2t": "Демонстрация: радиус взрыва",
   "rules.demo2d": "Ферзь d3 берёт пешку e4 — взрыв убивает коня f5 рядом! Ферзь тоже гибнет.",
   "btn.show": "▶ Показать", "btn.reset": "↺ Сброс", "btn.hint": "💡 Подсказка", "btn.skip": "Пропустить ⏭",
+  "tab.trainer": "🏋️ Тренажёр",
+  "tr.title": "🏋️ Тренажёр атомных шахмат",
+  "tr.subtitle": "Упражнения в духе lichess.org/learn — играй сам и достигай цели! Ты управляешь обеими сторонами.",
+  "tr.list": "Упражнения:", "tr.exercise": "Упражнение", "tr.youmove": "Ходи обеими сторонами", "tr.moves": "Ходов",
+  "tr.done": "Успех! Цель достигнута 🎉", "tr.next": "Следующее →", "tr.progress": "Пройдено",
+  "tr.how": "Клик по фигуре → клик по клетке. Цель — сверху. Если застрял — «Сброс».",
   "lessons.title": "🎓 Интерактивные уроки (проверено движком)",
   "lessons.interactive": "Доска интерактивная: кликай по фигурам, чтобы ходить и проверять идеи.",
   "lessons.boom-basic.t": "Взятие = взрыв",
@@ -442,6 +480,12 @@ en: {
   "rules.demo2t": "Demo: blast radius",
   "rules.demo2d": "The queen on d3 takes the pawn e4 — the blast kills the knight on f5 nearby! The queen dies too.",
   "btn.show": "▶ Show", "btn.reset": "↺ Reset", "btn.hint": "💡 Hint", "btn.skip": "Skip ⏭",
+  "tab.trainer": "🏋️ Trainer",
+  "tr.title": "🏋️ Atomic chess trainer",
+  "tr.subtitle": "Exercises in the spirit of lichess.org/learn — play solo, reach the goal. You control both sides!",
+  "tr.list": "Exercises:", "tr.exercise": "Exercise", "tr.youmove": "Play both sides", "tr.moves": "Moves",
+  "tr.done": "Success! Goal reached 🎉", "tr.next": "Next →", "tr.progress": "Completed",
+  "tr.how": "Click a piece → click a square. The goal is at the top. Stuck? Use Reset.",
   "lessons.title": "🎓 Interactive lessons (engine-verified)",
   "lessons.interactive": "The board is interactive: click pieces to move and test ideas.",
   "lessons.boom-basic.t": "Capture = explosion",
@@ -948,6 +992,91 @@ function courseReset(id) {
   if (lb) lb.textContent = "";
 }
 
+/* ================= ТРЕНАЖЁР ================= */
+let trIdx = 0, trSt = null, trSel = null, trLegal = [], trLast = null, trMoves = 0, trInitB = 0;
+let trDoneL = [];
+try { trDoneL = JSON.parse(localStorage.getItem("atTrDone") || "[]"); } catch (e) { trDoneL = []; }
+function trTitle(ex) { return LANG === "en" ? ex.title_en : ex.title_ru; }
+function trGoal(ex) { return LANG === "en" ? ex.goal_en : ex.goal_ru; }
+function renderTrainer() {
+  const list = document.getElementById("trList");
+  if (!list) return;
+  list.innerHTML = "";
+  DATA.exercises.forEach((ex, i) => {
+    const d = document.createElement("div");
+    d.className = "gameitem" + (i === trIdx ? " act" : "");
+    d.innerHTML = `<b>${ex.num}. ${trTitle(ex)}</b>${trDoneL.includes(ex.id) ? " ✅" : ""}`;
+    d.onclick = () => { trIdx = i; trLoad(); };
+    list.appendChild(d);
+  });
+  const doneN = DATA.exercises.filter(x => trDoneL.includes(x.id)).length;
+  document.getElementById("trProgress").textContent = LANG === "en"
+    ? `Completed ${doneN} / ${DATA.exercises.length}` : `Пройдено ${doneN} из ${DATA.exercises.length}`;
+}
+function trTexts() {
+  const ex = DATA.exercises[trIdx];
+  document.getElementById("trNum").textContent = trIdx + 1;
+  document.getElementById("trTotal").textContent = DATA.exercises.length;
+  document.getElementById("trGoal").textContent = trGoal(ex);
+}
+function trLoad() {
+  const ex = DATA.exercises[trIdx];
+  trSt = parseFEN(ex.fen);
+  trLegal = genLegal(trSt);
+  trSel = null; trLast = null; trMoves = 0;
+  trInitB = [...trSt.b].filter(p => p && !isW(p) && p.toUpperCase() !== "P").length;
+  renderTrainer();
+  trTexts();
+  trDraw(null);
+  document.getElementById("trMsg").innerHTML = "";
+}
+function trDraw(sel) {
+  drawBoard(document.getElementById("trBoard"), trSt, { sel, legal: trLegal, canMove: true,
+    onTarget: trTarget, onSelect: i => { trSel = i; trDraw(i); } });
+}
+function trTarget(idx) {
+  const cand = trLegal.filter(m => m.from === trSel && m.to === idx);
+  if (!cand.length) { trSel = null; trDraw(null); return; }
+  const mv = cand.sort((a, b) => (b.promo ? 1 : 0) - (a.promo ? 1 : 0))[0];
+  trLast = { to: idx, promo: mv.promo || null, captured: !!trSt.b[idx], exploded: [] };
+  const exploded = applyMove(trSt, mv);
+  trLast.exploded = exploded;
+  trMoves++;
+  trLegal = genLegal(trSt);
+  beep(exploded.length ? "boom" : "move");
+  trDraw(null);
+  const lbl = document.getElementById("trLbl");
+  if (lbl) lbl.textContent = `${uciOf(mv)} · ${T("tr.moves")}: ${trMoves}` + (exploded.length ? " 💥" : "");
+  if (trCheckGoal()) trSuccess();
+}
+function trCheckGoal() {
+  const c = DATA.exercises[trIdx].check;
+  if (c.kind === "capture-sq") {
+    const sqIdx = (c.sq.charCodeAt(0) - 97) + (parseInt(c.sq[1]) - 1) * 8;
+    return !!(trLast && trLast.captured && trLast.to === sqIdx);
+  }
+  if (c.kind === "destroy") {
+    const now = [...trSt.b].filter(p => p && !isW(p) && p.toUpperCase() !== "P").length;
+    return (trInitB - now) >= c.n;
+  }
+  if (c.kind === "boom-king") return kingSq(trSt, "b") === -1;
+  if (c.kind === "mate") return gameStatus(trSt) === "mate-loss";
+  if (c.kind === "promote") return !!(trLast && trLast.promo === "Q");
+  if (c.kind === "reach") {
+    const sq = (c.sq.charCodeAt(0) - 97) + (parseInt(c.sq[1]) - 1) * 8;
+    return trSt.b[sq] === "R";
+  }
+  return false;
+}
+function trSuccess() {
+  const ex = DATA.exercises[trIdx];
+  if (!trDoneL.includes(ex.id)) { trDoneL.push(ex.id); localStorage.setItem("atTrDone", JSON.stringify(trDoneL)); }
+  renderTrainer();
+  document.getElementById("trMsg").innerHTML = `<div class="note ok">🎉 ${T("tr.done")} <button class="btn main" onclick="trNext()">${T("tr.next")}</button></div>`;
+}
+function trReset() { trLoad(); }
+function trNext() { trIdx = (trIdx + 1) % DATA.exercises.length; trLoad(); }
+
 /* ================= ПАЗЛЫ ================= */
 const PZ_TYPES = {
   boom:     { ru: "💥 Взрыв короля", en: "💥 King explosion", lvl: 1 },
@@ -1345,6 +1474,8 @@ async function loadMyGames() {
 }
 
 /* ================= СТАРТ ================= */
+renderTrainer();
+trLoad();
 document.querySelectorAll("#pzFilters .srcbtn").forEach(b => b.onclick = () => {
   document.querySelectorAll("#pzFilters .srcbtn").forEach(x => x.classList.remove("act"));
   b.classList.add("act");

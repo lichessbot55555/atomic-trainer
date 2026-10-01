@@ -297,7 +297,80 @@ lessons.append({"id":"real-mate","fen":mate_fen,"moves":["h3f1"],
 
 print(f"  Уроков проверено: {len(lessons)}")
 
-print("== 6. Курс «Моя атомная система» ==")
+print("== 6c. Упражнения тренажёра (в стиле lichess learn) ==")
+EXERCISES = [
+ {"id": "ex-first-boom", "fen": "k7/8/8/8/4p3/3P4/8/K7 w - - 0 1", "num": 1,
+  "title_ru": "Первый взрыв", "title_en": "The first explosion",
+  "goal_ru": "Возьми ЧЁРНУЮ пешку e4 своей пешкой d3 — обе исчезнут во взрыве! Ходи только БЕЛЫМИ.",
+  "goal_en": "Capture the BLACK pawn on e4 with your pawn d3 — both vanish in the blast! Move WHITE only.",
+  "check": {"kind": "capture-sq", "sq": "e4"}},
+ {"id": "ex-double", "fen": "k7/8/8/4qn2/4p3/3Q4/8/1K6 w - - 0 1", "num": 2,
+  "title_ru": "Двойной удар", "title_en": "Double strike",
+  "goal_ru": "Ферзь берёт пешку e4 — взрыв уничтожает ферзя e5 и коня f5! Уничтожь 2 чёрные фигуры одним взрывом.",
+  "goal_en": "The queen takes the pawn on e4 — the blast destroys the queen e5 and knight f5! Destroy 2 black pieces with one capture.",
+  "check": {"kind": "destroy", "n": 2}},
+ {"id": "ex-triple", "fen": "k7/8/8/4qn2/4pr2/3Q4/8/1K6 w - - 0 1", "num": 3,
+  "title_ru": "Полная зачистка", "title_en": "Full cleanup",
+  "goal_ru": "Один взрыв на e4 уничтожает ферзя e5, коня f5 и ладью f4! Уничтожь все 3 чёрные фигуры одним ударом.",
+  "goal_en": "One blast on e4 destroys the queen e5, knight f5 and rook f4! Destroy all 3 black pieces in a single strike.",
+  "check": {"kind": "destroy", "n": 3}},
+ {"id": "ex-boom-king", "fen": "6k1/5p2/8/8/8/1Q6/8/K7 w - - 0 1", "num": 4,
+  "title_ru": "Взрыв короля", "title_en": "King explosion",
+  "goal_ru": "Ферзь бьёт пешку f7 — взрыв уничтожает короля g8! Это победа!",
+  "goal_en": "The queen captures the pawn on f7 — the blast kills the king on g8! That is victory!",
+  "check": {"kind": "boom-king"}},
+ {"id": "ex-promote", "fen": "k7/1P6/8/8/8/8/8/K7 w - - 0 1", "num": 5,
+  "title_ru": "Пешка становится ферзём", "title_en": "Pawn becomes a queen",
+  "goal_ru": "Проведи пешку b7 на b8 и преврати её в ФЕРЗЯ.",
+  "goal_en": "Push the pawn from b7 to b8 and promote it to a QUEEN.",
+  "check": {"kind": "promote"}},
+ {"id": "ex-quiet-mate", "fen": "6k1/8/5KQ1/8/8/8/8/8 w - - 0 1", "num": 6,
+  "title_ru": "Тихий мат ферзём", "title_en": "Quiet queen mate",
+  "goal_ru": "Поставь мат ферзём. Поле g7 защищает твой же король f6!",
+  "goal_en": "Deliver mate with the queen. Your king on f6 guards g7!",
+  "check": {"kind": "mate"}},
+ {"id": "ex-maneuver", "fen": "7k/7K/7p/8/8/8/8/7R w - - 0 1", "num": 7,
+  "title_ru": "Манёвр ладьи", "title_en": "The rook maneuver",
+  "goal_ru": "Пешка h6 взрывоопасна — брать нельзя! Проведи ладью с h1 на a1 и не подорвись.",
+  "goal_en": "The pawn on h6 is explosive — do not capture it! Take the rook from h1 to a1 without blowing yourself up.",
+  "check": {"kind": "reach", "sq": "a1", "piece": "R"}},
+ {"id": "ex-kill-attacker", "fen": "7k/8/8/8/5n2/6PR/8/7K w - - 0 1", "num": 8,
+  "title_ru": "Убей нападающего", "title_en": "Kill the attacker",
+  "goal_ru": "Конь f4 напал на ладью h3! Съешь его пешкой g3 — взрыв уничтожит коня, а пешка встанет на f4.",
+  "goal_en": "The knight on f4 attacked the rook h3! Capture it with the g3 pawn — the blast kills the knight and your pawn lands on f4.",
+  "check": {"kind": "destroy", "n": 1}}
+]
+# проверки всех упражнений движком
+_b = chess.variant.AtomicBoard(EXERCISES[0]["fen"])
+assert chess.Move.from_uci("d3e4") in _b.legal_moves
+_b = chess.variant.AtomicBoard(EXERCISES[1]["fen"])
+_m = chess.Move.from_uci("d3e4"); assert _m in _b.legal_moves
+_b.push(_m)
+assert _b.piece_at(chess.parse_square("e5")) is None and _b.piece_at(chess.parse_square("f5")) is None
+_b = chess.variant.AtomicBoard(EXERCISES[2]["fen"])
+_m = chess.Move.from_uci("d3e4"); assert _m in _b.legal_moves
+_b.push(_m)
+assert _b.piece_at(chess.parse_square("e5")) is None and _b.piece_at(chess.parse_square("f5")) is None and _b.piece_at(chess.parse_square("f4")) is None
+_b = chess.variant.AtomicBoard(EXERCISES[3]["fen"])
+_m = chess.Move.from_uci("b3f7"); assert _m in _b.legal_moves
+_b.push(_m)
+assert _b.king(chess.BLACK) is None, "король должен взорваться"
+_b = chess.variant.AtomicBoard(EXERCISES[4]["fen"])
+_m = chess.Move.from_uci("b7b8q"); assert _m in _b.legal_moves
+_b.push(_m)
+assert _b.piece_at(chess.parse_square("b8")).symbol() == "Q"
+_b = chess.variant.AtomicBoard(EXERCISES[5]["fen"])
+assert _b.is_valid() and not _b.is_check()
+_m = chess.Move.from_uci("g6g7"); assert _m in _b.legal_moves
+_b = chess.variant.AtomicBoard(EXERCISES[6]["fen"])
+_m = chess.Move.from_uci("h1a1"); assert _m in _b.legal_moves
+assert chess.Move.from_uci("h1h6") not in _b.legal_moves, "Rxh6 должен быть запрещён"
+_b = chess.variant.AtomicBoard(EXERCISES[7]["fen"])
+_m = chess.Move.from_uci("g3f4"); assert _m in _b.legal_moves
+_b.push(_m)
+assert _b.piece_at(chess.parse_square("f4")) is None, "конь должен исчезнуть"
+assert _b.piece_at(chess.parse_square("h3")).symbol() == "R", "ладья h3 цела"
+print(f"  Упражнений: {len(EXERCISES)} — все проверены движком")
 L = {l["id"]: l for l in lessons}
 
 # --- новые проверки для глав ---
@@ -436,7 +509,7 @@ for g in games:
 top_open = openings.most_common(8)
 
 print("== 7. Сохранение data.js ==")
-out = {"games": games, "puzzles": puzzles, "lessons": lessons, "topOpen": top_open, "course": COURSE, "openings": DATA_OPENINGS}
+out = {"games": games, "puzzles": puzzles, "lessons": lessons, "topOpen": top_open, "course": COURSE, "openings": DATA_OPENINGS, "exercises": EXERCISES}
 with open(os.path.join(BASE, "data.js"), "w", encoding="utf-8") as f:
     f.write("const DATA = " + json.dumps(out, ensure_ascii=False, separators=(",", ":")) + ";")
 print(f"  games={len(games)}, puzzles={len(puzzles)}, lessons={len(lessons)}, size={os.path.getsize(os.path.join(BASE,'data.js'))//1024}KB")
