@@ -10,6 +10,8 @@
 <meta property="og:description" content="Правила атомных шахмат с нуля, интерактивные уроки, 26 задач и 54 партии топ-игроков Lichess. Бесплатно, без регистрации.">
 <meta property="og:type" content="website">
 <meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="i3QPKw1VZIeYYHLvrKVS_rrnwiqLqTDWheUEJQv3TfU">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♟️</text></svg>">
 <script src="data.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -221,7 +223,14 @@
     <span class="score" id="pzScore">✅ 0 &nbsp; ❌ 0</span>
     <span class="pz-tag" id="pzSolved">…</span>
   </div>
-  <div class="btnrow" id="pzFilters" style="margin:8px 0 0"></div>
+  <div class="btnrow" id="pzFilters" style="margin:8px 0 0">
+    <button class="srcbtn act" data-pf="all" data-i18n="pz.f.all"></button>
+    <button class="srcbtn" data-pf="boom" data-i18n="pz.f.boom"></button>
+    <button class="srcbtn" data-pf="mate" data-i18n="pz.f.mate"></button>
+    <button class="srcbtn" data-pf="mate2" data-i18n="pz.f.mate2"></button>
+    <button class="srcbtn" data-pf="material" data-i18n="pz.f.material"></button>
+    <button class="srcbtn" data-pf="defense" data-i18n="pz.f.defense"></button>
+  </div>
   <div class="cols" style="margin-top:14px">
     <div class="col">
       <div class="boardwrap"><div id="pzBoard" class="board"></div></div>
