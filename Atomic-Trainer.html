@@ -140,14 +140,17 @@ const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.
 </header>
 
 <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(1,4,9,.72); z-index:50; align-items:center; justify-content:center;">
-  <div style="background:#161b22; border:1px solid #30363d; border-radius:14px; padding:24px; width:min(420px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.6);">
+  <div style="background:#161b22; border:1px solid #30363d; border-radius:14px; padding:24px; width:min(440px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.6);">
     <h3 style="margin-bottom:6px; font-size:20px" data-i18n="auth.title"></h3>
     <p class="muted" style="margin-bottom:14px" data-i18n="auth.desc"></p>
-    <input id="nickInput" placeholder="F55555" onkeydown="if(event.key==='Enter') doLogin()"
-      style="width:100%; padding:11px 14px; font-size:15px; background:#0d1117; color:#e6edf3; border:1px solid #30363d; border-radius:8px; outline:none; box-sizing:border-box;">
-    <div class="btnrow" style="justify-content:flex-end; margin-top:16px">
+    <button class="btn main" onclick="startOAuth()" style="width:100%; padding:12px; font-size:16px; background:#1f6feb; border-color:#388bfd; margin-bottom:10px;">
+      🔐 Sign in with Lichess
+    </button>
+    <p class="muted" style="font-size:12px; text-align:center; margin-top:4px;">
+      Вас перенаправит на lichess.org для авторизации
+    </p>
+    <div class="btnrow" style="justify-content:flex-end; margin-top:14px">
       <button class="btn" onclick="closeLogin()" data-i18n="auth.cancel"></button>
-      <button class="btn main" onclick="doLogin()" data-i18n="auth.enterbtn"></button>
     </div>
   </div>
 </div>
@@ -1416,42 +1419,129 @@ document.getElementById("pgnFile").addEventListener("change", async ev => {
   refreshList();
 });
 
-/* ================= ВХОД ПО НИКУ LICHESS ================= */
+/* ================= ВХОД ЧЕРЕЗ LICHESS (OAuth2 + PKCE) ================= */
+const OAUTH_CLIENT_KEY = "atClientId";
+function generateRandomString(length) {
+  const arr = new Uint8Array(length);
+  crypto.getRandomValues(arr);
+  return btoa(String.fromCharCode(...arr)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+async function generateChallenge(verifier) {
+  const data = new TextEncoder().encode(verifier);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return btoa(String.fromCharCode(...new Uint8Array(hash))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
 function openLogin() {
   document.getElementById("loginModal").style.display = "flex";
-  const inp = document.getElementById("nickInput");
-  inp.focus();
 }
 function closeLogin() { document.getElementById("loginModal").style.display = "none"; }
-function doLogin() {
-  const v = document.getElementById("nickInput").value.trim();
-  if (!v) return;
-  localStorage.setItem("atNick", v);
-  closeLogin();
+async function startOAuth() {
+  if (!crypto || !crypto.subtle) { alert("Нужен https (или localhost)"); return; }
+  let cid = localStorage.getItem(OAUTH_CLIENT_KEY);
+  if (!cid) {
+    cid = prompt(
+      "Первый вход — нужен Client ID от Lichess.\n\n" +
+      "Создайте приложение на:\nlichess.org/account/oauth/app\n\n" +
+      "Redirect URI:\n" + location.origin + location.pathname
+    );
+    if (!cid) return;
+    localStorage.setItem(OAUTH_CLIENT_KEY, cid.trim());
+  }
+  const verifier = generateRandomString(43);
+  const challenge = await generateChallenge(verifier);
+  const state = generateRandomString(16);
+  localStorage.setItem("oauth_verifier", verifier);
+  localStorage.setItem("oauth_state", state);
+  const p = new URLSearchParams({
+    response_type: "code",
+    client_id: cid,
+    redirect_uri: location.origin + location.pathname,
+    scope: "preference:read",
+    code_challenge: challenge,
+    code_challenge_method: "S256",
+    state: state
+  });
+  location.href = "https://lichess.org/oauth?" + p.toString();
+}
+async function doLogin() {
+  await startOAuth();
+}
+async function handleOAuthCallback() {
+  const q = new URLSearchParams(location.search);
+  const code = q.get("code");
+  if (!code) return;
+  const state = q.get("state");
+  if (state !== localStorage.getItem("oauth_state")) {
+    console.warn("State mismatch");
+    history.replaceState(null, "", location.pathname);
+    return;
+  }
+  localStorage.removeItem("oauth_state");
+  localStorage.removeItem("oauth_verifier");
+  const body = new URLSearchParams({
+    grant_type: "authorization_code",
+    code: code,
+    client_id: localStorage.getItem(OAUTH_CLIENT_KEY),
+    code_verifier: localStorage.getItem("oauth_verifier") || "",
+    redirect_uri: location.origin + location.pathname
+  });
+  try {
+    const r = await fetch("https://lichess.org/api/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body.toString()
+    });
+    const d = await r.json();
+    if (d.access_token) {
+      localStorage.setItem("atToken", d.access_token);
+    }
+  } catch (e) {
+    console.warn("Token exchange failed:", e);
+  }
+  history.replaceState(null, "", location.pathname);
   renderAuth();
-  loadMyGames();
 }
 function lichLogout() {
+  localStorage.removeItem("atToken");
   localStorage.removeItem("atNick");
   renderAuth();
   refreshList();
 }
 async function renderAuth() {
   const area = document.getElementById("authArea"), chip = document.getElementById("userChip");
-  const nick = localStorage.getItem("atNick");
-  if (!nick) { area.style.display = "block"; chip.style.display = "none"; return; }
+  const token = localStorage.getItem("atToken");
+  if (!token) { area.style.display = "block"; chip.style.display = "none"; return; }
   area.style.display = "none"; chip.style.display = "flex";
-  document.getElementById("uName").textContent = nick;
-  document.getElementById("uRating").textContent = "…";
   try {
-    const r = await fetch("https://lichess.org/api/user/" + nick);
-    if (!r.ok) throw new Error(r.status);
+    const r = await fetch("https://lichess.org/api/account", { headers: { Authorization: "Bearer " + token } });
+    if (!r.ok) { lichLogout(); return; }
     const me = await r.json();
+    document.getElementById("uName").textContent = me.username;
+    localStorage.setItem("atNick", me.username);
     const at = me.perfs && me.perfs.atomic ? me.perfs.atomic.rating : null;
-    document.getElementById("uRating").textContent = at ? ("☢️ " + at) : "";
+    document.getElementById("uRating").textContent = at ? ("\u2622\ufe0f " + at) : "";
   } catch (e) {
     document.getElementById("uRating").textContent = "";
   }
+}
+async function loadMyGames() {
+  const nick = localStorage.getItem("atNick");
+  if (!nick) return;
+  const btn = document.getElementById("myGamesBtn");
+  btn.disabled = true;
+  try {
+    const r = await fetch("https://lichess.org/api/games/user/" + nick + "?perfType=atomic&max=25");
+    if (!r.ok) throw new Error(r.status);
+    const pgn = await r.text();
+    const res = importPgnText(pgn, "import");
+    gFilter = "import";
+    document.querySelectorAll(".srcbtn").forEach(x => x.classList.toggle("act", x.dataset.src === "import"));
+    refreshList();
+    document.getElementById("gInfo").textContent = (LANG === "en" ? "Loaded " : "\u0417\u0430\u0433\u0440\u0443\u0436\u0435\u043d\u043e ") + res.added + (LANG === "en" ? " games" : " \u043f\u0430\u0440\u0442\u0438\u0439");
+  } catch (e) {
+    document.getElementById("gInfo").textContent = LANG === "en" ? "Failed to load" : "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c";
+  }
+  btn.disabled = false;
 }
 async function loadMyGames() {
   const nick = localStorage.getItem("atNick");
@@ -1476,6 +1566,7 @@ async function loadMyGames() {
 }
 
 /* ================= СТАРТ ================= */
+handleOAuthCallback();
 renderTrainer();
 trLoad();
 document.querySelectorAll("#pzFilters .srcbtn").forEach(b => b.onclick = () => {
