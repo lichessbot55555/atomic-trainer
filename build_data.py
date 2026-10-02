@@ -354,7 +354,7 @@ EXERCISES = [
   "goal_ru": "Сделай короткую рокировку: король e1 идёт на g1, ладья h1 перескакивает на f1.",
   "goal_en": "Castle short: the king from e1 goes to g1, the rook from h1 jumps to f1.",
   "check": {"kind": "reach", "sq": "f1", "piece": "R"}},
- {"id": "ex-double-boom", "fen": "6k1/5ppp/8/4q3/8/3B4/8/5K2 w - - 0 1", "num": 12,
+ {"id": "ex-double-boom", "fen": "6k1/5ppp/8/4q3/8/2B5/8/5K2 w - - 0 1", "num": 12,
   "title_ru": "Комбо-взрыв", "title_en": "Combo explosion",
   "goal_ru": "Возьми ФЕРЗЯ e5 слоном d3 — взрыв уничтожит их обоих. Пешки f7, g7, h7 выживут (пешки не взрываются), но чёрные потеряют ферзя!",
   "goal_en": "Capture the QUEEN on e5 with the bishop from d3 — the blast destroys both of them. Pawns f7, g7, h7 survive (pawns don't explode), but black loses their queen!",
@@ -410,7 +410,7 @@ _b = _check_ex(EXERCISES[9]["fen"], ["e5d6"], "ex-en-passant")  # e5:d6 ep
 assert _b.piece_at(chess.parse_square("d5")) is None, "битая пешка d5 должна исчезнуть"
 assert _b.piece_at(chess.parse_square("d6")) is None, "бьющая пешка тоже гибнет"
 _check_ex(EXERCISES[10]["fen"], ["e1g1"], "ex-castle")  # O-O
-_b = _check_ex(EXERCISES[11]["fen"], ["d3e5"], "ex-double-boom")
+_b = _check_ex(EXERCISES[11]["fen"], ["c3e5"], "ex-double-boom")
 assert _b.piece_at(chess.parse_square("e5")) is None, "ферзь и слон должны исчезнуть"
 _check_ex(EXERCISES[12]["fen"], ["h2h3"], "ex-save-king")  # h2-h3
 print("  Новые упражнения (9-13) проверены")
