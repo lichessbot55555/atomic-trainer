@@ -338,7 +338,32 @@ EXERCISES = [
   "title_ru": "Убей нападающего", "title_en": "Kill the attacker",
   "goal_ru": "Конь f4 напал на ладью h3! Возьми его пешкой g3 — ВЗРЫВ УНИЧТОЖИТ ОБЕИХ: и коня, и твою пешку. Размен в твою пользу!",
   "goal_en": "The knight on f4 attacked the rook h3! Capture it with the g3 pawn — THE BLAST DESTROYS BOTH: the knight and your pawn. A trade in your favor.",
-  "check": {"kind": "destroy", "n": 1}}
+  "check": {"kind": "destroy", "n": 1}},
+ {"id": "ex-pawn-armor", "fen": "6k1/8/8/3p1p2/4p3/3P2P1/8/6K1 w - - 0 1", "num": 9,
+  "title_ru": "Пешки — броня", "title_en": "Pawns are armor",
+  "goal_ru": "Уничтожь чёрную пешку e4, но НЕ тронь пешки d5 и f5 — они НЕ взрываются! Ходи d3:e4 или g3:e4.",
+  "goal_en": "Destroy the black pawn on e4, but do NOT touch d5 and f5 — pawns do NOT explode! Play d3:e4 or g3:e4.",
+  "check": {"kind": "capture-sq", "sq": "e4"}},
+ {"id": "ex-en-passant", "fen": "6k1/8/8/3pP3/8/8/8/6K1 w - d6 0 1", "num": 10,
+  "title_ru": "Взятие на проходе", "title_en": "En passant",
+  "goal_ru": "Чёрная пешка только что сходила d7-d5. Возьми её на проходе: пешка e5 бьёт на d6! Обе исчезнут во взрыве.",
+  "goal_en": "The black pawn just moved d7-d5. Capture it en passant: the e5 pawn takes on d6! Both vanish in the blast.",
+  "check": {"kind": "capture-sq", "sq": "d6"}},
+ {"id": "ex-castle", "fen": "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1", "num": 11,
+  "title_ru": "Рокировка", "title_en": "Castling",
+  "goal_ru": "Сделай короткую рокировку: король e1 идёт на g1, ладья h1 перескакивает на f1.",
+  "goal_en": "Castle short: the king from e1 goes to g1, the rook from h1 jumps to f1.",
+  "check": {"kind": "reach", "sq": "f1", "piece": "R"}},
+ {"id": "ex-double-boom", "fen": "6k1/5ppp/8/4q3/8/3B4/8/5K2 w - - 0 1", "num": 12,
+  "title_ru": "Комбо-взрыв", "title_en": "Combo explosion",
+  "goal_ru": "Возьми ФЕРЗЯ e5 слоном d3 — взрыв уничтожит их обоих. Пешки f7, g7, h7 выживут (пешки не взрываются), но чёрные потеряют ферзя!",
+  "goal_en": "Capture the QUEEN on e5 with the bishop from d3 — the blast destroys both of them. Pawns f7, g7, h7 survive (pawns don't explode), but black loses their queen!",
+  "check": {"kind": "destroy", "n": 1}},
+ {"id": "ex-save-king", "fen": "6k1/5ppp/8/8/8/8/5PPP/5K1R w - - 0 1", "num": 13,
+  "title_ru": "Укрой короля", "title_en": "Shelter the king",
+  "goal_ru": "Чёрные вот-вот взорвут твоего короля через h7! Сходи h2-h3 — построй стену, которая усложнит подрыв.",
+  "goal_en": "Black is about to explode your king through h7! Play h2-h3 — build a wall that makes the demolition harder.",
+  "check": {"kind": "reach", "sq": "h3", "piece": "P"}}
 ]
 # проверки всех упражнений движком
 _b = chess.variant.AtomicBoard(EXERCISES[0]["fen"])
@@ -371,6 +396,24 @@ _b.push(_m)
 assert _b.piece_at(chess.parse_square("f4")) is None, "конь должен исчезнуть"
 assert _b.piece_at(chess.parse_square("h3")).symbol() == "R", "ладья h3 цела"
 print(f"  Упражнений: {len(EXERCISES)} — все проверены движком")
+# дополнительные проверки новых упражнений
+def _check_ex(fen, moves, name):
+    b = chess.variant.AtomicBoard(fen)
+    for u in moves:
+        m = chess.Move.from_uci(u)
+        assert m in b.legal_moves, f"{name}: {u} нелегален"
+        b.push(m)
+    return b
+
+_check_ex(EXERCISES[8]["fen"], ["d3e4"], "ex-pawn-armor")  # d3:e4
+_b = _check_ex(EXERCISES[9]["fen"], ["e5d6"], "ex-en-passant")  # e5:d6 ep
+assert _b.piece_at(chess.parse_square("d5")) is None, "битая пешка d5 должна исчезнуть"
+assert _b.piece_at(chess.parse_square("d6")) is None, "бьющая пешка тоже гибнет"
+_check_ex(EXERCISES[10]["fen"], ["e1g1"], "ex-castle")  # O-O
+_b = _check_ex(EXERCISES[11]["fen"], ["d3e5"], "ex-double-boom")
+assert _b.piece_at(chess.parse_square("e5")) is None, "ферзь и слон должны исчезнуть"
+_check_ex(EXERCISES[12]["fen"], ["h2h3"], "ex-save-king")  # h2-h3
+print("  Новые упражнения (9-13) проверены")
 L = {l["id"]: l for l in lessons}
 
 # --- новые проверки для глав ---
