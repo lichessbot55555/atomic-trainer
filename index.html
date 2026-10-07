@@ -1430,10 +1430,10 @@ document.getElementById("pgnFile").addEventListener("change", async ev => {
 });
 
 /* ================= ВХОД ЧЕРЕЗ LICHESS — как на stepchess.ru =================
-   Владелец сайта ОДИН раз создаёт приложение на lichess.org/account/oauth/app
-   (Redirect URI: https://lichessbot55555.github.io/atomic-trainer/) и вписывает
-   Client ID в константу ниже — тогда все посетители входят в один клик. */
-const LICHESS_CLIENT_ID = ""; // ← вписать Client ID сюда
+   Lichess поддерживает НЕзарегистрированные публичные OAuth-клиенты (PKCE):
+   client_id может быть любой уникальной строкой, регистрация приложения не нужна
+   (страница /account/oauth/app удалена — поэтому и не находится). */
+const LICHESS_CLIENT_ID = "atomic-trainer"; // публичный клиент, менять не нужно
 const OAUTH_CLIENT_KEY = "atClientId";
 
 function generateRandomString(length) {
