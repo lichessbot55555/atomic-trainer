@@ -206,7 +206,6 @@
   <button data-p="puzzles" data-i18n="tab.puzzles"></button>
   <button data-p="games" data-i18n="tab.games"></button>
   <button data-p="import" data-i18n="tab.import"></button>
-  <button data-p="about" data-i18n="tab.about"></button>
 </nav>
 
 <!-- ================= ПРАВИЛА ================= -->
@@ -383,35 +382,8 @@
 </section>
 
 <!-- ================= О РЕЙТИНГЕ ================= -->
-<section class="page" id="p-about">
-  <h2 class="sect" data-i18n="ab.title"></h2>
-  <div class="cols">
-    <div class="col">
-      <div class="card">
-        <span class="big">🏆</span>
-        <p data-i18n="ab.card"></p>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <button class="btn" id="lbRefresh" onclick="refreshLB(true)" data-i18n="ab.refresh"></button>
-        <span class="badge" id="lbUpdated"></span>
-        <span class="badge" data-i18n="ab.autorefresh"></span>
-      </div>
-      <table class="lb" id="lbTable" style="margin-top:10px">
-        <tr><th>#</th><th data-i18n="ab.player"></th><th data-i18n="ab.rating"></th></tr>
-      </table>
-    </div>
-    <div class="col">
-      <div class="card">
-        <b data-i18n="ab.princ"></b>
-        <div class="rule" data-i18n-html="ab.p1"></div>
-        <div class="rule" data-i18n-html="ab.p2"></div>
-        <div class="rule" data-i18n-html="ab.p3"></div>
-        <div class="rule" data-i18n-html="ab.p4"></div>
-        <div class="rule" data-i18n-html="ab.p5"></div>
-        <div class="rule" data-i18n-html="ab.p6"></div>
-      </div>
-    </div>
-  </div>
+<section class="page" id="p-about" style="display:none">
+  <!-- Раздел «О рейтинге» удалён по просьбе владельца -->
 </section>
 </div>
 
@@ -607,7 +579,7 @@ function applyLang() {
   document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = T(el.dataset.i18nHtml));
   document.getElementById("langRu").classList.toggle("act", LANG === "ru");
   document.getElementById("langEn").classList.toggle("act", LANG === "en");
-  renderCourse(); renderLB(); renderOpenings();
+  renderCourse(); renderOpenings();
   document.getElementById("gPlay").textContent = gTimer ? T("g.autostop") : T("g.autoplay");
   document.getElementById("gInfo").textContent = gCur < 0 ? T("g.pick") : document.getElementById("gInfo").textContent;
   pzRenderTexts();
@@ -1492,38 +1464,7 @@ document.getElementById("statGames").textContent = allGames.length;
 document.getElementById("statPz").textContent = DATA.puzzles.length;
 console.log(`Self-test: games ${stOK}/${stOK+stFail}, puzzles clickable ${pzClickable}/${DATA.puzzles.length}`);
 
-/* ================= ТОП-20 С LICHESS (обновление каждые 30 мин) ================= */
-let lbCache = null;
-try { lbCache = JSON.parse(localStorage.getItem("atLB") || "null"); } catch (e) {}
-function renderLB() {
-  const table = document.getElementById("lbTable");
-  table.innerHTML = `<tr><th>#</th><th>${T("ab.player")}</th><th>${T("ab.rating")}</th></tr>`;
-  if (!lbCache || !lbCache.users || !lbCache.users.length) {
-    table.innerHTML += `<tr><td colspan="3" class="muted">${T("ab.updating")}</td></tr>`;
-    return;
-  }
-  lbCache.users.forEach((u, i) => {
-    const me = u.id.toLowerCase() === "f55555";
-    table.innerHTML += `<tr class="${me ? "me" : ""}"><td>${i + 1}</td><td>${u.name}${me ? " " + T("ab.you") : ""}</td><td>${u.rating}</td></tr>`;
-  });
-  const mins = Math.floor((Date.now() - lbCache.t) / 60000);
-  document.getElementById("lbUpdated").textContent = T("ab.updated") + " " + (mins < 1 ? T("ab.justnow") : mins + " " + T("ab.minago"));
-}
-async function refreshLB(manual) {
-  if (manual) document.getElementById("lbUpdated").textContent = T("ab.updating");
-  try {
-    const r = await fetch("https://lichess.org/api/player/top/20/atomic");
-    if (!r.ok) throw new Error(r.status);
-    const d = await r.json();
-    lbCache = { t: Date.now(), users: d.users.map(u => ({ id: u.id, name: u.username, rating: u.perfs.atomic ? u.perfs.atomic.rating : 0 }))
-      .sort((a, b) => b.rating - a.rating).slice(0, 20) };
-    localStorage.setItem("atLB", JSON.stringify(lbCache));
-    if (manual) console.log("LB updated");
-  } catch (e) {
-    if (manual) document.getElementById("lbUpdated").textContent = T("ab.fail");
-  }
-  renderLB();
-}
+/* ================= ТОП-20: раздел удалён (по просьбе владельца) ================= */
 
 /* ================= ТОП ДЕБЮТОВ ================= */
 function renderOpenings() {
@@ -1773,8 +1714,6 @@ document.addEventListener("keydown", ev => {
 DATA.puzzles.sort((a, b) => (a.lvl || 1) - (b.lvl || 1));
 pzLoad();
 refreshList();
-refreshLB(false);
-setInterval(() => refreshLB(false), 30 * 60 * 1000); // каждые 30 минут
 applyLang();
 renderAuth(); // вернувшийся вошедший пользователь: покажет чип и сам загрузит его партии
 </script>
