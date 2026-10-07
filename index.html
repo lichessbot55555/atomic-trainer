@@ -1526,8 +1526,7 @@ async function handleOAuthCallback() {
     if (d.access_token) {
       localStorage.setItem("atToken", d.access_token);
       closeLogin();
-      renderAuth();
-      loadMyGames();
+      renderAuth(); // внутри сам вызовет загрузку партий
     } else {
       openLogin();
       showLoginError(LANG === "en" ? "Authorization failed" : "Не удалось авторизоваться");
@@ -1556,6 +1555,8 @@ async function renderAuth() {
     localStorage.setItem("atNick", me.username);
     const at = me.perfs && me.perfs.atomic ? me.perfs.atomic.rating : null;
     document.getElementById("uRating").textContent = at ? ("\u2622\ufe0f " + at) : "";
+    // вошёл (или вернулся на сайт) → сразу грузим его партии автоматически
+    loadMyGames();
   } catch (e) {
     document.getElementById("uRating").textContent = "";
   }
@@ -1623,6 +1624,7 @@ refreshList();
 refreshLB(false);
 setInterval(() => refreshLB(false), 30 * 60 * 1000); // каждые 30 минут
 applyLang();
+renderAuth(); // вернувшийся вошедший пользователь: покажет чип и сам загрузит его партии
 </script>
 </body>
 </html>
