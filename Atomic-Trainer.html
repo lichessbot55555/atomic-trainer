@@ -144,11 +144,19 @@ const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.
     <h3 style="margin-bottom:6px; font-size:20px" data-i18n="auth.title"></h3>
     <p class="muted" style="margin-bottom:14px" data-i18n="auth.desc"></p>
     <button class="btn main" onclick="startOAuth()" style="width:100%; padding:12px; font-size:16px; background:#1f6feb; border-color:#388bfd; margin-bottom:10px;">
-      🔐 Sign in with Lichess
+      ♟️ <span data-i18n="auth.login"></span>
     </button>
-    <p class="muted" style="font-size:12px; text-align:center; margin-top:4px;">
-      Вас перенаправит на lichess.org для авторизации
-    </p>
+    <p class="muted" style="font-size:12px; text-align:center; margin-top:4px;" data-i18n="auth.trust"></p>
+    <div id="cidRow" style="display:none; margin-top:14px; padding-top:12px; border-top:1px dashed #30363d;">
+      <p class="muted" style="font-size:12px; margin-bottom:8px;">
+        <span data-i18n="auth.setup1"></span><br>
+        <a href="https://lichess.org/account/oauth/app" target="_blank" rel="noopener" style="color:#58a6ff">lichess.org/account/oauth/app</a><br>
+        Redirect URI: <code style="color:#79c0ff" id="cidUri"></code>
+      </p>
+      <input id="clientIdInput" placeholder="Client ID" onkeydown="if(event.key==='Enter') startOAuth()"
+        style="width:100%; padding:10px 12px; font-size:14px; background:#0d1117; color:#e6edf3; border:1px solid #30363d; border-radius:8px; outline:none; box-sizing:border-box;">
+    </div>
+    <p id="loginErr" style="display:none; color:#f85149; font-size:13px; margin-top:10px"></p>
     <div class="btnrow" style="justify-content:flex-end; margin-top:14px">
       <button class="btn" onclick="closeLogin()" data-i18n="auth.cancel"></button>
     </div>
@@ -387,7 +395,9 @@ ru: {
   "g.stats": "Статистика подборки", "g.white": "Белые", "g.black": "Чёрные", "g.draws": "Ничьи", "g.longest": "Самая длинная", "g.movesw": "ходов", "g.toppair": "Частая пара",
   "auth.login": "Войти через Lichess", "auth.logout": "Выйти", "auth.mygames": "Мои партии",
   "auth.title": "Вход — Lichess",
-  "auth.desc": "Введите ваш ник на Lichess. Пароль не нужен — сайт покажет ваш рейтинг и загрузит ваши атомные партии.",
+  "auth.desc": "Нажмите кнопку — вас перенаправит на lichess.org, где вы подтвердите вход. Пароль от Lichess мы не получаем.",
+  "auth.trust": "Пароль от Lichess мы не получаем — вы просто подтверждаете вход на lichess.org",
+  "auth.setup1": "Первый запуск: создайте приложение на",
   "auth.cancel": "Отмена", "auth.enterbtn": "Войти",
   "auth.welcome": "Вы вошли как",
   "rules.title": "📖 Атомные шахматы с нуля",
@@ -468,7 +478,9 @@ en: {
   "g.stats": "Selection stats", "g.white": "White", "g.black": "Black", "g.draws": "Draws", "g.longest": "Longest", "g.movesw": "moves", "g.toppair": "Common pair",
   "auth.login": "Sign in with Lichess", "auth.logout": "Log out", "auth.mygames": "My games",
   "auth.title": "Sign in — Lichess",
-  "auth.desc": "Enter your Lichess username. No password needed — the site will show your rating and load your atomic games.",
+  "auth.desc": "Click the button — you will be redirected to lichess.org to confirm. We never receive your Lichess password.",
+  "auth.trust": "We never receive your Lichess password — you just confirm the login on lichess.org",
+  "auth.setup1": "First launch: create an app at",
   "auth.cancel": "Cancel", "auth.enterbtn": "Sign in",
   "auth.welcome": "Signed in as",
   "rules.title": "📖 Atomic chess from zero",
@@ -1419,8 +1431,13 @@ document.getElementById("pgnFile").addEventListener("change", async ev => {
   refreshList();
 });
 
-/* ================= ВХОД ЧЕРЕЗ LICHESS (OAuth2 + PKCE) ================= */
+/* ================= ВХОД ЧЕРЕЗ LICHESS — как на stepchess.ru =================
+   Владелец сайта ОДИН раз создаёт приложение на lichess.org/account/oauth/app
+   (Redirect URI: https://lichessbot55555.github.io/atomic-trainer/) и вписывает
+   Client ID в константу ниже — тогда все посетители входят в один клик. */
+const LICHESS_CLIENT_ID = ""; // ← вписать Client ID сюда
 const OAUTH_CLIENT_KEY = "atClientId";
+
 function generateRandomString(length) {
   const arr = new Uint8Array(length);
   crypto.getRandomValues(arr);
@@ -1431,21 +1448,32 @@ async function generateChallenge(verifier) {
   const hash = await crypto.subtle.digest("SHA-256", data);
   return btoa(String.fromCharCode(...new Uint8Array(hash))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
+function getClientId() {
+  return (LICHESS_CLIENT_ID || localStorage.getItem(OAUTH_CLIENT_KEY) || "").trim();
+}
 function openLogin() {
   document.getElementById("loginModal").style.display = "flex";
+  document.getElementById("cidUri").textContent = location.origin + location.pathname;
 }
 function closeLogin() { document.getElementById("loginModal").style.display = "none"; }
+function showLoginError(msg) {
+  const el = document.getElementById("loginErr");
+  el.textContent = msg;
+  el.style.display = "block";
+}
 async function startOAuth() {
-  if (!crypto || !crypto.subtle) { alert("Нужен https (или localhost)"); return; }
-  let cid = localStorage.getItem(OAUTH_CLIENT_KEY);
+  document.getElementById("loginErr").style.display = "none";
+  if (!crypto || !crypto.subtle) { showLoginError("Нужен https (или localhost)"); return; }
+  let cid = getClientId();
   if (!cid) {
-    cid = prompt(
-      "Первый вход — нужен Client ID от Lichess.\n\n" +
-      "Создайте приложение на:\nlichess.org/account/oauth/app\n\n" +
-      "Redirect URI:\n" + location.origin + location.pathname
-    );
-    if (!cid) return;
-    localStorage.setItem(OAUTH_CLIENT_KEY, cid.trim());
+    // Приложение ещё не настроено: показываем форму первичной настройки
+    cid = (document.getElementById("clientIdInput").value || "").trim();
+    if (!cid) {
+      document.getElementById("cidRow").style.display = "block";
+      document.getElementById("clientIdInput").focus();
+      return;
+    }
+    localStorage.setItem(OAUTH_CLIENT_KEY, cid);
   }
   const verifier = generateRandomString(43);
   const challenge = await generateChallenge(verifier);
@@ -1470,19 +1498,24 @@ async function handleOAuthCallback() {
   const q = new URLSearchParams(location.search);
   const code = q.get("code");
   if (!code) return;
-  const state = q.get("state");
-  if (state !== localStorage.getItem("oauth_state")) {
-    console.warn("State mismatch");
-    history.replaceState(null, "", location.pathname);
-    return;
-  }
+  // читаем и чистим заранее — verifier нужен ниже, раньше его удаляли ДО чтения (баг)
+  const savedState = localStorage.getItem("oauth_state");
+  const verifier = localStorage.getItem("oauth_verifier") || "";
+  const cid = getClientId();
   localStorage.removeItem("oauth_state");
   localStorage.removeItem("oauth_verifier");
+  const state = q.get("state");
+  history.replaceState(null, "", location.pathname);
+  if (!state || state !== savedState || !verifier || !cid) {
+    openLogin();
+    showLoginError(LANG === "en" ? "Session expired, try again" : "Сессия истекла, попробуйте ещё раз");
+    return;
+  }
   const body = new URLSearchParams({
     grant_type: "authorization_code",
     code: code,
-    client_id: localStorage.getItem(OAUTH_CLIENT_KEY),
-    code_verifier: localStorage.getItem("oauth_verifier") || "",
+    client_id: cid,
+    code_verifier: verifier,
     redirect_uri: location.origin + location.pathname
   });
   try {
@@ -1494,12 +1527,17 @@ async function handleOAuthCallback() {
     const d = await r.json();
     if (d.access_token) {
       localStorage.setItem("atToken", d.access_token);
+      closeLogin();
+      renderAuth();
+      loadMyGames();
+    } else {
+      openLogin();
+      showLoginError(LANG === "en" ? "Authorization failed" : "Не удалось авторизоваться");
     }
   } catch (e) {
-    console.warn("Token exchange failed:", e);
+    openLogin();
+    showLoginError(LANG === "en" ? "Network error" : "Ошибка сети");
   }
-  history.replaceState(null, "", location.pathname);
-  renderAuth();
 }
 function lichLogout() {
   localStorage.removeItem("atToken");
