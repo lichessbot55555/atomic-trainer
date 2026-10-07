@@ -109,6 +109,21 @@ const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.
   .badge { display:inline-block; background:#161b22; border:1px solid #30363d; border-radius:8px; padding:4px 10px; font-size:12.5px; color:#8b949e; }
   .ok-badge { color:#3fb950; font-weight:700; }
   footer { text-align:center; color:#8b949e; padding:26px; font-size:13.5px; border-top:1px solid #21262d; }
+  /* === Lichess-style trainer === */
+  .pzrate { border-color:#8957e5 !important; background:linear-gradient(135deg,#161b22,#1c1130) !important; font-weight:600; }
+  .pzrate b { font-size:15px; }
+  #pzRateDiff { display:inline-block; margin-left:6px; font-weight:800; font-size:13px; opacity:0; }
+  #pzRateDiff.up { color:#3fb950; animation:rdpop 1.6s ease; }
+  #pzRateDiff.down { color:#f85149; animation:rdpop 1.6s ease; }
+  @keyframes rdpop { 0%{opacity:0; transform:translateY(6px) scale(.7);} 15%{opacity:1; transform:translateY(0) scale(1.15);} 30%{transform:scale(1);} 75%{opacity:1;} 100%{opacity:0; transform:translateY(-8px);} }
+  #pzStreakWrap.hot { border-color:#da3633 !important; background:linear-gradient(135deg,#161b22,#2d1114) !important; animation:flame 1s ease infinite alternate; }
+  @keyframes flame { from{box-shadow:0 0 2px #f85133;} to{box-shadow:0 0 12px #f85133;} }
+  .pzflash-ok { animation:fok .65s ease; }
+  .pzflash-err { animation:ferr .65s ease; }
+  @keyframes fok { 0%{box-shadow:0 0 0 3px #3fb950, 0 0 24px #3fb950;} 100%{box-shadow:none;} }
+  @keyframes ferr { 0%{box-shadow:0 0 0 3px #f85149, 0 0 24px #f85149;} 100%{box-shadow:none;} }
+  .pz-solved-banner { animation:bpop .45s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes bpop { from{transform:scale(.85); opacity:0;} to{transform:scale(1); opacity:1;} }
 </style>
 </head>
 <body>
@@ -160,6 +175,28 @@ const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.
     <div class="btnrow" style="justify-content:flex-end; margin-top:14px">
       <button class="btn" onclick="closeLogin()" data-i18n="auth.cancel"></button>
     </div>
+  </div>
+</div>
+
+<div id="sessModal" style="display:none; position:fixed; inset:0; background:rgba(1,4,9,.72); z-index:50; align-items:center; justify-content:center;">
+  <div style="background:#161b22; border:1px solid #30363d; border-radius:14px; padding:28px; width:min(420px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.6); text-align:center;">
+    <h3 style="margin-bottom:4px; font-size:22px" data-i18n="pz.sess.title"></h3>
+    <p class="muted" style="margin-bottom:18px" data-i18n="pz.sess.sub"></p>
+    <div style="display:flex; gap:10px; justify-content:center; margin-bottom:18px;">
+      <div style="flex:1; background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:14px;">
+        <div style="font-size:26px; font-weight:700" id="ssSolved">0/5</div>
+        <div class="muted" style="font-size:12px" data-i18n="pz.sess.solved"></div>
+      </div>
+      <div style="flex:1; background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:14px;">
+        <div style="font-size:26px; font-weight:700" id="ssRating">+0</div>
+        <div class="muted" style="font-size:12px" data-i18n="pz.sess.rating"></div>
+      </div>
+      <div style="flex:1; background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:14px;">
+        <div style="font-size:26px; font-weight:700" id="ssStreak">🔥0</div>
+        <div class="muted" style="font-size:12px" data-i18n="pz.sess.streak"></div>
+      </div>
+    </div>
+    <button class="btn main" onclick="pzCloseSession()" style="width:100%; padding:12px; font-size:15px; background:#238636; border-color:#2ea043;" data-i18n="pz.sess.cont"></button>
   </div>
 </div>
 
@@ -262,11 +299,13 @@ const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.
 <section class="page" id="p-puzzles">
   <h2 class="sect" data-i18n="pz.title"></h2>
   <div class="pz-head">
+    <span class="pz-tag pzrate" title="Puzzle rating">🏆 <b id="pzRate">…</b><span id="pzRateDiff"></span></span>
+    <span class="pz-tag" id="pzStreakWrap" title="Streak">🔥 <b id="pzStreak">0</b></span>
+    <span class="pz-tag" title="Time">⏱️ <b id="pzClock">0:00</b></span>
     <span class="pz-tag"><span data-i18n="pz.task"></span>: <b id="pzNum">1</b> / <span id="pzTotal">…</span></span>
     <span class="pz-tag" id="pzType">…</span>
     <span class="pz-tag"><span data-i18n="pz.tomove"></span>: <b id="pzSide">…</b></span>
     <span class="score" id="pzScore">✅ 0 &nbsp; ❌ 0</span>
-    <span class="pz-tag" id="pzSolved">…</span>
   </div>
   <div class="btnrow" id="pzFilters" style="margin:8px 0 0">
     <button class="srcbtn act" data-pf="all" data-i18n="pz.f.all"></button>
@@ -278,7 +317,7 @@ const DATA = {"games":[{"w":"SuperGame5","b":"CherryFish_Bot","r":"*","d":"2026.
   </div>
   <div class="cols" style="margin-top:14px">
     <div class="col">
-      <div class="boardwrap"><div id="pzBoard" class="board"></div></div>
+      <div class="boardwrap" id="pzBoardWrap"><div id="pzBoard" class="board"></div></div>
       <div class="blabel" id="pzLbl"></div>
       <div class="btnrow">
         <button class="btn" onclick="pzReset()" data-i18n="btn.reset"></button>
@@ -437,6 +476,12 @@ ru: {
   "pz.white": "белые", "pz.black": "чёрные",
   "pz.boom": "💥 Взрыв короля", "pz.mate": "🎯 Мат в 1",
   "pz.howt": "Как решать:", "pz.howd": "Ищи взятие, после которого взорвётся король соперника, или ход с матом. Клик по своей фигуре → клик по клетке.",
+  "pz.sess.title": "🏁 Сессия завершена!",
+  "pz.sess.sub": "Итоги пяти задач",
+  "pz.sess.solved": "Решено",
+  "pz.sess.rating": "Рейтинг",
+  "pz.sess.streak": "Лучшая серия",
+  "pz.sess.cont": "Продолжить тренировку",
   "pz.from": "Из партии:", "pz.label.w": "Ход белых. Найди решение!", "pz.label.b": "Ход чёрных. Найди решение!",
   "pz.ok": "✅ Верно!", "pz.boomtxt": "— король взорван! 💥", "pz.matetxt": "— мат!",
   "pz.miss": "❌ Мимо! Взрыв заденет не того... Попробуй ещё", "pz.reveal": "❌ Не то. Решение: — смотрим!",
@@ -520,6 +565,12 @@ en: {
   "pz.white": "White", "pz.black": "Black",
   "pz.boom": "💥 King explosion", "pz.mate": "🎯 Mate in 1",
   "pz.howt": "How to solve:", "pz.howd": "Look for a capture that blows up the enemy king, or a mating move. Click your piece → click the square.",
+  "pz.sess.title": "🏁 Session complete!",
+  "pz.sess.sub": "Five puzzles summary",
+  "pz.sess.solved": "Solved",
+  "pz.sess.rating": "Rating",
+  "pz.sess.streak": "Best streak",
+  "pz.sess.cont": "Continue training",
   "pz.from": "From the game:", "pz.label.w": "White to move. Find the solution!", "pz.label.b": "Black to move. Find the solution!",
   "pz.ok": "✅ Correct!", "pz.boomtxt": "— king blown up! 💥", "pz.matetxt": "— mate!",
   "pz.miss": "❌ Miss! The blast would hit the wrong thing... Try again", "pz.reveal": "❌ Wrong. Solution: — watch it!",
@@ -1102,11 +1153,94 @@ const PZ_TYPES = {
   material: { ru: "⚔️ Выигрыш материала", en: "⚔️ Win material", lvl: 2 },
   defense:  { ru: "🛡️ Спаси короля", en: "🛡️ Save the king", lvl: 3 }
 };
-let pzi = 0, pzOK = 0, pzBad = 0, pzTries = 0, pzSel = null, pzLegal = [], pzSt = null;
+let pzi = 0, pzOK = 0, pzBad = 0, pzTries = 0, pzSel = null, pzLegal = [], pzSt = null, pzFailedThis = false;
 let pzSolved = [];
 try { pzSolved = JSON.parse(localStorage.getItem("atSolved") || "[]"); } catch (e) { pzSolved = []; }
 function pzKey(p) { return (p.fen || "").slice(0, 40) + "|" + (p.sol || "").slice(0, 4); }
 let pzFilter = "all";
+
+/* ===== Lichess-style: рейтинг / серия / таймер / сессии ===== */
+let pzRating = parseInt(localStorage.getItem("atPzRating") || "1200", 10) || 1200;
+let pzStreakN = 0;
+let pzBestStreak = parseInt(localStorage.getItem("atPzBest") || "0", 10) || 0;
+let pzT0 = 0, pzClockIv = null, pzSolvedTime = 0;
+let pzSess = { n: 0, ok: 0, bad: 0, r0: pzRating, bestStr: 0 };
+
+function pzLvlRating(p) { const i = PZ_TYPES[p.type]; return 800 + ((i && i.lvl) || 1) * 400; }
+function pzUpdateRating(solved, p) {
+  const E = 1 / (1 + Math.pow(10, (pzLvlRating(p) - pzRating) / 400));
+  const d = Math.round(24 * ((solved ? 1 : 0) - E));
+  pzRating = Math.max(600, pzRating + d);
+  localStorage.setItem("atPzRating", String(pzRating));
+  return d;
+}
+function pzShowDiff(d) {
+  const el = document.getElementById("pzRateDiff");
+  el.textContent = (d >= 0 ? "+" : "") + d;
+  el.className = d >= 0 ? "up" : "down";
+  void el.offsetWidth;
+}
+function pzHUD() {
+  document.getElementById("pzRate").textContent = pzRating;
+  document.getElementById("pzStreak").textContent = pzStreakN;
+  const w = document.getElementById("pzStreakWrap");
+  if (pzStreakN >= 3) w.classList.add("hot"); else w.classList.remove("hot");
+}
+function pzClockStart() {
+  pzT0 = Date.now(); pzSolvedTime = 0;
+  clearInterval(pzClockIv);
+  pzClockIv = setInterval(() => {
+    const s = Math.floor((Date.now() - pzT0) / 1000);
+    document.getElementById("pzClock").textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }, 500);
+}
+function pzClockStop() {
+  pzSolvedTime = Date.now() - pzT0;
+  clearInterval(pzClockIv); pzClockIv = null;
+}
+function pzFlash(cls) {
+  const w = document.getElementById("pzBoardWrap");
+  w.classList.remove("pzflash-ok", "pzflash-err");
+  void w.offsetWidth;
+  w.classList.add(cls);
+}
+function pzBanner(html, ok) {
+  document.getElementById("pzMsg").innerHTML = `<div class="note ${ok ? "ok" : "err"} pz-solved-banner">${html}</div>`;
+}
+/* адаптивный подбор как на Lichess: ближайший по рейтингу, приоритет нерешённым */
+function pzPickNext() {
+  const vis = pzVisibleIdx();
+  if (!vis.length) { pzLoad(); return; }
+  const solvedSet = new Set(pzSolved);
+  const scored = vis.map(i => {
+    const p = DATA.puzzles[i];
+    const dr = Math.abs(pzLvlRating(p) - pzRating);
+    const done = solvedSet.has(pzKey(p)) ? 500 : 0;
+    return { i, s: dr + done + Math.random() * 150 };
+  }).sort((a, b) => a.s - b.s);
+  pzi = scored[0].i;
+  pzLoad();
+}
+function pzSessionStep(solved) {
+  pzSess.n++; solved ? pzSess.ok++ : pzSess.bad++;
+  pzSess.bestStr = Math.max(pzSess.bestStr, pzStreakN);
+  if (pzSess.n > 0 && pzSess.n % 5 === 0) pzShowSession();
+}
+function pzShowSession() {
+  document.getElementById("ssSolved").textContent = pzSess.ok + "/5";
+  const d = pzRating - pzSess.r0;
+  const el = document.getElementById("ssRating");
+  el.textContent = (d >= 0 ? "+" : "") + d;
+  el.style.color = d >= 0 ? "#3fb950" : "#f85149";
+  document.getElementById("ssStreak").textContent = "🔥" + pzSess.bestStr;
+  document.getElementById("sessModal").style.display = "flex";
+}
+function pzCloseSession() {
+  document.getElementById("sessModal").style.display = "none";
+  pzSess = { n: 0, ok: 0, bad: 0, r0: pzRating, bestStr: 0 };
+  pzPickNext();
+}
+
 function pzVisibleIdx() {
   const res = [];
   DATA.puzzles.forEach((p, i) => { if (pzFilter === "all" || p.type === pzFilter) res.push(i); });
@@ -1128,9 +1262,11 @@ function pzLoad() {
   const p = DATA.puzzles[pzi];
   pzSt = parseFEN(p.fen);
   pzLegal = genLegal(pzSt);
-  pzSel = null; pzTries = 0;
+  pzSel = null; pzTries = 0; pzFailedThis = false;
   pzRenderTexts();
   pzDraw();
+  pzClockStart();
+  pzHUD();
   // диагностика: решаем ли пазл движком
   const sol = parseUCI(p.sol);
   const solUCI = uciOf(sol).slice(0,4);
@@ -1148,7 +1284,6 @@ function pzRenderTexts() {
   const fromEl = document.getElementById("pzFrom");
   if (gm) fromEl.innerHTML = p.from.replace(/ \(lichess\.org\/[^)]+\)/, "") + ` <a href="https://lichess.org/${gm[1]}" target="_blank">🔗</a>`;
   else fromEl.textContent = p.from;
-  document.getElementById("pzSolved").textContent = (LANG === "en" ? "Solved: " : "Решено: ") + pzSolved.length + " / " + DATA.puzzles.length;
   document.getElementById("pzLbl").textContent = (p.side === "w" ? T("pz.label.w") : T("pz.label.b"));
   document.getElementById("pzScore").innerHTML = `✅ ${pzOK} &nbsp; ❌ ${pzBad}`;
 }
@@ -1166,23 +1301,40 @@ function pzTarget(idx) {
     const exploded = applyMove(pzSt, mv);
     drawBoard(document.getElementById("pzBoard"), pzSt, { flip: DATA.puzzles[pzi].side === "b", exploded, last: mv });
     beep("boom");
+    pzClockStop();
     pzOK++;
+    pzStreakN++;
+    if (pzStreakN > pzBestStreak) { pzBestStreak = pzStreakN; localStorage.setItem("atPzBest", String(pzBestStreak)); }
+    const d = pzUpdateRating(true, DATA.puzzles[pzi]);
     const key = pzKey(DATA.puzzles[pzi]);
     if (!pzSolved.includes(key)) pzSolved.push(key);
     localStorage.setItem("atSolved", JSON.stringify(pzSolved));
     const isM2 = DATA.puzzles[pzi].type === "mate2";
     const extra = isM2 ? (LANG === "en" ? "<br>Now finish the mate on the board yourself 💪" : "<br>Теперь заматуйте на доске сами 💪") : "";
-    document.getElementById("pzMsg").innerHTML = `<div class="note ok">${T("pz.ok")} ${u} ${DATA.puzzles[pzi].type === "boom" ? T("pz.boomtxt") : T("pz.matetxt")}${extra}</div>`;
+    const secs = Math.round(pzSolvedTime / 1000);
+    const dInfo = (LANG === "en" ? "Solved in " : "Решено за ") + secs + " c";
+    pzFlash("pzflash-ok");
+    pzBanner(`${T("pz.ok")} ${u} ${DATA.puzzles[pzi].type === "boom" ? T("pz.boomtxt") : T("pz.matetxt")}<br><b style="font-size:15px">${dInfo} · 🏆 ${d >= 0 ? "+" : ""}${d}</b>${extra}`, true);
+    pzShowDiff(d);
+    pzHUD();
     document.getElementById("pzScore").innerHTML = `✅ ${pzOK} &nbsp; ❌ ${pzBad}`;
-    setTimeout(() => pzNext(), isM2 ? 3000 : 1400);
+    pzSessionStep(true);
+    setTimeout(() => { if (!isM2) pzPickNext(); }, 1600);
+    if (isM2) setTimeout(() => pzPickNext(), 4200);
   } else {
     pzBad++; pzTries++;
     document.getElementById("pzScore").innerHTML = `✅ ${pzOK} &nbsp; ❌ ${pzBad}`;
     if (pzTries >= 3) {
+      pzClockStop();
+      pzFlash("pzflash-err");
+      pzStreakN = 0; pzHUD();
+      if (!pzFailedThis) { const d = pzUpdateRating(false, DATA.puzzles[pzi]); pzFailedThis = true; pzShowDiff(d); pzHUD(); }
       document.getElementById("pzMsg").innerHTML = `<div class="note err">${T("pz.reveal").replace("— смотрим!", "").replace("— watch it!", "")}<b>${DATA.puzzles[pzi].sol.slice(0,4)}</b></div>`;
       pzShowSol();
-      setTimeout(() => pzNext(), 2200);
+      pzSessionStep(false);
+      setTimeout(() => pzPickNext(), 2600);
     } else {
+      pzFlash("pzflash-err");
       document.getElementById("pzMsg").innerHTML = `<div class="note err">${T("pz.miss")} (${3 - pzTries})</div>`;
       beep("move");
       pzSel = null; pzDraw();
@@ -1200,7 +1352,7 @@ function pzHint() {
   const sol = DATA.puzzles[pzi].sol;
   document.getElementById("pzMsg").innerHTML = `<div class="note info">${T("pz.hintmsg")} <b>${sol.slice(0,2)}</b></div>`;
 }
-function pzNext() { pzNextVis(1); }
+function pzNext() { pzPickNext(); }
 function pzPrev() { pzNextVis(-1); }
 
 /* ================= ПАРТИИ ================= */
